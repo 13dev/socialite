@@ -1,0 +1,50 @@
+html {
+    position: relative;
+    min-height: 100%;
+  }
+
+.huge {
+    font-size: 40px;
+}
+
+body > #app > .container, {
+    margin-top: 100px;
+    margin-bottom: 250px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+@include media-breakpoint-down(xs) {
+    body > #app > .container, {
+        margin-bottom: 320px;
+    }
+}
+
+body > #app > .container-fluid {
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+
+.blink{
+    -webkit-animation: blink 700ms infinite alternate;
+    -moz-animation: blink 700ms infinite alternate;
+    -o-animation: blink 700ms infinite alternate;
+    animation: blink 700ms infinite alternate;
+}
+@-webkit-keyframes blink {
+    from { opacity:1; }
+    to { opacity:0; }
+}
+@-o-keyframes blink {
+    from { opacity:1; }
+    to { opacity:0; }
+}
+@-moz-keyframes blink {
+    from { opacity:1; }
+    to { opacity:0; }
+}
+@keyframes blink {
+    from { opacity:1; }
+    to { opacity:0; }
+};
