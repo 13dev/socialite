@@ -19,15 +19,17 @@ class DatabaseSeeder extends Seeder
         $role_admin = Role::firstOrCreate(['name' => Role::ROLE_ADMIN]);
 
         // Users
-        if (User::where('email', 'darthvader@deathstar.ds')->doesntExist()) {
+        if (User::where('email', 'admin@admin.com')->doesntExist()) {
             $user = User::create([
-                'name' => 'anakin',
-                'email' => 'darthvader@deathstar.ds',
-                'password' => '4nak1n'
+                'name' => 'admin',
+                'email' => 'admin@admin.com',
+                'password' => 'secret'
             ]);
 
             $user->roles()->attach($role_admin->id);
         }
+
+        factory(App\User::class, 10)->create();
 
         // API tokens
         User::where('api_token', null)->get()->each->update([

@@ -15,9 +15,9 @@ class PostTest extends TestCase
 
     public function testIndex()
     {
-        $anakin = factory(User::class)->states('anakin')->create();
+        $test = factory(User::class)->states('test')->create();
 
-        $post = factory(Post::class)->create(['author_id' => $anakin->id]);
+        $post = factory(Post::class)->create(['author_id' => $test->id]);
         factory(Post::class, 2)->create();
         factory(Comment::class, 3)->create(['post_id' => $post->id]);
 
@@ -28,7 +28,7 @@ class PostTest extends TestCase
             ->assertSee(e($post->title))
             ->assertSee(humanize_date($post->posted_at))
             ->assertSee('3')
-            ->assertSee('Anakin');
+            ->assertSee('test');
     }
 
     public function testSearch()

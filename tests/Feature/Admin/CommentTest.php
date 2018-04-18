@@ -15,14 +15,14 @@ class CommentTest extends TestCase
 
     public function testIndex()
     {
-        $anakin = factory(User::class)->states('anakin')->create();
-        $comment = factory(Comment::class)->create(['author_id' => $anakin->id]);
+        $test = factory(User::class)->states('test')->create();
+        $comment = factory(Comment::class)->create(['author_id' => $test->id]);
 
         $this->actingAsAdmin()
             ->get('/admin/comments')
             ->assertStatus(200)
             ->assertSee('1 commentaire')
-            ->assertSee('Anakin')
+            ->assertSee('test')
             ->assertSee('Contenu')
             ->assertSee('Auteur')
             ->assertSee('Posté le')
@@ -31,13 +31,13 @@ class CommentTest extends TestCase
 
     public function testEdit()
     {
-        $anakin = factory(User::class)->states('anakin')->create();
-        $comment = factory(Comment::class)->create(['author_id' => $anakin->id]);
+        $test = factory(User::class)->states('test')->create();
+        $comment = factory(Comment::class)->create(['author_id' => $test->id]);
 
         $this->actingAsAdmin()
             ->get("/admin/comments/{$comment->id}/edit")
             ->assertStatus(200)
-            ->assertSee('Anakin')
+            ->assertSee('test')
             ->assertSee("Voir l'article :")
             ->assertSee(route('posts.show', $comment->post))
             ->assertSee('Contenu')

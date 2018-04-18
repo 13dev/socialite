@@ -15,17 +15,17 @@ class UserTest extends TestCase
 
     public function testIndex()
     {
-        $anakin = factory(User::class)->states('anakin')->create();
+        $test = factory(User::class)->states('test')->create();
         factory(User::class, 3)->create();
-        factory(Post::class, 3)->create(['author_id' => $anakin->id]);
+        factory(Post::class, 3)->create(['author_id' => $test->id]);
 
         $this->actingAsAdmin()
             ->get('/admin/users')
             ->assertStatus(200)
             ->assertSee('5 utilisateurs')
             ->assertSee('3')
-            ->assertSee('anakin@skywalker.st')
-            ->assertSee('Anakin')
+            ->assertSee('test@skywalker.st')
+            ->assertSee('test')
             ->assertSee('Nom')
             ->assertSee('Email')
             ->assertSee('Enregistré le');
@@ -33,14 +33,14 @@ class UserTest extends TestCase
 
     public function testEdit()
     {
-        $anakin = factory(User::class)->states('anakin')->create();
+        $test = factory(User::class)->states('test')->create();
 
         $this->actingAsAdmin()
-            ->get("/admin/users/{$anakin->id}/edit")
+            ->get("/admin/users/{$test->id}/edit")
             ->assertStatus(200)
-            ->assertSee('Anakin')
+            ->assertSee('test')
             ->assertSee('Voir le profil')
-            ->assertSee('anakin@skywalker.st')
+            ->assertSee('test@skywalker.st')
             ->assertSee('Confirmation du mot de passe')
             ->assertSee('R&ocirc;les')
             ->assertSee('Mettre à jour')
@@ -85,8 +85,8 @@ class UserTest extends TestCase
     private function validParams($overrides = [])
     {
         return array_merge([
-            'name' => 'Anakin',
-            'email' => 'anakin@skywalker.st',
+            'name' => 'test',
+            'email' => 'test@skywalker.st',
         ], $overrides);
     }
 }

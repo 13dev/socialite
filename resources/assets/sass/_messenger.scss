@@ -1,0 +1,72 @@
+.me{
+	@extend .p-3,
+ 	.rounded,
+ 	.m-3, .justify-content-start;
+    background-color: #ccd7e0;
+}
+ 
+.you{
+	@extend .p-3,
+ 	.rounded,
+ 	.m-3, .justify-content-end;
+    background-color: #eaeff2;
+}
+
+.chat-bubble {
+  @extend .rounded, .mt-2;
+  display: inline-block;
+  position: relative;
+  max-width: 80%;
+  small {
+  	color: #2d253580
+  }
+
+ /* &:before {
+	  content: "\00a0";
+	  display: block;
+	  height: 16px;
+	  width: 9px;
+	  position: absolute;
+	  bottom: -7.5px;
+	}*/
+}
+
+
+
+.chat-bubble.left {
+  background-color: #eaeff2;
+  float: left;
+  clear: both;
+
+  small{
+	position: absolute;
+	white-space: nowrap;
+  }
+
+  /*&:before {
+	  background-color: #eaeff2;
+	  left: 10px;
+	  -webkit-transform: rotate(70deg) skew(5deg);
+	}*/
+}
+
+
+.chat-bubble.right {
+  background-color: #158ffe;
+  float: right;
+  clear: both;
+  color: #eaeff2;
+  
+  small{
+  	position: absolute;
+	left: 0;
+	white-space: nowrap;
+  }
+
+  /*&:before {
+	  background-color: #158ffe;
+	  right: 10px;
+	  -webkit-transform: rotate(118deg) skew(-5deg);
+	}*/
+}
+

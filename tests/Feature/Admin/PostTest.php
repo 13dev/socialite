@@ -17,15 +17,15 @@ class PostTest extends TestCase
 
     public function testIndex()
     {
-        $anakin = factory(User::class)->states('anakin')->create();
-        factory(Post::class)->create(['author_id' => $anakin->id]);
+        $test = factory(User::class)->states('test')->create();
+        factory(Post::class)->create(['author_id' => $test->id]);
         factory(Post::class, 3)->create();
 
         $this->actingAsAdmin()
             ->get("/admin/posts")
             ->assertStatus(200)
             ->assertSee('4 articles')
-            ->assertSee('Anakin')
+            ->assertSee('test')
             ->assertSee('Auteur')
             ->assertSee('Posté le')
             ->assertSee('Titre');
@@ -76,13 +76,13 @@ class PostTest extends TestCase
 
     public function testEdit()
     {
-        $anakin = $this->admin(['name' => 'Anakin', 'email' => 'anakin@skywalker.st']);
-        $post = factory(Post::class)->create(['author_id' => $anakin->id]);
+        $test = $this->admin(['name' => 'test', 'email' => 'test@skywalker.st']);
+        $post = factory(Post::class)->create(['author_id' => $test->id]);
 
-        $this->actingAs($anakin)
+        $this->actingAs($test)
             ->get("/admin/posts/{$post->slug}/edit")
             ->assertStatus(200)
-            ->assertSee('Anakin')
+            ->assertSee('test')
             ->assertSee("Voir l'article")
             ->assertSee(e($post->title))
             ->assertSee(e($post->content))
