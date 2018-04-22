@@ -57,7 +57,7 @@ if (api_token) {
  * allows your team to easily build robust real-time web applications.
  */
 
-import Echo from "laravel-echo";
+import Echo from 'laravel-echo';
 
 if (typeof io !== 'undefined') {
   window.Echo = new Echo({
@@ -65,3 +65,7 @@ if (typeof io !== 'undefined') {
     host: window.location.hostname + ':6001'
   });
 }
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})

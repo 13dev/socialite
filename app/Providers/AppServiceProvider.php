@@ -15,6 +15,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        \Carbon\Carbon::setLocale('pt');
+
         if (env('APP_ENV') == 'testing') {
             // Because travis-ci is still not compatible with mysql 5.7 ...
             Schema::defaultStringLength(191);

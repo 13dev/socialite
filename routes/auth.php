@@ -22,8 +22,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('newsletter-subscriptions', 'NewsletterSubscriptionController')->only('store');
 
     Route::get('test', function() {
-        //dd(Cmgmyr\Messenger\Models\Thread::find(1)->users);
-        broadcast(new \App\Events\NewMessage(Cmgmyr\Messenger\Models\Thread::find(1)));
+        dd(Cmgmyr\Messenger\Models\Thread::find(2)->participants->count());
+        //broadcast(new \App\Events\NewMessage(Cmgmyr\Messenger\Models\Thread::find(1)));
         return 'fire';
+        //use App\Events\NewMessageThread;
     });
 });

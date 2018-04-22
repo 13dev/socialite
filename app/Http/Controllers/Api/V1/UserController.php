@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UsersRequest;
 use App\Http\Resources\User as UserResource;
 use App\User;
@@ -43,5 +44,17 @@ class UserController extends Controller
         $user->update(array_filter($request->only(['name', 'email', 'password'])));
 
         return new UserResource($user);
+    }
+
+    /**
+     * Show all of new messages threads to the user.
+     *
+     * @return mixed
+     */
+    public function unreadMessages()
+    {
+        return [
+            'count' => Auth::user()->newThreadsCount()
+        ];
     }
 }

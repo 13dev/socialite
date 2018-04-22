@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use App\Events\NewMessage;
 use App\Events\NewMessageThread;
+use App\Http\Resources\Thread as ThreadResource;
 
 class MessagesController extends Controller
 {
@@ -28,10 +29,10 @@ class MessagesController extends Controller
         // All threads, ignore deleted/archived participants
         //$threads = Thread::getAllLatest()->get();
         // All threads that user is participating in
-        $threads = Thread::forUser(Auth::id())->latest('updated_at')->get();
+        //ThreadResource::withoutWrapping();
         // All threads that user is participating in, with new messages
         // $threads = Thread::forUserWithNewMessages(Auth::id())->latest('updated_at')->get();
-        return view('messenger.index', compact('threads'));
+        return view('messenger.index');
     }
     /**
      * Shows a message thread.

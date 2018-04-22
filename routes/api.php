@@ -11,10 +11,17 @@
 */
 Route::prefix('v1')->namespace('Api\V1')->group(function () {
     Route::middleware('auth:api')->group(function () {
-        // Messages 
-        Route::get('/messages/unread', 'MessagesController@unread');
+        
+        // User
+        Route::get('user/unreadmessages', 'UserController@unreadMessages');
 
-        Route::get('/messages/{thread}', 'MessagesController@getMessages');
+        // Messages 
+        Route::apiResource('messages', 'MessageController')->only(['store', 'show']);
+
+        // Threads
+        Route::apiResource('threads', 'ThreadController');
+        Route::apiResource('threads.messages', 'ThreadMessageController')->only('index');
+      
         // Comments
         Route::apiResource('comments', 'CommentController')->only('destroy');
         Route::apiResource('posts.comments', 'PostCommentController')->only('store');

@@ -21,30 +21,8 @@
 
     <!-- Styles -->
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
-    <style>
-        /* enable absolute positioning */
-        .inner-addon {
-          position: relative;
-        }
-
-        /* style glyph */
-        .inner-addon .fa {
-          position: absolute;
-          padding: 10px;
-          pointer-events: none;
-        }
-
-        /* align glyph */
-        .left-addon .fa  { left:  0px;}
-        .right-addon .fa { right: 0px;}
-
-        /* add padding  */
-        .left-addon input  { padding-left:  30px; }
-        .right-addon input { padding-right: 30px; }
-
-    </style>
 </head>
-<body class="bg-light">
+<body class="bg-dark">
     <div id="app">
         @include('shared/navbar')
 

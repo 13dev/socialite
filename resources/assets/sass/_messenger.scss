@@ -1,19 +1,8 @@
-.me{
-	@extend .p-3,
- 	.rounded,
- 	.m-3, .justify-content-start;
-    background-color: #ccd7e0;
-}
- 
-.you{
-	@extend .p-3,
- 	.rounded,
- 	.m-3, .justify-content-end;
-    background-color: #eaeff2;
-}
+
 
 .chat-bubble {
-  @extend .rounded, .mt-2;
+  @extend .mt-2, .px-2;
+  border-radius: 20px;
   display: inline-block;
   position: relative;
   max-width: 80%;
@@ -34,6 +23,7 @@
 
 
 .chat-bubble.left {
+  margin-left:15px;
   background-color: #eaeff2;
   float: left;
   clear: both;
@@ -52,6 +42,7 @@
 
 
 .chat-bubble.right {
+  margin-right:15px;
   background-color: #158ffe;
   float: right;
   clear: both;
@@ -59,8 +50,8 @@
   
   small{
   	position: absolute;
-	left: 0;
-	white-space: nowrap;
+	  right: 0;
+    white-space: nowrap;
   }
 
   /*&:before {
