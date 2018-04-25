@@ -7,9 +7,11 @@
 			type="text" 
 			:disabled="success === false"
 			v-model="message" 
-			class="form-control rounded-0 border-0 border-top" 
+			class="form-control rounded-0 border-0 border-top bg-light" 
 			placeholder="Mensagem..." 
-			aria-label="Mensagem...">
+			aria-label="Mensagem..."
+			@keydown.enter="trigger=true"
+			@keyup="writingMessage">
 			<div class="input-group-append">
 				<button 
 				@click="trigger=true" 
@@ -22,7 +24,7 @@
 					@loaded="loadedMessage"
 					@error="success = false"
 					:resource="$api.sendMessage"
-					:params="{thread_id: this.threadid, message: this.message}"
+					:params="{thread_id: $selectedThread, message: this.message}"
 					v-model="response"
 					:trigger.sync="trigger"
 					:spinner-scale="0.13"
@@ -48,7 +50,6 @@ export default {
 			message: null,
 			changeThread: null,
 			trigger: false,
-			threadid: null,
 			success: null,
 			response: null,
 			textBtn: 'Enviar'
@@ -57,7 +58,6 @@ export default {
 	mounted() {
 		Event.$on('change-thread',(data) => {
 			this.changeThread = true
-			this.threadid = data.id
 		})
 
 	},
@@ -79,6 +79,14 @@ export default {
 		},
 		loadedMessage(response){
 			this.message = ''
+		},
+		writingMessage(){
+			console.log('user is typing..')
+			this.$scrollAllBottom('messages')
+			Echo.join('thread.' + this.$selectedThread).whisper('typing', {
+		        name: Global.user.name,
+		        id: Global.user.id
+		    })
 		}
 	}
 }

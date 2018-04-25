@@ -26,12 +26,15 @@ class Thread extends Resource
             'subject' => $this->subject,
             'created_at' => $this->created_at->diffForHumans(),
             'updated_at' => $this->updated_at->diffForHumans(),
-            'participants_string' => $this->participantsString(Auth::id()),
+            'participants_string' => $this->participantsString($user->id),
                 'creator' => [
                     'name' => $this->creator()->name,
                     'id' => $this->creator()->id,
                 ],
-            'last_message' => new MessageResource($this->latestMessage)
+            'last_message' => new MessageResource($this->latestMessage),
+            'unreadmessages' => $this->userUnreadMessages($user->id),
+            'unreadmessagescount' => $this->userUnreadMessages($user->id)->count(),
+            'unreadthread' => $this->isUnread($user->id),
         ];
     }
 }

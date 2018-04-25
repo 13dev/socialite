@@ -39,9 +39,9 @@
 
       <div class="card-body p-0">
         <div class="d-flex align-items-start flex-column">
-          <div  class="conversation w-100" id="messages">
+          <div  class="conversation w-100">
             <div clas="mr-2" style="height: 30rem; overflow-y: hidden;" v-bar>
-              <div >
+              <div id="messages">
                 <messages></messages>
               </div>
             

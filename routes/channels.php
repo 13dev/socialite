@@ -1,6 +1,8 @@
 <?php
 
 use App\Broadcasting\PostChannel;
+use App\Broadcasting\ThreadChannel;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +20,8 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('post.{post}', PostChannel::class);
+
+Broadcast::channel('thread.{thread}', ThreadChannel::class);
 
 Broadcast::channel('messages.{id}', function ($user, $id) {
     return \Auth::check() && (int) $user->id === (int) $id;

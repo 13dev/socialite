@@ -3,7 +3,7 @@
 		<api-request @success="done" :resource="$api.getThreads" v-model="response">
 
 			<li v-if="response"
-			:class="{'active-thread': selectedThread == thread.id}"
+			:class="{'active-thread': selectedThread == thread.id, 'thread-unread': thread.unreadmessagescount > 0}"
 			@click="clickThread(thread.id)"
 			class="pt-2 media border-light border-bottom thread"
 			v-for="thread in threads"
@@ -20,7 +20,11 @@
 					</h6>
 					<div class="">
 						<small class="float-left mt-1">{{ thread.last_message.body }}</small>
-						<span class="float-right mt-1 mr-1 badge badge-primary badge-pill">+1</span>
+						<div  v-show="thread.unreadmessagescount > 0">
+							<span v-if="thread.unreadmessagescount <= 9" class="float-right mt-1 mr-3 badge badge-primary badge-pill">{{ thread.unreadmessagescount }}</span>
+							<span v-else class="float-right mt-1 mr-3 badge badge-primary badge-pill">+9</span>
+						</div>
+						
 					</div>
 					<!-- participants_string thread.creator.name -->
 				</div>
@@ -34,15 +38,36 @@ export default {
 		return {
 			response: null,
 			threads: null,
-			selectedThread: null
+			selectedThread: null,
+			unreadmessages: null
 		}
 	},
 	methods: {
 		done(response){
 			this.threads = response.data.data
+			console.log('unreadmessages');
+
+			// Map Thread unread messages to simply array
+			this.unreadmessages = $.map(this.threads,(element,index) => {
+
+				let arr = $.map(element.unreadmessages,(e,i) => {
+					// Get only the neccessary data
+					return {
+						id: e.id,
+						thread_id: e.thread_id,
+						body: e.body
+					}
+				})
+
+				if(arr.length <= 0) return
+
+				return [ arr ]
+			})
+
 		},
 		clickThread(threadId){
 			this.selectedThread = threadId
+			Vue.prototype.$selectedThread = threadId
 			Event.$emit('change-thread', {id: threadId})
 			 
 		}
@@ -61,5 +86,8 @@ export default {
 	}
 }
 
+.thread-unread {
+	background-color: #efeded99;
+}
 
 </style>

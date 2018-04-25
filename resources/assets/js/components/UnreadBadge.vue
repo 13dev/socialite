@@ -31,9 +31,10 @@ export default {
 
 		window.Echo.private('messages.' + Global.user.id)
 		.listen('.new.message', (e) =>{
-				this.trigger = true
-				blink('li.nav-item.message')
-			})
+			//console.log(e)
+			this.trigger = true
+			blink('li.nav-item.message')
+		})
 		.listen('.new.message.thread', (e) => {
 			this.isLoading = false
 			console.log('.new.message.thread')

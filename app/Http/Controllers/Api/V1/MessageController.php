@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use App\Events\NewMessage;
+use App\Events\NewMessagePresence;
 use App\Events\NewMessageThread;
 use App\Http\Resources\Message as MessageResource;
 
@@ -68,6 +69,7 @@ class MessageController extends Controller
         }
 
         broadcast(new NewMessage($thread));
+        broadcast(new NewMessagePresence($thread, $message))->toOthers();
 
         return new MessageResource($message);
     }

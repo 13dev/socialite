@@ -48,6 +48,7 @@ Vue.component('message-send', require('./components/MessageSend.vue'));
 
 window.Event = new Vue();
 
+
 const app = new Vue({
   el: '#app',
 
