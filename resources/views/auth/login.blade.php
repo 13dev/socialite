@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="row justify-content-md-center">
-    <div class="col-md-6">
+    <div class="col-md-6 bg-white p-3 bb rounded">
         <h1>@lang('auth.login')</h1>
 
         {!! Form::open(['route' => 'login', 'role' => 'form', 'method' => 'POST']) !!}

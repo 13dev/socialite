@@ -7,14 +7,15 @@ html {
     font-size: 40px;
 }
 
+
 body > #app > .container, {
-    margin-top: 100px;
+    margin-top: 80px;
     margin-bottom: 250px;
     padding-top: 15px;
     padding-bottom: 15px;
 }
 
-@include media-breakpoint-down(xs) {
+@include media-breakpoint-down(xs) { 
     body > #app > .container, {
         margin-bottom: 320px;
     }
@@ -49,7 +50,7 @@ body > #app > .container-fluid {
     to { opacity:0; }
 };
 
-nav {
+nav, .bb {
     border-bottom: 2px solid $primary;
 }
 

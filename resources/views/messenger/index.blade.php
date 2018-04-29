@@ -4,7 +4,7 @@
 
 <div class="row bg-faded">
   <div class="col-md-3 p-0 m-0">
-    <div class="card h-100 rounded-0 rounded-left border-right">
+    <div class="card h-100 rounded-0 rounded-left border-right bb">
       <div class="card-header p-2 d-inline-flex border-bottom" style="height: 53px!important;">
         <!-- Seamless Right Icon -->
         <div class="input-group input-group-seamless mr-2">
@@ -19,7 +19,7 @@
       </div>
 
       <div class="card-body h-100 p-0">
-          <div class="card rounded-0 border-0">
+          <div class="card rounded-0 border-0 rounded-left">
             <ul class="list-unstyled">
               <div clas="mr-2" style="height: 30rem; overflow-y: hidden;" v-bar>
                 <div>
@@ -32,7 +32,7 @@
     </div>
   </div>
   <div class="col-md-9 p-0 m-0">
-    <div class="card h-100 rounded-0 rounded-right">
+    <div class="card h-100 rounded-0 rounded-right bb">
       <div class="card-header p-3 border-bottom" style="height: 53px!important;">
         User <b>is typing...</b>
       </div>

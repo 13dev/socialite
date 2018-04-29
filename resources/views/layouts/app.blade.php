@@ -21,8 +21,19 @@
 
     <!-- Styles -->
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+    <style>
+        #bg {
+          position: fixed;
+          top: 0;
+          left: 0;
+          /* Preserve aspet ratio */
+          min-width: 100%;
+          min-height: 100%;
+        }
+    </style>
 </head>
-<body class="bg-dark">
+<body>
+    <img id="bg" src="assets/background.png" alt="Background image">
     <div id="app">
         @include('shared/navbar')
 
