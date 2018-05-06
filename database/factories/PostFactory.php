@@ -1,16 +1,14 @@
 <?php
 
-use App\Post;
+use Faker\Generator as Faker;
 use App\User;
-use Faker\Generator;
+use App\Post;
 
-$factory->define(Post::class, function (Generator $faker) {
+$factory->define(Post::class, function (Faker $faker) {
     return [
-        'title' => $faker->sentence,
-        'content' => $faker->paragraph,
-        'posted_at' => now(),
-        'author_id' => function () {
+        'user_id' => function () {
             return factory(User::class)->create()->id;
-        }
+        },
+        'post' => substr($faker->paragraph, 0, 139),
     ];
 });

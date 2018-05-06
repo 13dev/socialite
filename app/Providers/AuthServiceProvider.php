@@ -12,8 +12,6 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Comment' => 'App\Policies\CommentPolicy',
-        'App\Post' => 'App\Policies\PostPolicy',
         'Cmgmyr\Messenger\Models\Message' => 'App\Policies\MessagePolicy',
     ];
 

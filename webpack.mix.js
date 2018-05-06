@@ -18,5 +18,3 @@ mix.js('resources/assets/js/app.js', 'public/js')
 mix.js('resources/assets/admin/js/admin.js', 'public/js')
    .sass('resources/assets/admin/sass/admin.scss', 'public/css')
    .version();
-
-mix.copy('node_modules/trumbowyg/dist/ui/icons.svg', 'public/js/ui/icons.svg');

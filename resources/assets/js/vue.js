@@ -45,6 +45,8 @@ Vue.component('unread-badge', require('./components/UnreadBadge.vue'));
 Vue.component('messages', require('./components/Messages.vue'));
 Vue.component('threads', require('./components/Threads.vue'));
 Vue.component('message-send', require('./components/MessageSend.vue'));
+Vue.component('user-profile', require('./components/user/Profile.vue'));
+Vue.component('user-timeline', require('./components/user/Timeline.vue'));
 
 window.Event = new Vue();
 

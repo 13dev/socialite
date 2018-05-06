@@ -8,6 +8,7 @@ $factory->define(User::class, function (Generator $faker) {
 
     return [
         'name' => $faker->name,
+        'username' => substr($faker->unique()->username, 0, 12),
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = 'secret',
         'api_token' => str_random(60),
@@ -15,9 +16,3 @@ $factory->define(User::class, function (Generator $faker) {
     ];
 });
 
-$factory->state(User::class, 'test', function (Generator $faker) {
-    return [
-        'name' => 'test',
-        'email' => 'teste@test.test'
-    ];
-});

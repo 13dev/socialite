@@ -1,8 +1,4 @@
-require('trumbowyg');
 
-$('.trumbowyg-form').trumbowyg({
-  svgPath: '/js/ui/icons.svg'
-});
 
 // Toggle the side navigation
 $("#sidenavToggler").click(function(e) {
