@@ -15,6 +15,10 @@
                 'convs' => auth()->user()->threads->pluck('id')->toArray()
             ]); ?>
         </script>
+    @else 
+    <script>
+         window.Global = [];
+    </script>
     @endauth
 
     <title>{{ config('app.name', 'Laravel') }}</title>
