@@ -7,6 +7,6 @@ export default {
 	        	 		$('#' + id).prop('scrollHeight')
 	        	},600);
         	}, 100);
-        },
+        }
     },
 };

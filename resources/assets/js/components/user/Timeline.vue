@@ -6,10 +6,13 @@
 	v-model="response">
 		<ul v-if="response" class="list-group list-group-flush">
 			<li class="list-group-item" v-for="tl in timeline">
-        <h5>{{ tl.user.name }} <small>@{{ tl.user.username }}</small></h5>
-          <small v-show="tl.is_repost">
-            @{{ user.username }} repost
-          </small>
+        <span v-show="tl.is_repost">
+          <i class="fa fa-retweet" style="color: #00b108;"></i> 
+          <a :href="'/u/' + tl.user.username" 
+              v-html="'@' + tl.user.username" /> 
+          repost
+        </span>
+        <h5>{{ tl.user.name }} <small><a :href="'/u/' + tl.user.username" v-html="'@' + tl.user.username" /></small></h5>
 				<div class="post">
             <span>{{ tl.post }}</span>
         </div>
@@ -25,7 +28,11 @@
               <span class="mx-1">{{ tl.count.reposts }}</span>
             </div> 
             <div class="p-favorite mr-4">
-              <i class="fa" :class="{'fa-star': tl.me.favorited, 'fa-star-o': !tl.me.favorited || !gUser() }"></i>
+              <i class="fa" 
+                :class="{
+                  'fa-star': tl.me.favorited, 
+                  'fa-star-o': !tl.me.favorited || !gUser() 
+                }"></i>
               <span class="mx-1">{{ tl.count.favorites }}</span>
             </div>
             <div class="p-more" v-if="tl.me.author">
@@ -49,17 +56,34 @@ export default {
   data () {
     return {
     	timeline: null,
-    	response: null
+    	response: null,
+      option: {
+        count: {
+          favorited: null,
+          reposted: null,  
+          replied: null,        
+        },
+        me: {
+          favorited: false,
+          reposted: false,  
+          replied: false, 
+          author: false,
+        }
+      }
     }
   },
   methods: {
   	done(response){
   		this.timeline = response.data.data
       console.log(JSON.stringify(this.timeline))
+      this.handleOptions(this.timeline)
       //  //#ffcc4d
   	},
     gUser(){
       return Global.user
+    },
+    handleOptions(timeline = {}) {
+
     }
   }
 }
@@ -70,10 +94,12 @@ export default {
   display: inline-block;
 }
 
-.p-options i, span {
-  font-size: 18px;
-  cursor: pointer;
-  color: #b4b4b4;
+.p-options {
+  i, span {
+    font-size: 18px;
+    cursor: pointer;
+    color: #b4b4b4;
+  }
 }
 .p-options > div:hover,
 .p-options > div:focus {
@@ -89,7 +115,6 @@ export default {
 }
 
 .p-favorite i {
-
   color: #f4900c;
 }
 </style>
