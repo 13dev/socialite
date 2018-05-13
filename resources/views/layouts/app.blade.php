@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" class="has-navbar-fixed-top">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -31,6 +31,7 @@
 </head>
 <body>
     <div id="app">
+
         @include('shared/navbar')
         
         @include('shared/alerts')
@@ -38,14 +39,8 @@
         @yield('c-content')
 
         <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    @yield('content')
-                </div>
-            </div>
+            @yield('content')
         </div>
-
-        @include('shared/footer')
     </div>
 
     <!-- Scripts -->

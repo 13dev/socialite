@@ -4,44 +4,70 @@
 	:resource="$api.getUserTimeline"
   :params="{id: user.id }"
 	v-model="response">
-		<ul v-if="response" class="list-group list-group-flush">
-			<li class="list-group-item" v-for="tl in timeline">
-        <span v-show="tl.is_repost">
-          <i class="fa fa-retweet" style="color: #00b108;"></i> 
-          <a :href="'/u/' + tl.user.username" 
-              v-html="'@' + tl.user.username" /> 
-          repost
-        </span>
-        <h5>{{ tl.user.name }} <small><a :href="'/u/' + tl.user.username" v-html="'@' + tl.user.username" /></small></h5>
-				<div class="post">
-            <span>{{ tl.post }}</span>
-        </div>
-        <div v-if="gUser()">
-          <hr class="bg-light my-2">
-          <div class="p-options">
-            <div class="p-reply mr-4">
-              <i class="fa fa-reply"></i>
-              <span class="mx-1">{{ tl.count.replies }}</span>
-            </div>
-            <div class="p-retweet mr-4">
-              <i class="fa fa-retweet"></i>
-              <span class="mx-1">{{ tl.count.reposts }}</span>
-            </div> 
-            <div class="p-favorite mr-4">
-              <i class="fa" 
+
+<div v-if="response" v-for="tl in timeline" class="post">
+  <div v-if="tl.is_repost">
+    <i class="mdi mdi-twitter-retweet is-size-5" style="color: #00b108;"></i>
+    <a :href="'/u/' + tl.user_repost.username" 
+      v-html="'@' + tl.user_repost.username" /> 
+    repost
+  </div>
+<article class="media">
+  <figure class="media-left">
+    <p class="image is-64x64">
+      <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+    </p>
+  </figure>
+  <div class="media-content">
+    <div class="content m-b-2">     
+      <p>
+        <strong>
+          {{ tl.user.name }}
+          <a :href="'/u/' + tl.user.username" v-html="'@' + tl.user.username" />
+        </strong>
+
+        <small>10 min ago</small>
+        <br>
+        <span class="has-text-weight-light">{{ tl.post }}</span>
+      </p>
+    </div>
+    <nav class="level is-mobile">
+      <div class="level-left">
+        <a class="level-item">
+          <span class="icon m-r-5">
+            <i class="mdi mdi-reply"></i>
+            {{ tl.count.replies }}
+          </span>
+        </a>
+        <a class="level-item">
+          <span class="icon m-r-5">
+            <i class="mdi mdi-twitter-retweet"></i>
+            {{ tl.count.reposts }}
+          </span>
+        </a>
+        <a class="level-item">
+          <span class="icon m-r-5">
+            <i class="mdi" 
                 :class="{
-                  'fa-star': tl.me.favorited, 
-                  'fa-star-o': !tl.me.favorited || !gUser() 
+                  'mdi-heart': tl.me.favorited, 
+                  'mdi-heart-outline': !tl.me.favorited || !gUser() 
                 }"></i>
-              <span class="mx-1">{{ tl.count.favorites }}</span>
-            </div>
-            <div class="p-more" v-if="tl.me.author">
-              <i class="fa fa-ellipsis-h"></i>
-            </div>
-          </div>
-        </div>
-			</li>
-		</ul>
+            {{ tl.count.favorites }}
+          </span>
+        </a>
+        <a class="level-item" v-if="tl.me.author">
+          <span class="icon m-r-5">
+            Admin
+          </span>
+        </a>
+      </div>
+    </nav>
+  </div>
+  <div class="media-right" v-if="tl.me.author">
+    <button class="delete"></button>
+  </div>
+</article>
+</div>
     <div v-if="timeline && timeline.length == 0" class="my-5 w-50 mx-auto">
         <h5> Este utilizador não tem nenhuma publicação </h5>
     </div>
@@ -55,6 +81,7 @@ export default {
   props: ['user'],
   data () {
     return {
+      showModal: true,
     	timeline: null,
     	response: null,
       option: {
@@ -73,6 +100,19 @@ export default {
     }
   },
   methods: {
+    toggleModal() {
+        this.showModal = ! this.showModal
+    },
+
+    handleOpen() {
+        console.log('Modal is about to open.');
+    },
+
+    handleClose() {
+        console.log('Modal has closed.');
+        
+        this.showModal = false
+    },
   	done(response){
   		this.timeline = response.data.data
       console.log(JSON.stringify(this.timeline))
@@ -90,26 +130,35 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.p-options div {
-  display: inline-block;
+.post:not(:last-child) {
+  border-bottom: 1px solid #dbdbdb;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
 }
-
-.p-options {
-  i, span {
+.media-content {
+  overflow: hidden !important;
+}
+.level-item {
+  margin-left: 2px;
+  span {
     font-size: 18px;
     cursor: pointer;
     color: #b4b4b4;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  span > i {
+    margin-right: 5px;
   }
 }
-.p-options > div:hover,
-.p-options > div:focus {
-  span, i {
-    color: #5a6169;
-  }
+.level-item > span:hover,
+.level-item > span:focus {
+  color: #5a6169;
 }
 
 
-.p-options span {
+.level-item span {
   font-weight: 600;
   color: #b4b4b4;
 }

@@ -1,10 +1,9 @@
 <template>
-	<!-- TODO: corrigir os acessos a request -->
 	<div class="profile">
 		<div class="profile-cover"></div>
-			<div class="container-fluid profile-nav">
-				<div class="row">
-					<div class="col-md-3 first-col">
+			<div class="profile-nav">
+				<div class="columns">
+					<div class="column is-one-quarter first-col">
 						<div class="profile-avatar"></div>
 						<div class="profile-about">
 							<div class="profile-name">{{ user.name }}</div>
@@ -14,29 +13,31 @@
 						</div>
 					</div>
 
-				<div class="col-md-9">
-					<div class="profile-nav-itens">
-						<div class="row item">
+				<div class="column">
+					<div class="columns profile-nav-itens">
+						<div class="column item">
 							<div>Posts</div>
 							<span>{{ user.count.posts }}</span>
 						</div>
-						<div class="row item">
+						<div class="column item">
 							<div>Followers</div>
 							<span>{{ user.count.followers }}</span>
 						</div>
-						<div class="row item">
+						<div class="column item">
 							<div>Following</div>
 							<span>{{ user.count.following }}</span>
 						</div>
 					</div>
 
 					<div class="profile-content">
-						<div class="card border">
-							<div class="card-header border-bottom">
-								TIMELINE
+						<nav class="panel">
+						  <p class="panel-heading">
+						    Timeline
+						  </p>
+						  	<div class="panel-block">
+								<user-timeline :user="user"></user-timeline>
 							</div>
-							<user-timeline :user="user"></user-timeline>
-						</div>
+						</nav>
 					</div>
 				</div>
 			</div>
@@ -51,7 +52,7 @@ export default {
 	props: ['user'],
 	data () {
 		return {
-
+			show_modal: false
 		}
 	},
 	monted() {
@@ -81,7 +82,7 @@ export default {
     background-size: cover;
 }
 .profile {
-    margin-top: 55px;
+    margin-top: -20px;
 }
 
 .profile-nav .item {
@@ -125,6 +126,10 @@ export default {
 .card-header, .profile-name {
 	font-size: 18px; 
 	font-weight: 600;
+}
+
+.profile-nav-itens {
+	margin-top: -25px;
 }
 
 </style>

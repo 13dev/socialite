@@ -1,9 +1,122 @@
+<form id="logout-form" style="display: none;" action="{{ url('/logout') }}" method="POST">
+    {{ csrf_field() }}
+</form>
+<nav class="navbar is-white is-fixed-top">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="https://bulma.io">
+      <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+    </a>
+
+    <a role="button" class="navbar-burger" data-target="nav-menu" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="nav-menu" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="https://bulma.io/">
+        Home
+      </a>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="/documentation/overview/start/">
+            <figure class="image m-r-5">
+              <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+            </figure>
+          Docs
+        </a>
+        <div class="navbar-dropdown is-boxed">
+          <a class="navbar-item" href="/documentation/overview/start/">
+            Overview
+          </a>
+          <a class="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">
+            Modifiers
+          </a>
+          <a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">
+            Columns
+          </a>
+          <a class="navbar-item" href="https://bulma.io/documentation/layout/container/">
+            Layout
+          </a>
+          <a class="navbar-item" href="https://bulma.io/documentation/form/general/">
+            Form
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item" href="https://bulma.io/documentation/elements/box/">
+            Elements
+          </a>
+          <a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">
+            Components
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-end">
+        @guest
+        <div class="navbar-item">
+            <div class="field is-grouped">
+                <p class="control">
+                    <a class="bd-tw-button button" 
+                        href="{{ route('login') }}">
+                        <span class="icon">
+                            <i class="mdi mdi-login-variant"></i>
+                        </span>
+                        <span>
+                            Login
+                        </span>
+                    </a>
+                </p>
+                <p class="control">
+                    <a class="button is-primary" 
+                        href="{{ route('register') }}">
+                        <span class="icon">
+                            <i class="mdi mdi-account-plus"></i>
+                        </span>
+                        <span>Register</span>
+                    </a>
+                </p>
+            </div>
+        </div>
+        @else
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link" href="#">
+            <figure class="image m-r-5">
+              <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+            </figure>
+          {{ Auth::user()->name }}
+        </a>
+        <div class="navbar-dropdown is-boxed is-right">
+          <a class="navbar-item" href="">
+            Overview
+          </a>
+          <a class="navbar-item" href="">
+            Modifiers
+          </a>
+          <a class="navbar-item" href="">
+            Columns
+          </a>
+          <a class="navbar-item" href="">
+            Layout
+          </a>
+          <a class="navbar-item" href="">
+            Form
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+           Logout
+          </a>
+        </div>
+      </div>
+        @endguest
+  </div>
+</nav>
+<!--
 <nav class="navbar navbar-light bg-light fixed-top navbar-expand-md">
     <div class="container">
-        <!-- Branding Image -->
         {{ link_to_route('home', config('app.name', 'Laravel'), [], ['class' => 'navbar-brand']) }}
 
-        <!-- Collapsed Hamburger -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -55,5 +168,5 @@
         </ul>
     </div>
 </div>
-</nav>
+</nav> -->
 

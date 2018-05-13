@@ -1,34 +1,6 @@
-html {
-    position: relative;
-    min-height: 100%;
-  }
-
-.huge {
-    font-size: 40px;
-}
-
-
-body > #app > .container, .profile, {
-    margin-top: 80px;
-    margin-bottom: 250px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
-
-@include media-breakpoint-down(xs) { 
-    body > #app > .container, {
-        margin-bottom: 320px;
-    }
-}
-
-body > #app > .container-fluid {
-    padding-bottom: 15px;
-    padding-top: 15px;
-}
 body {
-    background-color: #f6f6f6;
+    margin-top: 20px!important;
 }
-
 
 .blink{
     -webkit-animation: blink 700ms infinite alternate;
@@ -53,14 +25,14 @@ body {
     to { opacity:0; }
 };
 
-nav, .bb {
-    border-bottom: 2px solid $primary;
-}
-
 .active-thread {
     border-left:3px solid $primary!important;
     color: #4b4848;
 }
+
+/*
+Vue Bar
+*/
 
 .vb > .vb-dragger {
     z-index: 5;

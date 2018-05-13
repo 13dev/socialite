@@ -10,8 +10,11 @@ import Api from './api'
 import Global from './mixins/Global'
 import Vuebar from 'vuebar'
 import SmallSpinner from './components/SmallSpinner'
+import Buefy from 'buefy'
 
 Vue.mixin(Global)
+
+Vue.use(Buefy)
 
 VueApiRequest.addEffect('blur', el => {
   el.style.filter = 'blur(20px)'
@@ -35,21 +38,17 @@ Vue.use(VueApiRequest, {
   }
 })
 Vue.use(Vuebar)
-
-Vue.component('comment', require('./components/comments/Comment.vue'));
-Vue.component('comment-list', require('./components/comments/Comment-list.vue'));
-Vue.component('comment-form', require('./components/comments/Comment-form.vue'));
-
-Vue.component('like', require('./components/Like.vue'));
-Vue.component('unread-badge', require('./components/UnreadBadge.vue'));
-Vue.component('messages', require('./components/Messages.vue'));
-Vue.component('threads', require('./components/Threads.vue'));
-Vue.component('message-send', require('./components/MessageSend.vue'));
-Vue.component('user-profile', require('./components/user/Profile.vue'));
-Vue.component('user-timeline', require('./components/user/Timeline.vue'));
-
+Vue.component('comment', require('./components/comments/Comment.vue'))
+Vue.component('comment-list', require('./components/comments/Comment-list.vue'))
+Vue.component('comment-form', require('./components/comments/Comment-form.vue'))
+Vue.component('like', require('./components/Like.vue'))
+Vue.component('unread-badge', require('./components/UnreadBadge.vue'))
+Vue.component('messages', require('./components/Messages.vue'))
+Vue.component('threads', require('./components/Threads.vue'))
+Vue.component('message-send', require('./components/MessageSend.vue'))
+Vue.component('user-profile', require('./components/user/Profile.vue'))
+Vue.component('user-timeline', require('./components/user/Timeline.vue'))
 window.Event = new Vue();
-
 
 const app = new Vue({
   el: '#app',
