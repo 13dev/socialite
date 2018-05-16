@@ -1,6 +1,6 @@
 <template>
-	<div class="px-2">
-		<i class="fa fa-circle-o-notch fa-spin" style="color: #000"></i>
+	<div class="p-l-2 p-r-2">
+		<b-icon icon="loading" style="color: #000"></b-icon>
 	</div>
 </template>
 

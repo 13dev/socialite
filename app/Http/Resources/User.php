@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
+//use App\Role;
 
 class User extends Resource
 {
@@ -19,7 +20,7 @@ class User extends Resource
             'name' => $this->name,
             'username' => $this->username,
             'email' => $this->email,
-            'roles' => Role::collection($this->roles),
+            //'roles' => Role::collection($this->roles),
         ];
     }
 }

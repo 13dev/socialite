@@ -3,8 +3,8 @@
 </form>
 <nav class="navbar is-white is-fixed-top">
   <div class="navbar-brand">
-    <a class="navbar-item" href="https://bulma.io">
-      <img src="https://bulma.io/images/bulma-logo.png" alt="Bulma: a modern CSS framework based on Flexbox" width="112" height="28">
+    <a class="navbar-item" href="#">
+      <img src="{{ asset('/assets/logo.png') }}" alt="Logo" width="112" height="28">
     </a>
 
     <a role="button" class="navbar-burger" data-target="nav-menu" aria-label="menu" aria-expanded="false">
@@ -80,6 +80,9 @@
             </div>
         </div>
         @else
+        <a class="navbar-item" style="display:inline-flex;" href="{{ route('messages') }}">
+        Messages <unread-badge></unread-badge>
+      </a>
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link" href="#">
             <figure class="image m-r-5">

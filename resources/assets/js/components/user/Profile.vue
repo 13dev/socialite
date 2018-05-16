@@ -28,16 +28,17 @@
 							<span>{{ user.count.following }}</span>
 						</div>
 					</div>
-
-					<div class="profile-content">
-						<nav class="panel">
-						  <p class="panel-heading">
-						    Timeline
-						  </p>
-						  	<div class="panel-block">
-								<user-timeline :user="user"></user-timeline>
-							</div>
-						</nav>
+					<div class="column">
+						<div class="profile-content">
+							<nav class="panel">
+							  <p class="panel-heading">
+							    Timeline
+							  </p>
+							  	<div class="panel-block">
+									<user-timeline :user="user"></user-timeline>
+								</div>
+							</nav>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -52,7 +53,6 @@ export default {
 	props: ['user'],
 	data () {
 		return {
-			show_modal: false
 		}
 	},
 	monted() {
@@ -113,10 +113,6 @@ export default {
 
 .profile-about {
 
-}
-
-.profile-content {
-	margin-top: 30px;
 }
 
 .profile-avatar {

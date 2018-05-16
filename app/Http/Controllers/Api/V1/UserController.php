@@ -105,6 +105,6 @@ class UserController extends Controller
 
         }
 
-        return ['data' => $response];
+        return $response;
     }
 }

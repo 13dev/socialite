@@ -13,6 +13,8 @@ Route::prefix('v1')->namespace('Api\V1')->group(function () {
     
     //User
     Route::get('user/{id}/timeline', 'UserController@timeline');
+    Route::get('posts/{id}', 'PostController@show');
+    Route::get('posts/{id}/replies', 'PostController@show');
 
     Route::middleware('auth:api')->group(function () {
         

@@ -1,4 +1,6 @@
+
 const api = {
+
 	// User
 	userUnreadMessages: (params = {}) => {
 		return axios.get(Vue.prototype.$baseApiUrl + '/user/unreadmessages', params)
@@ -6,6 +8,7 @@ const api = {
 	getUserTimeline: (params = {}) => {
 		return axios.get(Vue.prototype.$baseApiUrl + '/user/' + params.id + '/timeline', params)
 	},
+
 	// Messages
 	sendMessage: (params = {}) => {
 		return axios.post(Vue.prototype.$baseApiUrl + '/messages', params)
@@ -27,6 +30,15 @@ const api = {
 	createThread: (params = {}) => {
 		return axios.post(Vue.prototype.$baseApiUrl + '/threads/', params)
 	},
+
+	//Posts
+	getPost: (params = {}) => {
+		return axios.get(Vue.prototype.$baseApiUrl + '/posts/' + params.id, params)
+	},
+	getPostReplies: (params = {}) => {
+		return axios.get(Vue.prototype.$baseApiUrl + '/posts/' + params.id + '/replies', params)
+	},
+
 }
 
 export default api

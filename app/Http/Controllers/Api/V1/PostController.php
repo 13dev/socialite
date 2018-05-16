@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PostsRequest;
-use App\Http\Resources\Post as PostResource;
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Transformers\PostTransformer;
 
 class PostController extends Controller
 {
@@ -18,9 +19,10 @@ class PostController extends Controller
      */
     public function index(Request $request)
     {
+        /*
         return PostResource::collection(
             Post::search($request->input('q'))->withCount('comments')->latest()->paginate($request->input('limit', 20))
-        );
+        ); */
     }
 
     /**
@@ -40,7 +42,7 @@ class PostController extends Controller
             $post->storeAndSetThumbnail($request->file('thumbnail'));
         }
 
-        return new PostResource($post);
+        //return new PostResource($post);
     }
 
     /**
@@ -58,7 +60,7 @@ class PostController extends Controller
             $post->storeAndSetThumbnail($request->file('thumbnail'));
         }
 
-        return new PostResource($post);
+        //return new PostResource($post);
     }
 
     /**
@@ -67,9 +69,24 @@ class PostController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show(int $id)
     {
-        return new PostResource($post);
+        $authUser = Auth::guard('api')->user();
+        $post = Post::find($id);
+
+        if(!$post)
+            abort(404);
+
+        $build = fractal()
+                ->collection($post->replies)
+                ->transformWith(new PostTransformer());
+        
+        //User auth?
+        if($authUser)
+            $build = $build->includeMe();
+
+        return $build->toArray();
+        
     }
 
     /**

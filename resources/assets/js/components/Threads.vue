@@ -1,38 +1,45 @@
 <template>
 	<div>
-		<api-request @success="done" :resource="$api.getThreads" v-model="response">
-
-			<li v-if="response"
+		<api-request 
+		@success="done" 
+		:resource="$api.getThreads" 
+		v-model="response">
+		<article
+			v-if="response"
+			class="media thread p-l-10 p-t-5 p-b-5 m-0"
 			:class="{'active-thread': selectedThread == thread.id, 'thread-unread': thread.unreadmessagescount > 0}"
 			@click="clickThread(thread.id)"
-			class="pt-2 media border-light border-bottom thread"
-			v-for="thread in threads"
-
-			data-toggle="tooltip"
-			data-placement="bottom"
-			:title="'Creator: ' + thread.creator.name"
-			>
-				<input type="hidden" id="_participants" :value="thread.participants_string">
-				<img class="rounded-circle mb-2 ml-2 mr-2" src="http://placehold.it/50" 
-				:alt="thread.subject">
-				<div class="media-body">
-					<h6 class="m-0 border-light border-bottom" style="font-weight: 400;">{{ thread.subject }}
-					</h6>
-					<div class="">
-						<small class="float-left mt-1">{{ thread.last_message.body }}</small>
-						<div  v-show="thread.unreadmessagescount > 0">
-							<span v-if="thread.unreadmessagescount <= 9" class="float-right mt-1 mr-3 badge badge-primary badge-pill">{{ thread.unreadmessagescount }}</span>
-							<span v-else class="float-right mt-1 mr-3 badge badge-primary badge-pill">+9</span>
-						</div>
-						
-					</div>
-					<!-- participants_string thread.creator.name -->
-				</div>
-			</li>
+			v-for="thread in threads">
+			  <figure class="media-left">
+			    <p class="image is-48x48">
+					<span 
+					v-if="thread.unreadmessagescount <= 9 && thread.unreadmessagescount > 0" 
+					class="notify-badge" >{{ thread.unreadmessagescount }}</span>
+					<span class="notify-badge" 
+					v-if="thread.unreadmessagescount > 9 && thread.unreadmessagescount > 0">+9</span>
+			      <img class="is-rounded" src="https://bulma.io/images/placeholders/48x48.png">
+			    </p>
+			  </figure>
+			  <div class="media-content">
+			    <div class="content">
+			        <strong>{{ thread.subject | truncate(20) }}</strong>
+			        <br>
+			        <div style="display: flex; justify-content: space-between;">
+			        	<div>
+			        		{{ thread.last_message.body | truncate(25) }}
+			        	</div>
+			        	<div style="justify-content: flex-end;">
+			        		5 min ago
+			        	</div>
+			        </div>
+			    </div>
+			  </div>
+			</article>
 		</api-request>
 	</div>
 </template>
 <script>
+
 export default {
 	data () {
 		return {
@@ -46,36 +53,77 @@ export default {
 		done(response){
 			this.threads = response.data.data
 			console.log('unreadmessages');
+			Event.$on('update-unreadcount-thread', (data) => {
+				// Search the correct thread and set unreadmessagescount
+				for (let thread in this.threads) {
+				    if (this.threads[thread].id == data.convid) {
+				    	this.threads[thread].unreadmessagescount++
+				       	break //Stop this loop, we found it!
+				    }
+			   	}
+			})
 
 			// Map Thread unread messages to simply array
-			this.unreadmessages = $.map(this.threads,(element,index) => {
+			// this.unreadmessages = $.map(this.threads,(element,index) => {
 
-				let arr = $.map(element.unreadmessages,(e,i) => {
-					// Get only the neccessary data
-					return {
-						id: e.id,
-						thread_id: e.thread_id,
-						body: e.body
-					}
-				})
+			// 	let arr = $.map(element.unreadmessages,(e,i) => {
+			// 		// Get only the neccessary data
+			// 		return {
+			// 			id: e.id,
+			// 			thread_id: e.thread_id,
+			// 			body: e.body
+			// 		}
+			// 	})
 
-				if(arr.length <= 0) return
+			// 	if(arr.length <= 0) return
 
-				return [ arr ]
-			})
+			// 	return [ arr ]
+			// })
 
 		},
 		clickThread(threadId){
+			// if user is in the same thread that click in
+			if(this.selectedThread == threadId)
+				return;
+
+			// Leave last channel in
+			if(Vue.prototype.$selectedThread != null){
+				Echo.leave('thread.' + Vue.prototype.$selectedThread)
+			}
 			this.selectedThread = threadId
 			Vue.prototype.$selectedThread = threadId
 			Event.$emit('change-thread', {id: threadId})
+
+			// Search the correct thread and set unreadmessagescount
+			for (let thread in this.threads) {
+			    if (this.threads[thread].id == threadId) {
+			    	this.threads[thread].unreadmessagescount = 0
+			       	break; //Stop this loop, we found it!
+			    }
+		   	}
 			 
 		}
+	},
+	mounted () {
+		console.log(this.userTyping);
 	}
 }
 </script>
 
 <style lang="scss" scoped>
+.notify-badge{
+	position: absolute;
+	right: -4px;
+	bottom: 0;
+	background: #168efe;
+	text-align: center;
+	border-radius: 10px;
+	color: white;
+	padding: 1px 6px;
+	font-size: 11px;
+	font-weight: 500;
+}
+
 .thread {
 	&:hover {
 		cursor:pointer;
@@ -88,6 +136,14 @@ export default {
 
 .thread-unread {
 	background-color: #efeded99;
+	img {
+		border: 2px solid #168efe;
+	}
 }
 
+.threads:not(:last-child) {
+  border-bottom: 1px solid #dbdbdb;
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+}
 </style>

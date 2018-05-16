@@ -24,6 +24,8 @@
         "socket.io-client": "^2.1.0",
         "vue": "^2.5.13",
         "vue-api-request": "^1.1.7",
+        "vue-avatar-cropper": "^0.0.27",
+        "vue-truncate-filter": "^1.1.7",
         "vuebar": "^0.0.18"
     }
 }
