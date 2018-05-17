@@ -31,17 +31,24 @@ export default {
 
 		window.Echo.private('messages.' + Global.user.id)
 		.listen('.new.message', (e) =>{
-			//console.log(e)
+			// New message
+			console.log('.new.message')
+			console.log(e)
+			// Fire event to increment unread count on certain thread
+			Event.$emit('update-unreadcount-thread', { convid: e.convid })
 			this.trigger = true
 			blink('li.nav-item.message')
+
 		})
 		.listen('.new.message.thread', (e) => {
+			// New message in new thread!
 			this.isLoading = false
 			console.log('.new.message.thread')
-	        	//Global.convs.push(e.convid)
-	        	this.trigger = true
+			console.log(e)
+	        //Global.convs.push(e.convid)
+	        this.trigger = true
 	        	
-	        	blink('li.nav-item.message')
+	        blink('li.nav-item.message')
 	        })
 
 	},

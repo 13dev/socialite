@@ -1,25 +1,25 @@
 <template>
-	<div v-if="changeThread">
+	<div style="width: 100%;">
+		<div class="field has-addons" style="border-radius: 0; height: 48px !important;">
+		  <div class="control"  style="width: 100%;">
+		    <input 
+		    :disabled="success === false || !changeThread" 
+		    class="input" 
+		    type="text"
+		    style="height: 48px; border-radius:0;" 
+		    v-model="message"
+		    @keydown.enter="trigger=true"
+		    @keyup="writingMessage"
+		    placeholder="Message">
+		  </div>
+		  <div class="control">
+		    <a 
+		    @click="trigger=true" 
+			:disabled="success === false || !changeThread" 
+			class="button is-primary"
+			style="height: 48px;border-radius:0;">
 
-
-		<div class="input-group input-group mt-auto">
-			<input 
-			type="text" 
-			:disabled="success === false"
-			v-model="message" 
-			class="form-control rounded-0 border-0 border-top bg-light" 
-			placeholder="Mensagem..." 
-			aria-label="Mensagem..."
-			@keydown.enter="trigger=true"
-			@keyup="writingMessage">
-			<div class="input-group-append">
-				<button 
-				@click="trigger=true" 
-				:disabled="success === false" 
-				class="btn border-primary
-				 btn-primary rounded-0">
-
-					<api-request
+			    <api-request
 					@success="successMessage"
 					@loaded="loadedMessage"
 					@error="success = false"
@@ -28,8 +28,7 @@
 					v-model="response"
 					:trigger.sync="trigger"
 					:spinner-scale="0.13"
-					:spinner-padding="0"
-					>
+					:spinner-padding="0">
 					<span slot="waiting">
 						<i class="fa fa-send"></i> Enviar
 					</span>
@@ -37,10 +36,9 @@
 						<i class="fa fa-send"></i> Enviando...
 					</span>
 				</api-request>
-
-			</button>
+		    </a>
+		  </div>
 		</div>
-	</div>
 	</div>
 </template>
 <script>
@@ -82,10 +80,10 @@ export default {
 		},
 		writingMessage(){
 			console.log('user is typing..')
-			this.$scrollAllBottom('messages')
+			//this.$scrollAllBottom('messages')
+			// Pass all user data
 			Echo.join('thread.' + this.$selectedThread).whisper('typing', {
-		        name: Global.user.name,
-		        id: Global.user.id
+		        user: Global.user,
 		    })
 		}
 	}

@@ -12,3 +12,5 @@
 /storage/debugbar
 /storage/tmp
 /log
+/.phpintel/*
+yarn-error.log

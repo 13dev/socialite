@@ -15,7 +15,6 @@ class UserObserver
      */
     public function creating(User $user)
     {
-        $user->registered_at = now();
         $user->api_token = Token::generate();
     }
 }

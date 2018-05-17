@@ -2,62 +2,53 @@
 
 namespace App;
 
-use App\Concern\Likeable;
-use App\Concern\Mediable;
-use App\Scopes\PostedScope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use App\Services\PostParser;
 
 class Post extends Model
 {
-    use Mediable, Likeable;
+ 
+    protected $table = 'posts';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
     protected $fillable = [
-        'author_id',
-        'title',
-        'content',
-        'posted_at',
-        'thumbnail_id',
-        'slug',
+        'user_id', 'post', 'parent_id'
     ];
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'posted_at'
-    ];
-
-    /**
-     * The "booting" method of the model.
-     *
-     * @return void
-     */
-    protected static function boot()
+    public function user()
     {
-        parent::boot();
-        static::addGlobalScope(new PostedScope);
+        return $this->belongsTo('App\User');
     }
 
-    /**
-     * Get the route key for the model.
-     *
-     * @return string
-     */
-    public function getRouteKeyName(): string
+    public function favorites()
     {
-        if (request()->expectsJson()) {
-            return 'id';
-        }
+        return $this->hasMany('App\Favorite');
+    }
 
-        return 'slug';
+
+    public function parent()
+    {
+        return $this->belongsTo('App\Post');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany('App\Post', 'parent_id', 'id');
+    }
+
+    public function reposts()
+    {
+        return $this->hasMany('App\RePost');
+    }
+
+    public function hashtags()
+    {
+        return $this->belongsToMany('App\Hashtag', 'hashtag_map', 'post_id', 'hashtag_id');
+    }
+
+    public function images()
+    {
+        return $this->hasMany('App\Image');
     }
 
     /**
@@ -69,7 +60,7 @@ class Post extends Model
     public function scopeSearch($query, $search)
     {
         if ($search) {
-            return $query->where('title', 'LIKE', "%{$search}%");
+            return $query->where('post', 'LIKE', "%{$search}%");
         }
     }
 
@@ -81,7 +72,7 @@ class Post extends Model
      */
     public function scopeLatest($query)
     {
-        return $query->orderBy('posted_at', 'desc');
+        return $query->orderBy('created_at', 'desc');
     }
 
     /**
@@ -92,7 +83,7 @@ class Post extends Model
      */
     public function scopeLastMonth($query, $limit = 5)
     {
-        return $query->whereBetween('posted_at', [now()->subMonth(), now()])
+        return $query->whereBetween('created_at', [now()->subMonth(), now()])
                      ->latest()
                      ->limit($limit);
     }
@@ -105,76 +96,8 @@ class Post extends Model
      */
     public function scopeLastWeek($query)
     {
-        return $query->whereBetween('posted_at', [now()->subWeek(), now()])
+        return $query->whereBetween('created_at', [now()->subWeek(), now()])
                      ->latest();
     }
 
-    /**
-     * Check if the post has a valid thumbnail
-     *
-     * @return boolean
-     */
-    public function hasThumbnail(): bool
-    {
-        return $this->hasMedia($this->thumbnail_id);
-    }
-
-    /**
-     * Retrieve the post's thumbnail
-     *
-     * @return mixed
-     */
-    public function thumbnail()
-    {
-        return $this->media->where('id', $this->thumbnail_id)->first();
-    }
-
-    /**
-     * Store and set the post's thumbnail
-     *
-     * @return void
-     */
-    public function storeAndSetThumbnail(UploadedFile $thumbnail)
-    {
-        $thumbnail_name = $thumbnail->store('/');
-
-        $media = $this->media()->create([
-            'filename' => $thumbnail_name,
-            'original_filename' => $thumbnail->getClientOriginalName(),
-            'mime_type' => $thumbnail->getMimeType()
-        ]);
-
-        $this->update(['thumbnail_id' => $media->id]);
-    }
-
-    /**
-     * Return the post's author
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function author()
-    {
-        return $this->belongsTo(User::class, 'author_id');
-    }
-
-    /**
-     * Return the post's comments
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function comments()
-    {
-        return $this->hasMany(Comment::class);
-    }
-
-    /**
-     * return the excerpt of the post content
-     *
-     * @param  $length
-     * @return string
-     */
-    public function excerpt($length = 50): string
-    {
-        return str_limit($this->content, $length);
-    }
 }

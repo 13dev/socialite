@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
+//use App\Role;
 
 class User extends Resource
 {
@@ -17,13 +18,9 @@ class User extends Resource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'username' => $this->username,
             'email' => $this->email,
-            'provider' => $this->provider,
-            'provider_id' => $this->provider_id,
-            'registered_at' => $this->registered_at->toIso8601String(),
-            'comments_count' => $this->comments_count ?? $this->comments()->count(),
-            'posts_count' => $this->posts_count ?? $this->posts()->count(),
-            'roles' => Role::collection($this->roles),
+            //'roles' => Role::collection($this->roles),
         ];
     }
 }

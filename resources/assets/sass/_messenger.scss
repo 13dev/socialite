@@ -1,13 +1,16 @@
 
 
 .chat-bubble {
-  @extend .mt-2, .px-2;
+  margin-top: 25px;
+  padding-left: 10px;
+  padding-right: 10px;
   border-radius: 20px;
   display: inline-block;
   position: relative;
   max-width: 80%;
   small {
-  	color: #2d253580
+  	color: #2d253580;
+    font-weight: 400;
   }
 
  /* &:before {

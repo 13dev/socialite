@@ -3,25 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UsersRequest;
+use App\Repositories\FavoriteRepository;
+use App\Repositories\UserRepository;
 use App\Role;
+use App\Services\PostsGetter;
+use App\Transformers\UserTransformer;
 use App\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    /**
-     * Display the specified resource.
-     */
-    public function show(Request $request, User $user)
+    protected $getter;
+    protected $userRepo;
+
+    protected $favoriteRepository;
+
+    public function __construct(PostsGetter $getter, FavoriteRepository $favRepo)
     {
-        return view('users.show', [
-            'user' => $user,
-            'posts_count' => $user->posts()->count(),
-            'comments_count' => $user->comments()->count(),
-            'likes_count' => $user->likes()->count(),
-            'posts' => $user->posts()->withCount('likes', 'comments')->latest()->limit(5)->get(),
-            'comments' => $user->comments()->with('post.author')->latest()->limit(5)->get()
-        ]);
+        $this->getter = $getter;
+        $this->favoriteRepository = $favRepo;
+    }
+
+    public function show(string $username)
+    {
+        $user = User::where('username', $username)->get()->first();
+
+        if(!$user)
+            abort(404);
+
+        $user = fractal($user, new UserTransformer())->toArray();
+        return view('users.show', compact('user'));
     }
 
     /**

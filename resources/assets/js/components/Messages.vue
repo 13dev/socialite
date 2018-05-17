@@ -10,11 +10,12 @@
 	</div>
 	<div slot="success">
 		<div v-for="message in messages">
-			<div class="chat-bubble mb-5" :class="{'left': !isUser(message.user_id), 'right': isUser(message.user_id)  }">
-				<div class="px-2 p-1">
+			<div class="chat-bubble m-b-5" :class="{'left': !isUser(message.user_id), 'right': isUser(message.user_id)  }">
+				<div class="p-l-2 p-r-2 p-1" style="word-break: break-all;">
 					{{ message.body }}
 				</div>
-				<small v-if="message.created_at" class="d-inline-flex mt-1 message-date" attr-date=""><i class="fa" style="margin-top:2px;">&#xf017;&nbsp;</i>{{ message.created_at }}</small>
+				<small 
+				v-if="message.created_at" class="d-inline-flex mt-1 message-date" attr-date=""><b-icon icon="clock-outline" style="margin-top:2px;"></b-icon>&nbsp; {{ message.created_at }}</small>
 			</div>
 		</div>
 	</div>
@@ -71,38 +72,38 @@ export default {
 		    })
 		    .joining((user) => {
 		    	console.log('Presence: joining()')
+
+		    	setTimeout(() => {
+			    	this.$toast.open({
+	                    duration: 3000,
+	                    message: `${user.name} is now in this conversation, send a message now!`,
+	                    position: 'is-top',
+	                    type: 'is-success'
+	                })
+		    	},1000)
 		    	//Display a new online user
 		        console.log(user.name);
 		    })
 		    .leaving((user) => {
 		    	console.log('Presence: leaving()')
+		    	setTimeout(() => {
+			    	this.$toast.open({
+	                    duration: 3000,
+	                    message: `${user.name} ĺeft this conversation, see you later!`,
+	                    position: 'is-top',
+	                    type: 'is-warning'
+	                })
+		    	},1000)
 		    	//Display leaving user
 		        console.log(user.name);
 		    }).listen('.new.message.presence', (e) =>{
+
 		    	this.messages.push(e)
-		    	
 		    	console.log('Presence: new.message.presence')
 		    	console.log(e)
 				//Append new message to current thread
-			}).listenForWhisper('typing', (e) => {
-				this.$scrollAllBottom('messages')
-		        console.log(e.name);
-		        let m = this.messages.find(function(element) {
-				  return element.id == Global.user.id + 't';
-				});
-
-		    	if(m == null){
-		    		this.messages.push({
-		        		body: e.name + ' is typing...',
-		        		id: Global.user.id + 't'
-
-		        	})
-		    	}
-		       
-
-		        setTimeout(()=> {
-		        	this.messages = this.messages.filter(u => u.id != Global.user.id + 't');
-		        }, 4000)
+			}).listenForWhisper('typing', (user) => {
+				Event.$emit('is-typing', user)
 		    });
 		}
 	}

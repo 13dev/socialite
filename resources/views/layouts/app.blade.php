@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ app()->getLocale() }}" class="has-navbar-fixed-top">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,6 +15,10 @@
                 'convs' => auth()->user()->threads->pluck('id')->toArray()
             ]); ?>
         </script>
+    @else 
+    <script>
+         window.Global = [];
+    </script>
     @endauth
 
     <title>{{ config('app.name', 'Laravel') }}</title>
@@ -22,32 +26,21 @@
     <!-- Styles -->
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
     <style>
-        #bg {
-          position: fixed;
-          top: 0;
-          left: 0;
-          /* Preserve aspet ratio */
-          min-width: 100%;
-          min-height: 100%;
-        }
+        
     </style>
 </head>
 <body>
-    <img id="bg" src="assets/background.png" alt="Background image">
     <div id="app">
+
         @include('shared/navbar')
+        
+        @include('shared/alerts')
+
+        @yield('c-content')
 
         <div class="container">
-            @include('shared/alerts')
-
-            <div class="row">
-                <div class="col-md-12">
-                    @yield('content')
-                </div>
-            </div>
+            @yield('content')
         </div>
-
-        @include('shared/footer')
     </div>
 
     <!-- Scripts -->

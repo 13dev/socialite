@@ -10,6 +10,12 @@
 |
 */
 Route::prefix('v1')->namespace('Api\V1')->group(function () {
+    
+    //User
+    Route::get('user/{id}/timeline', 'UserController@timeline');
+    Route::get('posts/{id}', 'PostController@show');
+    Route::get('posts/{id}/replies', 'PostController@show');
+
     Route::middleware('auth:api')->group(function () {
         
         // User
@@ -25,11 +31,7 @@ Route::prefix('v1')->namespace('Api\V1')->group(function () {
         // Comments
         Route::apiResource('comments', 'CommentController')->only('destroy');
         Route::apiResource('posts.comments', 'PostCommentController')->only('store');
-        // Posts
-        Route::apiResource('posts', 'PostController')->only(['update', 'store', 'destroy']);
-        Route::delete('/posts/{post}/thumbnail', 'PostThumbnailController@destroy')->name('posts.thumbnail.destroy');
-        Route::post('/posts/{post}/likes', 'PostLikeController@store')->name('posts.likes.store');
-        Route::delete('/posts/{post}/likes', 'PostLikeController@destroy')->name('posts.likes.destroy');
+
         // Users
         Route::apiResource('users', 'UserController')->only('update');
     });
@@ -38,8 +40,7 @@ Route::prefix('v1')->namespace('Api\V1')->group(function () {
     Route::apiResource('posts.comments', 'PostCommentController')->only('index');
     Route::apiResource('users.comments', 'UserCommentController')->only('index');
     Route::apiResource('comments', 'CommentController')->only(['index', 'show']);
-    // Posts
-    Route::apiResource('posts', 'PostController')->only(['index', 'show']);
+    
     Route::apiResource('users.posts', 'UserPostController')->only('index');
     // Users
     Route::apiResource('users', 'UserController')->only(['index', 'show']);

@@ -16,17 +16,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'provider', 'provider_id', 'registered_at', 'api_token'
+        'name', 'username', 'email', 'password', 'provider', 'provider_id', 'created_at', 'api_token'
     ];
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'registered_at'
-    ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -37,6 +29,111 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function follows($id)
+    {
+        foreach ($this->following as $following)
+        {
+            if ($following->id == $id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function muted($id)
+    {
+        foreach ($this->mutes as $mutes)
+        {
+            if ($mutes->muted_id == $id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function favorited($id)
+    {
+        foreach ($this->favorites as $favorite)
+        {
+            if ($favorite->post_id == $id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function posted($id)
+    {
+        foreach ($this->posts as $post)
+        {
+            if ($post->id == $id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function reposted($id)
+    {
+        foreach ($this->reposts as $repost)
+        {
+            if ($repost->post_id == $id)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function getTimelineAttribute($value)
+    {
+        $posts = $this->posts()->latest()->get();
+        $reposts = $this->reposts()->latest()->get();
+        
+        // problems ? use push()
+        return $posts->merge($reposts);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany('App\Post')->orderBy('created_at', 'DESC');
+    }
+
+    public function reposts()
+    {
+        return $this->hasMany('App\RePost');
+    }
+
+    public function favorites()
+    {
+        return $this->hasMany('App\Favorite');
+    }
+
+    public function mutes()
+    {
+        return $this->hasMany('App\Mute', 'user_id', 'id');
+    }
+
+    public function followers()
+    {
+        return $this->belongsToMany('App\User', 'user_relations', 'followed_id', 'follower_id');
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany('App\User', 'user_relations', 'follower_id', 'followed_id');
+    }
+
+    public function profile()
+    {
+        return $this->hasOne('App\Profile');
+    }
+
+
     /**
      * Get the user's fullname titleized.
      *
@@ -46,6 +143,67 @@ class User extends Authenticatable
     {
         return title_case($this->name);
     }
+
+    public function getDisplayNameAttribute()
+    {
+        $available = false;
+        if (isset($this->profile->display_name)
+            && !empty($this->profile->display_name))
+        {
+            $available = true;
+        }
+        return $available ?
+            $this->profile->display_name :
+            $this->name;
+    }
+
+    public function getWebsiteLinkAttribute()
+    {
+        $link = $this->profile->website;
+        if (!preg_match('#^http(s)?://#', $link)) {
+            $link = 'http://' . $link;
+        }
+        return $link;
+    }
+
+    public function getWebsiteAttribute()
+    {
+        $link = parse_url($this->website_link);
+        return $link['host'];
+    }
+
+    public function profileImage($size = 'small')
+    {
+        $webpath = 'images/no-thumb.png';
+        try
+        {
+            $contents = null;
+            switch ($size)
+            {
+                case 'small':
+                    $contents = explode('/', $this->profile->image->small);
+                    break;
+                case 'tiny':
+                    $contents = explode('/', $this->profile->image->tiny);
+                    break;
+                case 'medium':
+                    $contents = explode('/', $this->profile->image->medium);
+                    break;
+                case 'large';
+                    $contents = explode('/', $this->profile->image->large);
+                    break;
+                case 'actual':
+                    $contents = explode('/', $this->profile->image->actual);
+                    break;
+            }
+            $filename = array_pop($contents);
+            $directory = array_pop($contents);
+            $webpath = implode('/', ['images', $directory, $filename]);
+        }
+        catch (\ErrorException $e) {}
+        return $webpath;
+    }
+
 
     /**
      * Encrypt the user's password.
@@ -66,7 +224,7 @@ class User extends Authenticatable
      */
     public function scopeLastWeek($query)
     {
-        return $query->whereBetween('registered_at', [now()->subWeek(), now()])
+        return $query->whereBetween('created_at', [now()->subWeek(), now()])
                      ->latest();
     }
 
@@ -78,7 +236,7 @@ class User extends Authenticatable
      */
     public function scopeLatest($query)
     {
-        return $query->orderBy('registered_at', 'desc');
+        return $query->orderBy('created_at', 'desc');
     }
 
     /**
@@ -95,15 +253,6 @@ class User extends Authenticatable
         });
     }
 
-    /**
-     * Check if the user can be an author
-     *
-     * @return boolean
-     */
-    public function canBeAuthor(): bool
-    {
-        return $this->isAdmin() || $this->isEditor();
-    }
 
     /**
      * Check if the user has a role
@@ -126,45 +275,6 @@ class User extends Authenticatable
         return $this->hasRole(Role::ROLE_ADMIN);
     }
 
-    /**
-     * Check if the user has role editor
-     *
-     * @return boolean
-     */
-    public function isEditor(): bool
-    {
-        return $this->hasRole(Role::ROLE_EDITOR);
-    }
-
-    /**
-     * Return the user's posts
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function posts()
-    {
-        return $this->hasMany(Post::class, 'author_id');
-    }
-
-    /**
-     * Return the user's comments
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function comments()
-    {
-        return $this->hasMany(Comment::class, 'author_id');
-    }
-
-    /**
-     * Return the user's likes
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
-     */
-    public function likes()
-    {
-        return $this->hasMany(Like::class, 'author_id');
-    }
 
     /**
      * Return the user's roles

@@ -1,40 +1,43 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row justify-content-md-center">
-    <div class="col-md-6 bg-white p-3 bb rounded">
-        <h1>@lang('auth.login')</h1>
+<div class="columns is-centered">
+    <div class="column is-half">
+
+        <h1 class="title">@lang('auth.login')</h1>
+        <hr>
 
         {!! Form::open(['route' => 'login', 'role' => 'form', 'method' => 'POST']) !!}
-            <div class="form-group">
-                {!! Form::label('email', __('validation.attributes.email'), ['class' => 'control-label']) !!}
-                {!! Form::email('email', old('email'), ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : ''), 'required', 'autofocus']) !!}
+        <b-field label="Email"
+            type="{{ ($errors->has('email') ? 'is-danger' : '') }}"
+            message="{{ $errors->first('email') }}">
+            <b-input placeholder="Email..."
+                type="email"
+                icon="at"
+                name="email"
+                value="{{ old('email') }}">
+            </b-input>
+        </b-field>
 
-                @if ($errors->has('email'))
-                    <span class="invalid-feedback">{{ $errors->first('email') }}</span>
-                @endif
-            </div>
+        <b-field label="Password"
+            type="{{ ($errors->has('password') ? 'is-danger' : '') }}"
+            message="{{ $errors->first('password') }}">
+            <b-input placeholder="Password..."
+                type="password"
+                name="password"
+                icon="textbox-password" password-reveal>
+            </b-input>
+        </b-field>
 
-            <div class="form-group">
-                {!! Form::label('password', __('validation.attributes.password'), ['class' => 'control-label']) !!}
-                {!! Form::password('password', ['class' => 'form-control' . ($errors->has('password') ? ' is-invalid' : ''), 'required']) !!}
-
-                @if ($errors->has('password'))
-                    <span class="invalid-feedback">{{ $errors->first('password') }}</span>
-                @endif
-            </div>
-
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        {!! Form::checkbox('remember', null, old('remember')) !!} @lang('auth.remember_me')
-                    </label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                {!! Form::submit(__('auth.login'), ['class' => 'btn btn-primary']) !!}
-                {{ link_to('/password/reset', __('auth.forgotten_password'), ['class' => 'btn btn-link'])}}
+        <b-field>
+            <b-checkbox 
+            name="remember" 
+            value="{{ old('remember') }}">
+            @lang('auth.remember_me')
+            </b-checkbox>
+        </b-field>
+        {!! Form::submit(__('auth.login'), ['class' => 'button is-primary']) !!}
+        {{ link_to('/password/reset', __('auth.forgotten_password'), ['class' => 'button is-link'])}}
             </div>
         {!! Form::close() !!}
 

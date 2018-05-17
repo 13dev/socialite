@@ -1,28 +1,20 @@
-@import "variables";
+@import "~bulma/sass/utilities/_all";
 
-// Bootstrap
-@import "~bootstrap/scss/bootstrap";
-@import "~shards-ui/src/scss/shards";
+@import "variables";
 
 // Base
 @import "base/base";
 
-// Font-awesome
-@import "~font-awesome/scss/font-awesome";
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
 
-// Modules
-@import "modules/form";
-@import "modules/turbolinks";
-@import "modules/panels";
-@import "modules/buttons";
 
-// Shared
-@import "shared/sidebar";
-@import "shared/footer";
+// Material design icons
+@import "~@mdi/font/scss/materialdesignicons";
 
-// Layouts
-@import "layouts/posts";
-@import "layouts/administration";
+// Helpers
+@import "helpers";
 
 //messenger
 @import "messenger";
