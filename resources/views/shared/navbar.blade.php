@@ -81,7 +81,10 @@
         </div>
         @else
         <a class="navbar-item" style="display:inline-flex;" href="{{ route('messages') }}">
-        Messages <unread-badge></unread-badge>
+        Messages 
+        @if(\Route::current()->getName() != 'messages')
+          <unread-badge></unread-badge>
+        @endif
       </a>
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link" href="#">

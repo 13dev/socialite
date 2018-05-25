@@ -10,6 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Cmgmyr\Messenger\Models\Thread;
+use Illuminate\Support\Facades\Auth;
 
 class NewMessage implements ShouldBroadcast
 {
@@ -38,7 +39,14 @@ class NewMessage implements ShouldBroadcast
      */
     public function broadcastOn()
     {
+        $authUser = Auth::guard('api')->user();
+
         foreach ($this->thread->users as $user) {
+
+            // skip the current user
+            if($authUser->id == $user->id)
+                continue;
+
             $channels[] = new PrivateChannel('messages.' . $user->id);
         }
 
