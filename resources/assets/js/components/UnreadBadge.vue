@@ -32,8 +32,14 @@ export default {
 		window.Echo.private('messages.' + Global.user.id)
 		.listen('.new.message', (e) =>{
 			// New message
-			console.log('.new.message')
-			console.log(e)
+			setTimeout(() => {
+		    	this.$toast.open({
+                    duration: 3000,
+                    message: `You have a new message!`,
+                    position: 'is-top',
+                    type: 'is-success'
+                })
+		    },1000)
 			// Fire event to increment unread count on certain thread
 			Event.$emit('update-unreadcount-thread', { convid: e.convid })
 			this.trigger = true
@@ -42,6 +48,14 @@ export default {
 		})
 		.listen('.new.message.thread', (e) => {
 			// New message in new thread!
+			setTimeout(() => {
+		    	this.$toast.open({
+                    duration: 3000,
+                    message: `You are in new thread!`,
+                    position: 'is-top',
+                    type: 'is-success'
+                })
+		    },1000)
 			this.isLoading = false
 			console.log('.new.message.thread')
 			console.log(e)

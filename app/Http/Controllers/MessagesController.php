@@ -103,7 +103,7 @@ class MessagesController extends Controller
             $thread->addParticipant($input['recipients']);
         }
 
-        broadcast(new NewMessageThread($thread));
+        broadcast(new NewMessageThread($thread))->toOthers();
         return redirect()->route('messages');
     }
     /**
@@ -144,7 +144,7 @@ class MessagesController extends Controller
             $thread->addParticipant(Input::get('recipients'));
         }
 
-        broadcast(new NewMessage($thread));
+        broadcast(new NewMessage($thread))->toOthers();
 
         return redirect()->route('messages.show', $id);
     }
