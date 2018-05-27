@@ -4,6 +4,9 @@
 /public/css
 /public/fonts
 /public/js
+/public/images/avatar/*
+!/public/images/avatar/no-avatar.png
+!/public/images/avatar/.gitkeep
 /vendor
 /.idea
 /.vagrant
