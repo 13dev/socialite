@@ -50,6 +50,10 @@ Vue.component('user-profile', require('./components/user/Profile.vue'))
 Vue.component('user-timeline', require('./components/user/Timeline.vue'))
 Vue.component('post', require('./components/Post.vue'))
 Vue.component('user-typing', require('./components/UserTyping.vue'))
+Vue.component('user-online', require('./components/UserOnline.vue'))
+Vue.component('thread-info', require('./components/ThreadInfo.vue'))
+
+Vue.component('render-emojis', require('./components/RenderEmojis.vue') );
 
 window.Event = new Vue();
 
@@ -57,14 +61,6 @@ const app = new Vue({
   el: '#app',
   data() {
     return {
-      usersTypings: [
-      {
-        id: 0
-      },
-      {
-        id: 1
-      }
-      ]
     }
   },
   mounted() {

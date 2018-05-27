@@ -26,10 +26,10 @@
 			        <br>
 			        <div style="display: flex; justify-content: space-between;">
 			        	<div>
-			        		{{ thread.last_message.body | truncate(25) }}
+			        		<render-emojis :truncate="true" :size="18" :message="thread.last_message.body"></render-emojis>
 			        	</div>
-			        	<div style="justify-content: flex-end;">
-			        		5 min ago
+			        	<div style="justify-content: flex-end;" class="m-r-10">
+			        		<small class="has-text-grey-light">{{ thread.last_message.created_at }}</small>
 			        	</div>
 			        </div>
 			    </div>
@@ -53,15 +53,6 @@ export default {
 		done(response){
 			this.threads = response.data.data
 			console.log('unreadmessages');
-			Event.$on('update-unreadcount-thread', (data) => {
-				// Search the correct thread and set unreadmessagescount
-				for (let thread in this.threads) {
-				    if (this.threads[thread].id == data.convid) {
-				    	this.threads[thread].unreadmessagescount++
-				       	break //Stop this loop, we found it!
-				    }
-			   	}
-			})
 
 			// Map Thread unread messages to simply array
 			// this.unreadmessages = $.map(this.threads,(element,index) => {
@@ -92,11 +83,17 @@ export default {
 			}
 			this.selectedThread = threadId
 			Vue.prototype.$selectedThread = threadId
-			Event.$emit('change-thread', {id: threadId})
 
 			// Search the correct thread and set unreadmessagescount
 			for (let thread in this.threads) {
 			    if (this.threads[thread].id == threadId) {
+			    	Event.$emit('change-thread', { 
+			    		id: threadId, 
+			    		thread: this.threads[thread] 
+			    	})
+
+			    	Event.$emit(`is-online:remove-all-users`)
+
 			    	this.threads[thread].unreadmessagescount = 0
 			       	break; //Stop this loop, we found it!
 			    }
@@ -105,7 +102,20 @@ export default {
 		}
 	},
 	mounted () {
-		console.log(this.userTyping);
+		Event.$on('update-thread', (data) => {
+			// Update thread
+			// Search the correct thread and set unreadmessagescount
+			for (let thread in this.threads) {
+			    if (this.threads[thread].id == data.convid) {
+
+			    	if(!data.me)
+			    		this.threads[thread].unreadmessagescount++
+
+			    	this.threads[thread].last_message = data.message
+			       	break //Stop this loop, we found it!
+			    }
+		   	}
+		})
 	}
 }
 </script>

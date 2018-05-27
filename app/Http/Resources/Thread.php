@@ -24,8 +24,8 @@ class Thread extends Resource
         return [          
             'id' => $this->id,
             'subject' => $this->subject,
-            'created_at' => $this->created_at->diffForHumans(),
-            'updated_at' => $this->updated_at->diffForHumans(),
+            'created_at' => $this->created_at->diffForHumans(null, false, true),
+            'updated_at' => $this->updated_at->diffForHumans(null, false, true),
             'participants_string' => $this->participantsString($user->id),
                 'creator' => [
                     'name' => $this->creator()->name,
