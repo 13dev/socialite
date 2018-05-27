@@ -5,17 +5,24 @@
 	:params="{id: selectedThread() }"
 	:trigger.sync="trigger"
 	v-model="response">
-	<div slot="waiting" class="my-auto mx-auto w-100">
-		<h4>Escolhe uma conversa...</h4> 
+	<div slot="waiting" style="display: flex;flex-direction: column; justify-content: center;align-items: center;height: 350px; opacity: 0.5;">
+		<h2 class="title">CHOOSE ONE THREAD</h2>
+		<img src="assets/conv.png" style="max-width: 30%;">
 	</div>
 	<div slot="success">
 		<div v-for="message in messages">
 			<div class="chat-bubble m-b-5" :class="{'left': !isUser(message.user_id), 'right': isUser(message.user_id)  }">
-				<div class="p-l-2 p-r-2 p-1" style="word-break: break-all;">
-					{{ message.body }}
+				<div v-show="!isUser(message.user_id)">
+					<small style="position: relative!important;">{{ message.user_name }}</small>
+					<hr class="m-0"/>
 				</div>
-				<small 
-				v-if="message.created_at" class="d-inline-flex mt-1 message-date" attr-date=""><b-icon icon="clock-outline" style="margin-top:2px;"></b-icon>&nbsp; {{ message.created_at }}</small>
+				<div class="p-l-2 p-r-2 p-1" style="word-break: break-all;">
+					<render-emojis :message="message.body"></render-emojis>
+				</div>
+				<small v-if="message.created_at" class="m-t-3 m-r-5 message-date" attr-date="">
+					<b-icon icon="clock" size="is-small"></b-icon>
+					{{ message.created_at }}
+				</small>
 			</div>
 		</div>
 	</div>
@@ -25,7 +32,9 @@
 </api-request>
 </template> 
 <script>
+
 export default {
+
 	data () {
 		return {
 			messages: null,
@@ -66,11 +75,16 @@ export default {
 			this.channel = Echo.join('thread.' + threadid)
 
 		    this.channel.here((users) => {
-		    	console.log('Presence: here()')
-		    	console.log(users);
-		        //Display online users
-		    })
-		    .joining((user) => {
+		    	for (var i = 0; i < users.length; i++) {
+		    		if(users[i].id == this.$user().id)
+		    			continue
+
+		    		Event.$emit(`is-online:add-user`, { user: users[i] })
+		    	}
+		    }).joining((user) => {
+
+		    	Event.$emit(`is-online:add-user`, { user: user })
+
 		    	console.log('Presence: joining()')
 
 		    	setTimeout(() => {
@@ -86,6 +100,9 @@ export default {
 		    })
 		    .leaving((user) => {
 		    	console.log('Presence: leaving()')
+
+		    	Event.$emit(`is-online:remove-user`, { user: user })
+
 		    	setTimeout(() => {
 			    	this.$toast.open({
 	                    duration: 3000,
@@ -97,10 +114,17 @@ export default {
 		    	//Display leaving user
 		        console.log(user.name);
 		    }).listen('.new.message.presence', (e) =>{
+		    	// Reciving message
+		    	// Fire event to update thread
+				Event.$emit('update-thread', {
+		    		convid: e.thread_id,
+		    		message: e,
+		    		me: false
+		    	})
 
 		    	this.messages.push(e)
 		    	console.log('Presence: new.message.presence')
-		    	console.log(e)
+		    	this.$scrollAllBottom('messages')
 				//Append new message to current thread
 			}).listenForWhisper('typing', (user) => {
 				Event.$emit('is-typing', user)
@@ -109,7 +133,3 @@ export default {
 	}
 }
 </script>
-
-<style scoped>
-
-</style>

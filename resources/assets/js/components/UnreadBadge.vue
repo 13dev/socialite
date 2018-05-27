@@ -31,6 +31,7 @@ export default {
 
 		window.Echo.private('messages.' + Global.user.id)
 		.listen('.new.message', (e) =>{
+
 			// New message
 			setTimeout(() => {
 		    	this.$toast.open({
@@ -40,8 +41,7 @@ export default {
                     type: 'is-success'
                 })
 		    },1000)
-			// Fire event to increment unread count on certain thread
-			Event.$emit('update-unreadcount-thread', { convid: e.convid })
+		    
 			this.trigger = true
 			blink('li.nav-item.message')
 

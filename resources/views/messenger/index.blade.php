@@ -9,21 +9,10 @@
         <p class="card-header-title">
           <b-input placeholder="Search..."
                 type="search"
-                icon="magnify">
+                icon="magnify"
+                style="width:100%!important;">
             </b-input>
         </p>
-          <b-dropdown class="card-header-icon">
-              <span class="icon" slot="trigger">
-                <b-icon icon="dots-horizontal"></b-icon>
-              </span>
-            <b-dropdown-item>
-              <b-icon icon="message-plus" size="is-small"></b-icon>
-              New Thread
-            </b-dropdown-item>
-            <b-dropdown-item>Another action</b-dropdown-item>
-            <b-dropdown-item>Something else</b-dropdown-item>
-          </b-dropdown>
-        
       </header>
       <!-- content -->
       <div>
@@ -37,7 +26,10 @@
       </div>
       <!-- /content -->
       <footer class="card-footer">
-        <a href="#" class="card-footer-item">Options</a>
+        <a href="#" class="card-footer-item">
+          <b-icon icon="message-plus" size="is-small"></b-icon>
+          New Thread
+        </a>
       </footer>
     </div>
   </div>
@@ -45,9 +37,13 @@
     <!-- Messages -->
     <div class="card">
       <header class="card-header">
-        <p class="card-header-title" style="height: 60px;">
+        <div class="card-header-title" style="height: 60px;">
+          <thread-info></thread-info>
           <user-typing></user-typing>
-        </p>
+        </div>
+        <div class="card-header-icon">
+          <user-online></user-online>
+        </div>
       </header>
       <div>
         <div style="height: 22rem; overflow-y: hidden;" v-bar>
