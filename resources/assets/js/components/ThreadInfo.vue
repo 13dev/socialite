@@ -6,7 +6,7 @@
     </div>
     <div style="display: flex;" v-else>
       <div style="line-height: 2;">
-        Select one thread &nbsp;
+        Select One Thread &nbsp;
       </div>
       <render-emojis :message="':grin::+1:'"></render-emojis>
     </div>

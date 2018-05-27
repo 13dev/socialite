@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="threads">
 		<api-request 
 		@success="done" 
 		:resource="$api.getThreads" 
@@ -7,9 +7,12 @@
 		<article
 			v-if="response"
 			class="media thread p-l-10 p-t-5 p-b-5 m-0"
-			:class="{'active-thread': selectedThread == thread.id, 'thread-unread': thread.unreadmessagescount > 0}"
+			:class="{
+				'active-thread': selectedThread == thread.id, 
+				'thread-unread': thread.unreadmessagescount > 0
+			}"
 			@click="clickThread(thread.id)"
-			v-for="thread in threads">
+			v-for="thread in filterThreads">
 			  <figure class="media-left">
 			    <p class="image is-48x48">
 					<span 
@@ -35,6 +38,16 @@
 			    </div>
 			  </div>
 			</article>
+			<div class="centerall" v-show="filterThreads && filterThreads.length == 0">
+				<h3 class="subtitle" style="display: flex;">
+					No Threads Found <render-emojis :message="':unamused:'"></render-emojis>!
+				</h3>
+			</div>
+			<div class="centerall" v-show="threads && threads.length == 0">
+				<h3 class="subtitle" style="display: flex;">
+					Omg! No threads <render-emojis :message="':scream:'"></render-emojis>!
+				</h3>
+			</div>
 		</api-request>
 	</div>
 </template>
@@ -46,12 +59,14 @@ export default {
 			response: null,
 			threads: null,
 			selectedThread: null,
-			unreadmessages: null
+			unreadmessages: null,
+			filterThreads: null
 		}
 	},
 	methods: {
 		done(response){
 			this.threads = response.data.data
+			this.filterThreads = response.data.data
 			console.log('unreadmessages');
 
 			// Map Thread unread messages to simply array
@@ -115,6 +130,19 @@ export default {
 			       	break //Stop this loop, we found it!
 			    }
 		   	}
+		})
+
+		Event.$on('search-threads', data => {
+			if(data.data == '' || data.data == null){
+				this.filterThreads = this.threads
+				return
+			}
+
+			this.filterThreads = this.threads.filter(thread => {
+				return thread.subject
+					.toLowerCase()
+					.includes(data.data.toLowerCase())
+	        })
 		})
 	}
 }

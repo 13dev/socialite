@@ -19,7 +19,7 @@
       <a class="navbar-item" href="https://bulma.io/">
         Home
       </a>
-      <div class="navbar-item has-dropdown is-hoverable">
+      <div class="navbar-item navbar-item-max has-dropdown is-hoverable">
         <a class="navbar-link" href="/documentation/overview/start/">
             <figure class="image m-r-5">
               <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
@@ -86,7 +86,7 @@
           <unread-badge></unread-badge>
         @endif
       </a>
-      <div class="navbar-item has-dropdown is-hoverable">
+      <div class="navbar-item navbar-item-max has-dropdown is-hoverable">
         <a class="navbar-link" href="#">
             <figure class="image m-r-5">
               <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">

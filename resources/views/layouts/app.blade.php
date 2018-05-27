@@ -31,6 +31,13 @@
 </head>
 <body>
     <div id="app">
+        <div v-if="!$data">
+            <div id="loader-wrapper">
+                <div id="loader"></div>
+                    <div class="loader-section section-left"></div>
+                    <div class="loader-section section-right"></div>
+            </div>
+        </div>
 
         @include('shared/navbar')
         

@@ -7,11 +7,7 @@
     <div class="card">
       <header class="card-header">
         <p class="card-header-title">
-          <b-input placeholder="Search..."
-                type="search"
-                icon="magnify"
-                style="width:100%!important;">
-            </b-input>
+          <search-thread></search-thread>
         </p>
       </header>
       <!-- content -->

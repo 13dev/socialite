@@ -52,17 +52,14 @@ Vue.component('post', require('./components/Post.vue'))
 Vue.component('user-typing', require('./components/UserTyping.vue'))
 Vue.component('user-online', require('./components/UserOnline.vue'))
 Vue.component('thread-info', require('./components/ThreadInfo.vue'))
+Vue.component('search-thread', require('./components/SearchThread.vue'))
+Vue.component('render-emojis', require('./components/RenderEmojis.vue'))
 
-Vue.component('render-emojis', require('./components/RenderEmojis.vue') );
-
-window.Event = new Vue();
-
+window.Event = new Vue()
 const app = new Vue({
   el: '#app',
   data() {
     return {
     }
-  },
-  mounted() {
   }
 });
