@@ -15,4 +15,4 @@ Route::get('/', function(){
 	return 'home';
 })->name('home');
 
-Route::get('/u/{username}', 'UserController@show');
+Route::get('/u/{username}', 'UserController@show')->name('profile');

@@ -38,12 +38,12 @@
 			    </div>
 			  </div>
 			</article>
-			<div class="centerall" v-show="filterThreads && filterThreads.length == 0">
+			<div class="centerall" v-if="filterThreads && filterThreads.length == 0">
 				<h3 class="subtitle" style="display: flex;">
 					No Threads Found <render-emojis :message="':unamused:'"></render-emojis>!
 				</h3>
 			</div>
-			<div class="centerall" v-show="threads && threads.length == 0">
+			<div class="centerall" v-show="threads && threads.length == 0" v-else>
 				<h3 class="subtitle" style="display: flex;">
 					Omg! No threads <render-emojis :message="':scream:'"></render-emojis>!
 				</h3>

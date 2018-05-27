@@ -16,6 +16,7 @@
 /storage/tmp
 /log
 /.phpintel/*
+/.phpintel/
 yarn-error.log
 composer.lock
 public/mix-manifest.json

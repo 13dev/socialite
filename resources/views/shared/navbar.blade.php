@@ -16,41 +16,18 @@
 
   <div id="nav-menu" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" href="https://bulma.io/">
+      <a class="navbar-item" href="#">
+        <span class="icon">
+          <i class="mdi mdi-home"></i>
+        </span>
         Home
       </a>
-      <div class="navbar-item navbar-item-max has-dropdown is-hoverable">
-        <a class="navbar-link" href="/documentation/overview/start/">
-            <figure class="image m-r-5">
-              <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
-            </figure>
-          Docs
-        </a>
-        <div class="navbar-dropdown is-boxed">
-          <a class="navbar-item" href="/documentation/overview/start/">
-            Overview
-          </a>
-          <a class="navbar-item" href="https://bulma.io/documentation/modifiers/syntax/">
-            Modifiers
-          </a>
-          <a class="navbar-item" href="https://bulma.io/documentation/columns/basics/">
-            Columns
-          </a>
-          <a class="navbar-item" href="https://bulma.io/documentation/layout/container/">
-            Layout
-          </a>
-          <a class="navbar-item" href="https://bulma.io/documentation/form/general/">
-            Form
-          </a>
-          <hr class="navbar-divider">
-          <a class="navbar-item" href="https://bulma.io/documentation/elements/box/">
-            Elements
-          </a>
-          <a class="navbar-item is-active" href="https://bulma.io/documentation/components/breadcrumb/">
-            Components
-          </a>
-        </div>
-      </div>
+      <a class="navbar-item" href="#">
+        <span class="icon">
+          <i class="mdi mdi-information-outline"></i>
+        </span>
+        About us
+      </a>
     </div>
 
     <div class="navbar-end">
@@ -80,7 +57,16 @@
             </div>
         </div>
         @else
+        <a class="navbar-item">
+          <span class="icon">
+            <i class="mdi mdi-plus"></i>
+          </span>
+        New Post
+        </a>
         <a class="navbar-item" style="display:inline-flex;" href="{{ route('messages') }}">
+          <span class="icon">
+            <i class="mdi mdi-message-processing"></i>
+          </span>
         Messages 
         @if(\Route::current()->getName() != 'messages')
           <unread-badge></unread-badge>
@@ -89,28 +75,36 @@
       <div class="navbar-item navbar-item-max has-dropdown is-hoverable">
         <a class="navbar-link" href="#">
             <figure class="image m-r-5">
-              <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+              <img class="is-rounded" src="{{ asset(Auth::user()->profileImage('tiny')) }}">
             </figure>
           {{ Auth::user()->name }}
         </a>
         <div class="navbar-dropdown is-boxed is-right">
+          @admin
+            <a class="navbar-item" href="">
+              <span class="icon">
+                <i class="mdi mdi-verified"></i>
+              </span>
+              Admin
+            </a>
+          @endadmin
           <a class="navbar-item" href="">
-            Overview
+            <span class="icon">
+              <i class="mdi mdi-account-settings-variant"></i>
+            </span>
+            Settings
           </a>
-          <a class="navbar-item" href="">
-            Modifiers
-          </a>
-          <a class="navbar-item" href="">
-            Columns
-          </a>
-          <a class="navbar-item" href="">
-            Layout
-          </a>
-          <a class="navbar-item" href="">
-            Form
+          <a class="navbar-item" href="{{ route('profile', ['username' => Auth::user()->username ])}}">
+            <span class="icon">
+              <i class="mdi mdi-account-multiple"></i>
+            </span>
+            My Profile
           </a>
           <hr class="navbar-divider">
           <a class="navbar-item" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
+            <span class="icon">
+              <i class="mdi mdi-logout-variant"></i>
+            </span>
            Logout
           </a>
         </div>
