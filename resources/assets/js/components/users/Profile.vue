@@ -4,7 +4,8 @@
 			<div class="profile-nav">
 				<div class="columns">
 					<div class="column is-one-quarter first-col">
-						<div class="profile-avatar"></div>
+						<div class="profile-avatar" 
+						:style="'background-image: url(/' + user.avatar.large + ');'"></div>
 						<div class="profile-about">
 							<div class="profile-name">{{ user.name }}</div>
 							<span style="username">
@@ -105,10 +106,12 @@ export default {
 
 .profile-avatar {
     margin-top: -100px;
-    background-image: url('http://placehold.it/150');
     width: 200px;
     height: 200px;
     background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-color: #fff;
 }
 
 .profile-about {

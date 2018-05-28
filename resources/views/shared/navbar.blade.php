@@ -3,7 +3,7 @@
 </form>
 <nav class="navbar is-white is-fixed-top">
   <div class="navbar-brand">
-    <a class="navbar-item" href="#">
+    <a class="navbar-item" href="/">
       <img src="{{ asset('/assets/logo.png') }}" alt="Logo" width="112" height="28">
     </a>
 
@@ -16,7 +16,7 @@
 
   <div id="nav-menu" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" href="#">
+      <a class="navbar-item" href="/">
         <span class="icon">
           <i class="mdi mdi-home"></i>
         </span>

@@ -11,7 +11,7 @@
 			</div>
 			<div class="column is-half">
 				<!-- include the post form -->
-
+				<post-form></post-form>
 				<div class="card">
 				  <header class="card-header">
 				    <p class="card-header-title">

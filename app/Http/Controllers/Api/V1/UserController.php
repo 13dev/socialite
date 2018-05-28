@@ -133,8 +133,7 @@ class UserController extends Controller
                     $userFlrs->reposts
                         ->transformWith(new RePostTransformer())
                         ->toArray()
-                    )
-                ,$response);
+                    ), $response);
         }
 
         foreach ($user->followers as $userFlg)
@@ -149,8 +148,7 @@ class UserController extends Controller
                     $userFlg->reposts
                         ->transformWith(new RePostTransformer())
                         ->toArray()
-                    )
-                ,$response);
+                    ), $response);
         }
 
         // merge reposts and posts
@@ -167,14 +165,14 @@ class UserController extends Controller
             , $response);
         
         // Sort array by date
-        $response = array_values(array_reverse(array_sort($response, function ($value) {
+        $response = array_values(array_sort($response, function ($value) {
             return $value['created_at'];
-        })));
+        }));
 
-        // Remove duplicate
+        // Remove duplicates
         $response = array_unique($response, SORT_REGULAR);
 
-        return $response;
+        return array_reverse($response);
         
     }
 }

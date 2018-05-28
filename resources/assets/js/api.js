@@ -41,6 +41,9 @@ const api = {
 	getPostReplies: (params = {}) => {
 		return axios.get(Vue.prototype.$baseApiUrl + '/posts/' + params.id + '/replies', params)
 	},
+	insertPost: (params = {}) => {
+		return axios.post(Vue.prototype.$baseApiUrl + '/posts', params)
+	}
 
 }
 

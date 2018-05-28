@@ -25,13 +25,13 @@ return [
     'ascii'    => false,
 
     // Image shape: circle or square
-    'shape' => 'circle',
+    'shape' => 'square',
 
     // Image width, in pixel
-    'width'    => 100,
+    'width'    => 150,
 
     // Image height, in pixel
-    'height'   => 100,
+    'height'   => 150,
 
     // Number of characters used as initials. If name consists of single word, the first N character will be used
     'chars'    => 2,
@@ -40,7 +40,7 @@ return [
     'fontSize' => 48,
 
     // convert initial letter in uppercase
-    'uppercase' => false,
+    'uppercase' => true,
 
     // Fonts used to render text.
     // If contains more than one fonts, randomly selected based on name supplied
@@ -71,7 +71,7 @@ return [
     ],
 
     'border'    => [
-        'size'  => 1,
+        'size'  => 0,
 
         // border color, available value are:
         // 'foreground' (same as foreground color)

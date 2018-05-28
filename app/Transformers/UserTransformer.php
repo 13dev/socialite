@@ -22,6 +22,10 @@ class UserTransformer extends TransformerAbstract
             'name'      => $user->name,
             'username'  => $user->username,
             'email'     => $user->email,
+            'avatar' => [
+                'medium' => $user->profileImage('medium'),
+                'large' => $user->profileImage('large'),
+            ],
         ];
     }
 

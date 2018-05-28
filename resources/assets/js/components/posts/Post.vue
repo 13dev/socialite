@@ -2,7 +2,7 @@
 	<article class="media">
 	  <figure class="media-left">
 	    <p class="image is-64x64">
-	      <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+	      <img class="is-rounded" :src="'/' + post.user.avatar.medium">
 	    </p>
 	  </figure>
 	  <div class="media-content">
@@ -12,8 +12,7 @@
 	          {{ post.user.name }}
 	          <a :href="'/u/' + post.user.username" v-html="'@' + post.user.username" />
 	        </strong>
-
-	        <small>10 min ago</small>
+	        <small>&#8226; {{ post.created_at.humans }}</small>
 	        <br>
 	        <span class="has-text-weight-light">{{ post.post }}</span>
 	      </p>
@@ -61,7 +60,7 @@
 </template>
 
 <script>
-import ReplieModal from './modals/ReplieModal'
+import ReplieModal from '../modals/ReplieModal'
 
 export default {
 	props: {
@@ -159,5 +158,11 @@ export default {
 .level-item span {
   font-weight: 600;
   color: #b4b4b4;
+}
+
+figure img {
+	width: 64px;
+	height: 64px;
+	object-fit:cover;
 }
 </style>

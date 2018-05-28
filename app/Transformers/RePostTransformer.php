@@ -17,13 +17,9 @@ class RePostTransformer extends TransformerAbstract
     public function transform(RePost $repost)
     {
         $user = Auth::guard('api')->user();
-
-        $data = [];
-
         $data = [
             'is_repost' => true,
             'user_repost' => fractal($repost->user, new UserTransformer())->toArray(),
-
         ];
 
         //Include data of post
@@ -38,8 +34,10 @@ class RePostTransformer extends TransformerAbstract
                 ->toArray();
         }
 
+        $postData['created_at'] = $repost->created_at->timestamp;
 
-        return array_merge($data, $postData);
+
+        return array_merge($postData, $data);
     }
 
 }

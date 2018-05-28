@@ -4,7 +4,7 @@
             type="search"
             icon="magnify"
             v-model="search"
-            @input="searchMethod()">
+            @input="searchMethod()" rounded>
         </b-input>
 	</div>
 </template>
@@ -12,7 +12,7 @@
 <script>
 export default {
 
-  	name: 'SearchThread',
+  	name: 'Search',
 
 	data () {
 		return {

@@ -16,7 +16,7 @@
 <script>
 export default {
 
-  name: 'ThreadInfo',
+  name: 'Info',
 
   data () {
     return {
