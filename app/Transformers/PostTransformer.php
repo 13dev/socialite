@@ -25,6 +25,7 @@ class PostTransformer extends TransformerAbstract
         return [
             'id' => $post->id,
             'post' => $post->post,
+            'created_at' => optional($post->created_at)->timestamp,
             'count' => [
                 'favorites' => $post->favorites()->count(),
                 'replies' => $post->replies()->count(),

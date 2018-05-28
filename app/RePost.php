@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class RePost extends Model
 {
     protected $table = 'reposts';
+    protected $dates = ['created_at'];
     
-    protected $fillable = ['user_id', 'post_id'];
+    protected $fillable = ['user_id', 'post_id', 'created_at'];
 
     public function user()
     {

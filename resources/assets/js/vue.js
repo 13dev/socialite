@@ -54,6 +54,7 @@ Vue.component('user-online', require('./components/UserOnline.vue'))
 Vue.component('thread-info', require('./components/ThreadInfo.vue'))
 Vue.component('search-thread', require('./components/SearchThread.vue'))
 Vue.component('render-emojis', require('./components/RenderEmojis.vue'))
+Vue.component('feed', require('./components/Feed.vue'))
 
 window.Event = new Vue()
 const app = new Vue({
