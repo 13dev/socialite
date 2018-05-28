@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             $user->roles()->attach($role_admin->id);
         }
 
-        factory(App\User::class, 10)->create();
+        $this->call([ UsersTableSeeder::class]);
 
         // API tokens
         User::where('api_token', null)->get()->each->update([

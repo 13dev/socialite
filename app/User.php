@@ -174,7 +174,7 @@ class User extends Authenticatable
 
     public function profileImage($size = 'small')
     {
-        $webpath = 'images/no-thumb.png';
+        $webpath = 'images/avatar/no-avatar.png';
         try
         {
             $contents = null;
@@ -196,6 +196,7 @@ class User extends Authenticatable
                     $contents = explode('/', $this->profile->image->actual);
                     break;
             }
+
             $filename = array_pop($contents);
             $directory = array_pop($contents);
             $webpath = implode('/', ['images', $directory, $filename]);

@@ -52,15 +52,13 @@ class PostController extends Controller
      */
     public function store(PostsRequest $request)
     {
-        $this->authorize('store', Post::class);
+        $data = $request->only(['post_id', 'post']);
+        $authUser = Auth::guard('api')->user();
+        $post = Post::create(
+            array_merge(['user_id' => $authUser->id], $data)
+        );
 
-        $post = Post::create($request->only(['title', 'content', 'posted_at', 'author_id']));
-
-        if ($request->hasFile('thumbnail')) {
-            $post->storeAndSetThumbnail($request->file('thumbnail'));
-        }
-
-        //return new PostResource($post);
+        return json_encode(['success' => ($post) ?  true : false]);
     }
 
     /**

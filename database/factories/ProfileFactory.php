@@ -12,9 +12,9 @@ $factory->define(Profile::class, function (Faker $faker) {
         },
         'display_name' => $faker->firstName. ' '. $faker->lastName,
         'location' => $faker->country,
-        'image_id' => function () {
-            return factory(Image::class)->create()->id;
-        },
+        //'image_id' => function () {
+        //    return factory(Image::class)->create()->id;
+        //},
 
 
     ];

@@ -27,9 +27,6 @@ export default {
 
   name: 'Timeline',
   props: ['user'],
-  components: {
-    'post': require('../Post.vue')
-  },
   data () {
     return {
     	timeline: null,

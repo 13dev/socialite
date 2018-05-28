@@ -10,9 +10,9 @@ class Post extends Model
 {
  
     protected $table = 'posts';
-
+    protected $dates = ['created_at'];
     protected $fillable = [
-        'user_id', 'post', 'parent_id'
+        'user_id', 'post', 'parent_id', 'created_at'
     ];
 
     public function user()

@@ -8,6 +8,9 @@ const api = {
 	getUserTimeline: (params = {}) => {
 		return axios.get(Vue.prototype.$baseApiUrl + '/user/' + params.id + '/timeline', params)
 	},
+	getUserFeed: (params = {}) => {
+		return axios.get(Vue.prototype.$baseApiUrl + '/user/' + params.id + '/feed', params)
+	},
 
 	// Messages
 	sendMessage: (params = {}) => {
@@ -38,6 +41,9 @@ const api = {
 	getPostReplies: (params = {}) => {
 		return axios.get(Vue.prototype.$baseApiUrl + '/posts/' + params.id + '/replies', params)
 	},
+	insertPost: (params = {}) => {
+		return axios.post(Vue.prototype.$baseApiUrl + '/posts', params)
+	}
 
 }
 

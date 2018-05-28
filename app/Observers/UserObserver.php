@@ -4,6 +4,8 @@ namespace App\Observers;
 
 use App\Token;
 use App\User;
+use Avatar;
+use App\Image;
 
 class UserObserver
 {
@@ -16,5 +18,26 @@ class UserObserver
     public function creating(User $user)
     {
         $user->api_token = Token::generate();
+    }
+
+    public function created(User $user)
+    {
+        $avatar = md5(uniqid()) . '.png';
+        if (!file_exists(public_path('images/avatar/'))) {
+            mkdir(public_path('images/avatar/'), 666, true);
+        }
+        $avatar = 'images/avatar/' . $avatar;
+
+        Avatar::create($user->name)->save(public_path($avatar));
+
+        Image::create([
+            'user_id' => $user->id,
+            'actual' => $avatar, 
+            'large' => $avatar,
+            'medium' => $avatar, 
+            'small' => $avatar, 
+            'tiny' => $avatar,
+        ]);
+
     }
 }

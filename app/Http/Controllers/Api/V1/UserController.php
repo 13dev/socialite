@@ -107,4 +107,72 @@ class UserController extends Controller
 
         return $response;
     }
+
+    public function feed(int $id)
+    {
+        $user = User::find($id);
+        $authUser = Auth::guard('api')->user();
+
+        if(!$user || $user->id != $authUser->id)
+            abort(404);
+
+        $feed = [];
+        $feed['posts'] = [];
+        $feed['reposts'] = [];
+        $response = [];
+
+        foreach ($user->followers as $userFlrs)
+        {
+            // Merge reposts and posts to response array
+            $response = array_merge(
+                array_merge(
+                    $userFlrs->posts
+                        ->transformWith(new PostTransformer())
+                        ->includeMe()
+                        ->toArray(),
+                    $userFlrs->reposts
+                        ->transformWith(new RePostTransformer())
+                        ->toArray()
+                    ), $response);
+        }
+
+        foreach ($user->followers as $userFlg)
+        {
+            // Merge followers posts and reposts to response
+            $response = array_merge(
+                array_merge(
+                    $userFlg->posts
+                        ->transformWith(new PostTransformer())
+                        ->includeMe()
+                        ->toArray(),
+                    $userFlg->reposts
+                        ->transformWith(new RePostTransformer())
+                        ->toArray()
+                    ), $response);
+        }
+
+        // merge reposts and posts
+        $response = array_merge(
+            array_merge(
+                $user->posts
+                    ->transformWith(new PostTransformer())
+                    ->includeMe()
+                    ->toArray(),
+                $user->reposts
+                    ->transformWith(new RePostTransformer())
+                    ->toArray()
+                )
+            , $response);
+        
+        // Sort array by date
+        $response = array_values(array_sort($response, function ($value) {
+            return $value['created_at'];
+        }));
+
+        // Remove duplicates
+        $response = array_unique($response, SORT_REGULAR);
+
+        return array_reverse($response);
+        
+    }
 }
