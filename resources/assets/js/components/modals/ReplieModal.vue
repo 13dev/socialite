@@ -23,34 +23,35 @@
 	    	</div>
 	    </section>
 	    <footer class="modal-card-foot" style="flex-wrap: wrap;">
-	    	<div class="field-replie" style="width: 100%;">
-	    		<b-field label="Replie this post">
-		            <textarea
-		            	class="textarea" 
-		                maxlength="140"
-		                placeholder="Replie this post..."
-		                rows="2"
-		                style="max-height: 50px; overflow-y:hidden;"
-						v-model="replieText">
-		            </textarea>
-		        </b-field>
+	    	<div style="width: 100%;">
+	    		<post-send 
+	    		:always-button="true" 
+	    		:parent-id="post.id"
+	    		:picker-style="{
+	    			position: 'absolute', 
+	    			top: '-200px', 
+	    			'z-index': '2', 
+	    			width: '280px', 
+	    			height: '200px'
+	    		}"
+	    		 placeholder-text="Write something awesome!" 
+	    		 buttonText="REPLIE"
+	    		 ></post-send>
 	    	</div>
-			<div class="m-t-10">
-		        <button class="button" style="justify-content: flex-end;">
-		        	<b-icon icon="reply"></b-icon>
-		        	<span> Replie</span>
-		        </button>
-			</div>
 	    </footer>
 	</div>
 </form>
 </template>
 
 <script>
+import Form from '../posts/Form.vue'
 export default {
 
   name: 'ReplieModal',
   props:['data', 'post'],
+  components: {
+  	'post-send': Form
+  },
   data () {
     return {
     	replieText: ''

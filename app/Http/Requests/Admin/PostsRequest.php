@@ -26,7 +26,7 @@ class PostsRequest extends FormRequest
     public function rules()
     {
         return [
-            'post_id' => 'nullable',
+            'parent_id' => 'nullable',
             'post' => 'required',
         ];
     }

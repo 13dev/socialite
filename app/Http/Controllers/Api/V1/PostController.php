@@ -52,7 +52,7 @@ class PostController extends Controller
      */
     public function store(PostsRequest $request)
     {
-        $data = $request->only(['post_id', 'post']);
+        $data = $request->only(['parent_id', 'post']);
         $authUser = Auth::guard('api')->user();
         $post = Post::create(
             array_merge(['user_id' => $authUser->id], $data)

@@ -2,7 +2,7 @@
 	<article class="media">
 	  <figure class="media-left">
 	    <p class="image is-64x64">
-	      <img class="is-rounded" :src="'/' + post.user.avatar.medium">
+	      <img class="is-rounded" style="border: 2px solid #fff;" :src="'/' + post.user.avatar.medium">
 	    </p>
 	  </figure>
 	  <div class="media-content">
@@ -12,9 +12,11 @@
 	          {{ post.user.name }}
 	          <a :href="'/u/' + post.user.username" v-html="'@' + post.user.username" />
 	        </strong>
-	        <small>&#8226; {{ post.created_at.humans }}</small>
+	        <small class="has-text-grey has-text-weight-light">&#8226; {{ post.created_at.humans }}</small>
 	        <br>
-	        <span class="has-text-weight-light">{{ post.post }}</span>
+	        <span class="has-text-weight-light">
+	        	<render-emojis :message="post.post"></render-emojis>
+	    	</span>
 	      </p>
 	    </div>
 	    <nav class="level is-mobile" v-if="$user()">

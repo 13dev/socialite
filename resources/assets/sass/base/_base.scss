@@ -84,6 +84,14 @@ Vue Bar
     vertical-align: middle!important;
 }
 
+.emoji-mart:blur {
+    display: none!important;
+}
+.emoji-mart:focus,
+.emoji-mart:active {
+    display: block!important;
+}
+
 .centerall {
     height: 50vh;
     padding: 0;
