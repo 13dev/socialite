@@ -4,7 +4,7 @@
 /public/css
 /public/fonts
 /public/js
-/public/images/avatar/
+/public/images/avatar
 !/public/images/avatar/no-avatar.png
 /vendor
 /.idea
