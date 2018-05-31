@@ -43,7 +43,13 @@ const api = {
 	},
 	insertPost: (params = {}) => {
 		return axios.post(Vue.prototype.$baseApiUrl + '/posts', params)
-	}
+	},
+	repostPost: (params = {}) => {
+		return axios.post(Vue.prototype.$baseApiUrl + '/posts/' + params.id + '/repost', params)
+	},
+	favoritePost: (params = {}) => {
+		return axios.post(Vue.prototype.$baseApiUrl + '/posts/' + params.id + '/favorite', params)
+	},
 
 }
 

@@ -30,21 +30,61 @@
 	          </div>
 	        </a>
 	        <a class="level-item">
-	          <div class="m-r-10 repost">
-	            <b-icon icon="twitter-retweet"></b-icon>
-	            <span class="count">{{ post.count.reposts }}</span>
-	          </div>
+	          	<div class="m-r-10 repost">
+				    <api-request 
+					@success="doneRepost"
+				 	@error="handleErrorsRepost"
+					:resource="$api.repostPost"
+					:params="{
+				      id: post.id, 
+				      user_id: $user().id
+				    }"
+					v-model="responseRepost"
+					:trigger.sync="triggerRepost">
+					<div slot="waiting">
+						<div @click="triggerRepost=true" :class="{ 'reposted': isReposted }"> 
+							<b-icon icon="twitter-retweet"></b-icon>
+				            <span class="count">{{ countRepostt }}</span>
+						</div>
+					</div>
+					<div slot="loading">
+						<small-spinner></small-spinner>
+					</div>
+				    </api-request>
+	    	    </div>
 	        </a>
+	        <!-- favorite -->
 	        <a class="level-item favorite">
-	          <div class="m-r-10" v-if="post.me.favorited">
-	            <b-icon icon="heart"></b-icon>
-	              <span class="count">{{ post.count.favorites }}</span>
-	          </div>
-	          <div class="m-r-10" v-else>
-	              <b-icon icon="heart-outline"></b-icon>
-	              <span class="count">{{ post.count.favorites }}</span>
-	          </div>
+	          	<div class="m-r-10">
+				    <api-request 
+					@success="doneFavorite"
+				 	@error="handleErrorsFavorite"
+					:resource="$api.favoritePost"
+					:params="{
+				      id: post.id, 
+				      user_id: $user().id
+				    }"
+					v-model="responseFavorite"
+					:trigger.sync="triggerFavorite">
+					<div slot="waiting">
+						<div @click="triggerFavorite=true" :class="{ 'favorited': isFavorited}">
+							<span class="icon">
+				          		<i class="mdi mdi-24px" 
+				          		:class="{
+				          			'mdi-heart': isFavorited, 
+				          			'mdi-heart-outline': !isFavorited
+				          		}"></i>
+				        	</span>
+				            <span class="count">{{ countFavorite }}</span>
+						</div>
+					</div>
+					<div slot="loading">
+						<small-spinner></small-spinner>
+					</div>
+				    </api-request>
+	    	    </div>
 	        </a>
+	        <!-- / favorite -->
 	        <a class="level-item" v-if="post.me.author">
 	          <span class="icon m-r-5">
 				<b-icon icon="dots-horizontal"></b-icon>
@@ -63,7 +103,7 @@
 
 <script>
 import ReplieModal from '../modals/ReplieModal'
-
+import SmallSpinner from '../SmallSpinner'
 export default {
 	props: {
 		post: {
@@ -71,17 +111,57 @@ export default {
 		},
 		canReply: {
 			default: true
-		}
+		},
+	},
+	components: {
+		'small-spinner': SmallSpinner
 	},
   	name: 'Post',
 	data () {
 		return {
+			isFavorited: false,
+			isReposted: false,
+			countFavorite: 0,
+			countRepostt: 0,
+			triggerFavorite: false,
+			responseFavorite: null,
+			triggerRepost: false,
+			responseRepost: null,
+
 		}
 	},
 	mounted () {
-		console.log(this.canReply)
+		if(this.post.hasOwnProperty("me")){
+			this.isReposted = this.post.me.reposted
+			this.isFavorited = this.post.me.favorited
+		}
+
+		this.countFavorite = this.post.count.favorites
+		this.countRepostt = this.post.count.reposts
 	},
 	methods: {
+		doneFavorite(response){
+			this.isFavorited = response.data.favorited
+			if(this.isFavorited)
+					this.countFavorite++
+				else
+					this.countFavorite = (this.countFavorite > 0) ? this.countFavorite - 1 : 0
+		},
+		handleErrorsFavorite(response){
+			//show error message
+		},
+		doneRepost(response){
+			this.isReposted = response.data.reposted
+			console.log(response.data.reposted)
+
+			if(this.isReposted)
+				this.countRepostt++
+			else
+				this.countRepostt = (this.countRepostt > 0) ? this.countRepostt - 1 : 0
+		},
+		handleErrorsRepost(response){
+			//show error message
+		},
 	    openReplieModal(post) {
 	    	if(!this.canReply)
 	    		return;
@@ -118,6 +198,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.reposted {
+	color: #00b108!important;
+	span {
+		color: #00b108!important;
+	}
+}
+
+.favorited {
+	color: #e32929!important;
+	span {
+		color: #e32929!important;
+	}
+}
+
 .cannotReply span {
 	color: #d2d2d2!important;
 }

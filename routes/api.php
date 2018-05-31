@@ -17,7 +17,8 @@ Route::prefix('v1')->namespace('Api\V1')->group(function () {
     Route::get('posts/{id}', 'PostController@show');
     Route::post('posts', 'PostController@store');
     Route::get('posts/{id}/replies', 'PostController@show');
-
+    Route::post('posts/{id}/favorite', 'PostController@favorite');
+    Route::post('posts/{id}/repost', 'PostController@repost');
     Route::middleware('auth:api')->group(function () {
         
         // User

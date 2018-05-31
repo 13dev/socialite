@@ -1,3 +1,5 @@
+import api from '../api.js'
+
 export default {
     methods: {
         $scrollAllBottom(id) {
@@ -41,6 +43,9 @@ export default {
         },
         $user(){
             return Global.user
+        },
+        $apiG() {
+            return api
         }
     },
 };

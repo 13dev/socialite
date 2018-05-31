@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api;
+namespace App\Http\Requests\Api\Post;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CommentsRequest extends FormRequest
+class FavoriteRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class CommentsRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' => 'required'
+            'user_id' => 'required'
         ];
     }
 }
