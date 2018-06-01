@@ -34,7 +34,10 @@ class RePostTransformer extends TransformerAbstract
                 ->toArray();
         }
 
-        $postData['created_at'] = $repost->created_at->timestamp;
+        $postData['created_at'] = [
+            'timestamp' => optional($repost->created_at)->timestamp,
+            'humans' => optional($repost->created_at)->diffForHumans()
+        ];
 
 
         return array_merge($postData, $data);
