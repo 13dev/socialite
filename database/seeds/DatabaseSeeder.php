@@ -4,6 +4,7 @@ use App\Role;
 use App\Token;
 use App\User;
 use Illuminate\Database\Seeder;
+use App\Profile;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,6 +26,11 @@ class DatabaseSeeder extends Seeder
                 'email' => 'admin@admin.com',
                 'username' => 'admin',
                 'password' => 'secret'
+            ]);
+
+            // Create user profile
+            factory(Profile::class)->create([
+                'user_id' => $user->id,
             ]);
 
             $user->roles()->attach($role_admin->id);

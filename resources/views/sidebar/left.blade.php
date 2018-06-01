@@ -13,7 +13,7 @@
       </div>
       <div class="media-content">
         <p class="subtitle m-0">
-          {{ optional(Auth::user())->profile->display_name }}
+          {{ Auth::user()->profile->display_name }}
         </p>
         <small>{{ '@' . Auth::user()->username }}</small>
 
