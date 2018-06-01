@@ -4,7 +4,7 @@
   @error="handleErrors"
 	:resource="$api.getUserTimeline"
   :params="{id: user.id }"
-	v-model="response" style="margin:0 auto;">
+	v-model="response" style="width: 100%;">
 
 <div v-if="response" v-for="post in timeline" class="post">
   <div v-if="post.is_repost">
@@ -15,7 +15,7 @@
   </div>
   <post :post="post"></post>
 </div>
-<div v-if="timeline && timeline.length == 0">
+<div v-if="timeline && timeline.length == 0" style="margin:0 auto;">
     <h3 class="has-text-centered"> Este utilizador não tem nenhuma publicação </h3>
 </div>
 </api-request>
