@@ -5,7 +5,6 @@ use Faker\Generator;
 
 $factory->define(User::class, function (Generator $faker) {
     static $password;
-
     return [
         'name' => $faker->name,
         'username' => substr($faker->unique()->username, 0, 12),

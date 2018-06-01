@@ -10,7 +10,7 @@ $factory->define(Profile::class, function (Faker $faker) {
         'user_id' => function () {
             return factory(User::class)->create()->id;
         },
-        'display_name' => $faker->firstName. ' '. $faker->lastName,
+        'display_name' => $faker->firstName . ' '. $faker->lastName,
         'location' => $faker->country,
         //'image_id' => function () {
         //    return factory(Image::class)->create()->id;

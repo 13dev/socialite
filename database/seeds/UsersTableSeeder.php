@@ -15,9 +15,9 @@ class UsersTableSeeder extends Seeder
     {
         factory(User::class, 5)->create()
         	->each(function($user){
-        		factory(Profile::class, 5)->create([
-        			'user_id' => $user->id
-        		]);
+                $user->profile()->save(
+                    factory(Profile::class)->make()
+                );
         });
     }
 }
