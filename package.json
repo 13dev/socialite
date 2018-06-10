@@ -14,6 +14,7 @@
         "@mdi/font": "^2.3.54",
         "axios": "^0.17",
         "buefy": "^0.6.5",
+        "bulma-badge": "^1.0.1",
         "cross-env": "^5.1.3",
         "emoji-mart-vue": "^2.6.3",
         "font-awesome": "^4.7.0",
@@ -26,6 +27,7 @@
         "vue": "^2.5.13",
         "vue-api-request": "^1.1.7",
         "vue-avatar-cropper": "^0.0.27",
+        "vue-markdown": "^2.2.4",
         "vue-truncate-filter": "^1.1.7",
         "vuebar": "^0.0.18"
     }

@@ -58,20 +58,16 @@
         </div>
         @else
         <a class="navbar-item">
-          <span class="icon">
-            <i class="mdi mdi-plus"></i>
-          </span>
-        New Post
+          <b-icon icon="plus"></b-icon>
+          New Post
         </a>
-        <a class="navbar-item" style="display:inline-flex;" href="{{ route('messages') }}">
-          <span class="icon">
-            <i class="mdi mdi-message-processing"></i>
-          </span>
-        Messages 
+        <notifications></notifications>
+        
         @if(\Route::current()->getName() != 'messages')
-          <unread-badge></unread-badge>
+          <a class="navbar-item" style="display:inline-flex;" href="{{ route('messages') }}">
+            <unread-badge></unread-badge>
+          </a>
         @endif
-      </a>
       <div class="navbar-item navbar-item-max has-dropdown is-hoverable">
         <a class="navbar-link" href="#">
             <figure class="image m-r-5">

@@ -14,8 +14,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 use App\Events\NewMessage;
+use App\Notifications\NewMessage as NewMessageNotification;
 use App\Events\NewMessageThread;
 use App\Http\Resources\Thread as ThreadResource;
+use Notification;
 
 class MessagesController extends Controller
 {
@@ -145,6 +147,11 @@ class MessagesController extends Controller
         }
 
         broadcast(new NewMessage($thread))->toOthers();
+
+        //Notification::send(
+        //    $thread->participants()->where('id','!=',Auth::id())->get(), new NewMessageNotification($thread)
+        //);
+        //Auth::user()->notify(new NewMessageNotification($thread));
 
         return redirect()->route('messages.show', $id);
     }

@@ -11,6 +11,7 @@ import Global from './mixins/Global'
 import Vuebar from 'vuebar'
 import SmallSpinner from './components/SmallSpinner'
 import Buefy from 'buefy'
+import VueMarkdown from 'vue-markdown'
 
 Vue.use(require('vue-truncate-filter'))
 Vue.use(Buefy)
@@ -52,6 +53,8 @@ Vue.component('thread-info', require('./components/threads/Info.vue'))
 Vue.component('search-thread', require('./components/threads/Search.vue'))
 Vue.component('render-emojis', require('./components/RenderEmojis.vue'))
 Vue.component('feed', require('./components/Feed.vue'))
+Vue.component('notifications', require('./components/users/Notifications.vue'))
+Vue.component('vue-markdown', VueMarkdown)
 
 window.Event = new Vue()
 const app = new Vue({

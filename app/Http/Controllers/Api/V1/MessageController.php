@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Session;
 use App\Events\NewMessage;
 use App\Events\NewMessagePresence;
 use App\Events\NewMessageThread;
+use App\Notifications\NewMessage as NewMessageNotification;
 use App\Http\Resources\Message as MessageResource;
 
 class MessageController extends Controller
@@ -29,7 +30,8 @@ class MessageController extends Controller
      */
     public function store(SendMessageRequest $request)
     {
-        sleep(0.5);
+        sleep(0.2);
+
         $thread_id = $request->input('thread_id');
         $messsage = $request->input('message');
 
@@ -70,6 +72,15 @@ class MessageController extends Controller
 
         broadcast(new NewMessage($thread));
         broadcast(new NewMessagePresence($thread, $message))->toOthers();
+
+
+        // Send notification
+        $usersToNotify = $thread->users()
+            ->where('user_id', '!=', Auth::id())->get();
+
+        foreach ($usersToNotify as $user) {
+            $user->notify(new NewMessageNotification($thread, $message->user));
+        }
 
         return new MessageResource($message);
     }

@@ -11,6 +11,9 @@ const api = {
 	getUserFeed: (params = {}) => {
 		return axios.get(Vue.prototype.$baseApiUrl + '/user/' + params.id + '/feed', params)
 	},
+	userNotifications: (params = {}) => {
+		return axios.get(Vue.prototype.$baseApiUrl + '/user/' + params.id + '/notifications', params)
+	},
 
 	// Messages
 	sendMessage: (params = {}) => {

@@ -29,8 +29,16 @@ Route::middleware('auth')->group(function () {
 
 
     Route::get('test', function() {
-        dd(Cmgmyr\Messenger\Models\Thread::find(2)->participants->count());
+        //dd(Cmgmyr\Messenger\Models\Thread::find(2)->participants->count());
         //broadcast(new \App\Events\NewMessage(Cmgmyr\Messenger\Models\Thread::find(1)));
+        //
+        $thread = \Cmgmyr\Messenger\Models\Thread::find(1);
+
+        App\User::find(1)->notify(new App\Notifications\NewMessage($thread));
+
+        //App\User::find(1)->notify(new  App\Notifications\NewMessage($thread));
+
+        //Notification::send($thread->participants, new  App\Notifications\NewMessage($thread));
         return 'fire';
         //use App\Events\NewMessageThread;
     });

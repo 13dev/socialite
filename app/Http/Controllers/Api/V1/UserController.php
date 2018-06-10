@@ -12,6 +12,7 @@ use App\Services\PostsGetter;
 use App\Transformers\PostTransformer;
 use App\Transformers\RePostTransformer;
 use App\Transformers\TimelineTransformer;
+use App\Transformers\NotificationTransformer;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -108,6 +109,21 @@ class UserController extends Controller
         return $response;
     }
 
+    public function notifications(int $id)
+    {
+        $user = User::find($id);
+        $authUser = Auth::guard('api')->user();
+
+        if(!$user || $user->id != $authUser->id)
+            abort(404);
+
+        return fractal($user->unreadNotifications, new NotificationTransformer())->toArray();
+    }
+
+    /**
+     * @param  int | user id
+     * @return array
+     */
     public function feed(int $id)
     {
         $user = User::find($id);

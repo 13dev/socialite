@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Transformers\PostTransformer;
 use App\Favorite;
 use App\RePost;
+use App\Notifications\NewPost as NewPostNotification;
 
 class PostController extends Controller
 {
@@ -61,6 +62,14 @@ class PostController extends Controller
         $post = Post::create(
             array_merge(['user_id' => $authUser->id], $data)
         );
+
+        // Send notification
+        $usersToNotify = $authUser->followers()
+            ->where('users.id', '!=', Auth::id())->get();
+
+        foreach ($usersToNotify as $user) {
+            $user->notify(new NewPostNotification($post));
+        }
 
         return json_encode(['success' => ($post) ?  true : false]);
     }

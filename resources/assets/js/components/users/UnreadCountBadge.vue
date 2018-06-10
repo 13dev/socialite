@@ -10,9 +10,13 @@
 		:spinner-padding="0"
 		:trigger.sync="trigger"
 		>
-		<span v-if="count != 0">
-			(<span class="badge badge-primary badge-pill unread">{{ count }}</span>)
-		</span>
+			<span v-if="count != 0" class="badge is-badge-success" :data-badge="count">
+				<b-icon icon="message-processing"></b-icon>
+			</span>
+			<span v-else>
+				<b-icon icon="message-text-outline"></b-icon>
+			</span>
+			Messages
 	</api-request>
 	</div>
 </template>
