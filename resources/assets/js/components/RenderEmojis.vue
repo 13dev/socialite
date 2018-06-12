@@ -58,22 +58,28 @@ export default {
 				if(children[i] !== null && typeof children[i] === 'object'){
 					// each emoji count as 2 chars
 					str_length += 2
+					if(str_length >= 18) {
+						//truncate string
+						for (var x = i; x < children.length; x++) {
+							children.splice(x, 1)
+						}
+
+						//Append tree dots.
+						children[i+1] = '...' 
+						break
+					}
 				}else if(children[i] !== null && typeof children[i] === 'string') {
 					str_length += children[i].length
-				}
+					if(str_length >= 18) {
+						//truncate string
+						children[i] = children[i].substring(0, 18)
 
-				if(str_length >= 18)
-				{
-					//truncate string
-					for (var x = i; x < children.length; x++) {
-						children.splice(x, 1)
+						//Append tree dots.
+						children[i+1] = '...' 
+						break
 					}
-
-					children[i+1] = '...' 
-					break
 				}
 			}
-			//this.$options.filters.truncate(children)
 		}
 		return h('p', {}, children)
 	}
