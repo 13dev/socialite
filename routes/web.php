@@ -12,5 +12,6 @@
 */
 
 Route::get('/', 'HomeController@show')->name('home');
+Route::get('about', 'HomeController@about')->name('about');
 
 Route::get('/u/{username}', 'UserController@show')->name('profile');

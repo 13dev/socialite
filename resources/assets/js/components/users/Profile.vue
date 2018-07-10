@@ -28,6 +28,10 @@
 							<div>Following</div>
 							<span>{{ user.count.following }}</span>
 						</div>
+						<div class="column item">
+							<follow-button :user-to-follow="user.id"></follow-button>
+							
+						</div>
 					</div>
 					<div class="column">
 						<div class="profile-content">

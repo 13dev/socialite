@@ -14,6 +14,12 @@ const api = {
 	userNotifications: (params = {}) => {
 		return axios.get(Vue.prototype.$baseApiUrl + '/user/' + params.id + '/notifications', params)
 	},
+	follow: (params = {}) => {
+		return axios.post(Vue.prototype.$baseApiUrl + '/user/' + params.id + '/follow', params)
+	},
+	userIsFollowing: (params = {}) => {
+		return axios.get(Vue.prototype.$baseApiUrl + '/user/' + params.id + '/follow', params)
+	},
 
 	// Messages
 	sendMessage: (params = {}) => {

@@ -15,6 +15,8 @@ Route::prefix('v1')->namespace('Api\V1')->group(function () {
     Route::get('user/{id}/timeline', 'UserController@timeline');
     Route::get('user/{id}/feed', 'UserController@feed');
     Route::get('user/{id}/notifications', 'UserController@notifications');
+    Route::post('user/{id}/follow', 'UserController@follow');
+    Route::get('user/{id}/follow', 'UserController@userIsFollowing');
 
     Route::get('posts/{id}', 'PostController@show');
     Route::post('posts', 'PostController@store');

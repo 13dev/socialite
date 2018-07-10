@@ -21,7 +21,7 @@
     </script>
     @endauth
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Socialite') }}</title>
 
     <!-- Styles -->
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
@@ -41,13 +41,13 @@
 
         @include('shared/navbar')
         
-        @include('shared/alerts')
 
         @yield('c-content')
 
         <div class="container">
             @yield('content')
         </div>
+        @include('shared/footer')
     </div>
 
     <!-- Scripts -->

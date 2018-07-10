@@ -16,6 +16,7 @@ use App\Transformers\NotificationTransformer;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\UserRelations;
 
 class UserController extends Controller
 {
@@ -118,6 +119,63 @@ class UserController extends Controller
             abort(404);
 
         return fractal($user->unreadNotifications, new NotificationTransformer())->toArray();
+    }
+
+    /**
+     * check if current user (auth user) is following the {$id} user.
+     * @param  int    $id user followed
+     * @return bool
+     */
+    public function userIsFollowing(int $id)
+    {
+        // User to follow
+        $user = User::find($id);
+        $authUser = Auth::guard('api')->user();
+
+        if(!$user)
+            abort(404);
+
+        //Is user already following ?
+        if($authUser->follows($user->id)) {
+           return response()->json(['is_following' => true]);
+        }
+
+        return response()->json(['is_following' => false]);
+    }
+
+    /**
+     * POST - follow/unfollow user
+     * @param  int    $id user to follow
+     * @return bolean     return if user is followed or not.
+     */
+    public function follow(int $id)
+    {
+        $user = User::find($id);
+        $authUser = Auth::guard('api')->user();
+
+        if(!$user)
+            abort(404);
+
+        //Is user already following ?
+        if($authUser->follows($user->id)) {
+            UserRelations::where([
+                'follower_id' => $authUser->id,
+                'followed_id' => $user->id,
+            ])->delete();
+
+            return response()->json(['is_following' => false]);
+        }
+
+        $follows = UserRelations::create([
+            'follower_id' => $authUser->id,
+            'followed_id' => $user->id,
+        ]);
+
+        if(!$follows)
+            return response()->json(['is_following' => false]);
+
+
+        return response()->json(['is_following' => true]);
     }
 
     /**

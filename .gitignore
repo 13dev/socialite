@@ -12,7 +12,7 @@
 .env
 .php_cs.cache
 /storage/debugbar
-/storage/framework/
+/storage/framework
 /storage/tmp
 /log
 /.phpintel/*

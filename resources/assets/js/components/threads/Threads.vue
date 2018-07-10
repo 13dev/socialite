@@ -6,7 +6,7 @@
 		v-model="response">
 		<article
 			v-if="response"
-			class="media thread p-l-10 p-t-5 p-b-5 m-0"
+			class="media thread p-l-10 p-t-10 p-b-10 m-0"
 			:class="{
 				'active-thread': selectedThread == thread.id, 
 				'thread-unread': thread.unreadmessagescount > 0
@@ -25,8 +25,14 @@
 			  </figure>
 			  <div class="media-content">
 			    <div class="content">
-			        <strong>{{ thread.subject | truncate(20) }}</strong>
-			        <br>
+			    	<div style="display:flex; justify-content: space-between;">
+			    		<div>
+			    			<strong>{{ thread.subject | truncate(20) }}</strong>
+			    		</div>
+			    		<div class="m-r-10 more">
+			    			<b-icon icon="chevron-down"></b-icon>
+			    		</div>
+			    	</div>
 			        <div style="display: flex; justify-content: space-between;">
 			        	<div>
 			        		<render-emojis :truncate="true" :size="18" :message="thread.last_message.body"></render-emojis>
@@ -149,6 +155,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.more i {
+	&:hover {
+		color: #b8b8b8;
+		cursor: pointer;
+	}
+	
+	color: #363636;
+}
+
 .notify-badge{
 	position: absolute;
 	right: -4px;
@@ -170,6 +186,7 @@ export default {
 		transition: color 0.4s ease;
 		color: #4b4848;
 	}
+	border-bottom: 1px solid #dddddd;
 }
 
 .thread-unread {

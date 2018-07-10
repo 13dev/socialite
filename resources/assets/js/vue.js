@@ -54,6 +54,7 @@ Vue.component('search-thread', require('./components/threads/Search.vue'))
 Vue.component('render-emojis', require('./components/RenderEmojis.vue'))
 Vue.component('feed', require('./components/Feed.vue'))
 Vue.component('notifications', require('./components/users/Notifications.vue'))
+Vue.component('follow-button', require('./components/users/FollowButton.vue'))
 Vue.component('vue-markdown', VueMarkdown)
 
 window.Event = new Vue()
