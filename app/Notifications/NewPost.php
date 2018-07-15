@@ -51,10 +51,10 @@ class NewPost extends Notification
     {
         return [
             'notification' => trans('notification.post.new', [ 
-                'from' => $notifiable->profile->display_name ?? $notifiable->username , 
-                'username' => $notifiable->username,
+                'from' => $this->post->user, 
+                'username' => $this->post->user->username,
             ]),
-            'from' => fractal($notifiable, new UserTransformer())->toArray(),
+            'from' => fractal($this->post->user, new UserTransformer())->toArray(),
             'post' => fractal($this->post, new PostTransformer())->toArray(),
             'created_at' => Carbon::now()->diffForHumans(),
         ];
