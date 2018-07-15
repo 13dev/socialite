@@ -35,20 +35,12 @@ Route::prefix('v1')->namespace('Api\V1')->group(function () {
         Route::apiResource('threads', 'ThreadController');
         Route::apiResource('threads.messages', 'ThreadMessageController')->only('index');
       
-        // Comments
-        Route::apiResource('comments', 'CommentController')->only('destroy');
-        Route::apiResource('posts.comments', 'PostCommentController')->only('store');
 
         // Users
         Route::apiResource('users', 'UserController')->only('update');
     });
     Route::post('/authenticate', 'Auth\AuthenticateController@authenticate')->name('authenticate');
-    // Comments
-    Route::apiResource('posts.comments', 'PostCommentController')->only('index');
-    Route::apiResource('users.comments', 'UserCommentController')->only('index');
-    Route::apiResource('comments', 'CommentController')->only(['index', 'show']);
     
-    Route::apiResource('users.posts', 'UserPostController')->only('index');
     // Users
     Route::apiResource('users', 'UserController')->only(['index', 'show']);
 });

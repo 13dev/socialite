@@ -1,36 +1,55 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Create a new message</h1>
-    <form action="{{ route('messages.store') }}" method="post">
+<div class="columns is-centered">
+    <div class="column is-half">
+
+        <h1 class="title">Create a new Group with your friends!</h1>
+        <hr>
+
+       <form action="{{ route('messages.store') }}" method="post">
         {{ csrf_field() }}
-        <div class="col-md-6">
-            <!-- Subject Form Input -->
-            <div class="form-group">
-                <label class="control-label">Subject</label>
-                <input type="text" class="form-control" name="subject" placeholder="Subject"
-                       value="{{ old('subject') }}">
-            </div>
 
-            <!-- Message Form Input -->
-            <div class="form-group">
-                <label class="control-label">Message</label>
-                <textarea name="message" class="form-control">{{ old('message') }}</textarea>
-            </div>
+        @if($users->count() > 0)
+         <b-field label="Recivers"
+            type="{{ ($errors->has('recipients') ? 'is-danger' : '') }}"
+            message="{{ $errors->first('recipients') }}">
 
-            @if($users->count() > 0)
-                <div class="checkbox">
-                    @foreach($users as $user)
-                        <label title="{{ $user->name }}"><input type="checkbox" name="recipients[]"
-                            value="{{ $user->id }}">{!!$user->name!!}</label>
-                    @endforeach
-                </div>
-            @endif
-    
-            <!-- Submit Form Input -->
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary form-control">Submit</button>
+            <div class="checkbox">
+                @foreach($users as $user)
+                    <div class="field m-r-5" style="display: inline-block;">
+                        <b-checkbox name="recipients[]" type="is-info" native-value="{!! $user->id !!}">{{ $user->name }}</b-checkbox>
+                    </div>
+                @endforeach
             </div>
-        </div>
-    </form>
-@stop
+            </b-field>
+        @endif
+
+        <b-field label="Subject"
+            type="{{ ($errors->has('subject') ? 'is-danger' : '') }}"
+            message="{{ $errors->first('subject') }}">
+            <b-input placeholder="Subject..."
+                type="text"
+                icon="border-color"
+                name="subject"
+                value="{{ old('subject') }}">
+            </b-input>
+        </b-field>
+
+        <b-field label="First Message"
+            type="{{ ($errors->has('message') ? 'is-danger' : '') }}"
+            message="{{ $errors->first('message') }}">
+            <b-input placeholder="First Message..."
+                type="text"
+                name="message"
+                icon="border-color" >
+            </b-input>
+        </b-field>
+        {!! Form::submit('Create!', ['class' => 'button is-primary']) !!}
+            </div>
+       </form>
+
+        <hr>
+    </div>
+</div>
+@endsection

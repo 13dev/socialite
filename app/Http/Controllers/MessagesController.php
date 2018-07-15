@@ -77,11 +77,18 @@ class MessagesController extends Controller
      *
      * @return mixed
      */
-    public function store()
+    public function store(Request $request)
     {
+        $input = $request->validate([
+            'subject' => 'required|max:20',
+            'message' => 'nullable',
+            'recipients' => 'required',
+        ]);
 
+        if(!isset($input['message'])){
+            $input['message'] =  'Hey! Welcome! :+1:';
+        }
 
-        $input = Input::all();
         $thread = Thread::create([
             'subject' => $input['subject'],
         ]);

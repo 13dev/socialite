@@ -35,6 +35,15 @@ class DatabaseSeeder extends Seeder
 
             $user->roles()->attach($role_admin->id);
         }
+        if (User::where('email', 'user@user.com')->doesntExist()) {
+            $user = User::create([
+                'name' => 'user',
+                'email' => 'user@user.com',
+                'username' => 'user',
+                'password' => 'secret'
+            ]);
+        }
+
 
         $this->call([ UsersTableSeeder::class]);
 

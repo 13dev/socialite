@@ -22,7 +22,7 @@
       </div>
       <!-- /content -->
       <footer class="card-footer">
-        <a href="#" class="card-footer-item">
+        <a href="{{ route('messages.create') }}" class="card-footer-item">
           <b-icon icon="message-plus" size="is-small"></b-icon>
           New Thread
         </a>

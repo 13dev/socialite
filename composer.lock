@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d2faf107bb99cbcd67e69d0d19832293",
+    "content-hash": "40081f9bf44f7d77fd4920e288a5e433",
     "packages": [
         {
             "name": "barryvdh/laravel-debugbar",
@@ -907,6 +907,49 @@
                 "trusted proxy"
             ],
             "time": "2018-02-07T20:20:57+00:00"
+        },
+        {
+            "name": "garygreen/pretty-routes",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/garygreen/pretty-routes.git",
+                "reference": "e0e4f13299992778c09cd8218db9c66e75899856"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/garygreen/pretty-routes/zipball/e0e4f13299992778c09cd8218db9c66e75899856",
+                "reference": "e0e4f13299992778c09cd8218db9c66e75899856",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "5.1.*|5.2.*|5.3.*|5.4.*|5.5.*|5.6.*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "PrettyRoutes\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PrettyRoutes\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gary Green",
+                    "email": "holegary@gmail.com"
+                }
+            ],
+            "description": "Pretty routes for Laravel 5.",
+            "time": "2018-02-07T23:42:57+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",

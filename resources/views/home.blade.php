@@ -4,13 +4,15 @@
 	@guest
 		<div class="container">
 			<div class="columns is-centered">
-				<div class="column is-half">
+				<div class="column is-half" style="text-align: center;">
 					<h3 class="title">Welcome to {{ config('app.name') }}</h3>
 					<hr>
-					<small class="subtitle">Connecting your friends around the world. 
-						<br> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Phasellus nec iaculis mauris. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Phasellus nec iaculis mauris.</small>
+					<a href="/">
+				      <img src="{{ asset('/assets/logo_big.png') }}" style="display: block;margin: 0 auto;" alt="Logo">
+				    </a>
+				    <br>
+					<small class="subtitle" style="display: block;margin: 0 auto;">Connecting your friends around the world. 
+						<br>A social network is a website that allows people with similar interests to come together and share information, photos and videos.</small>
 					<br/><br/>
 					<div style="display: flex;justify-content: space-around;">
 						 <p class="control">

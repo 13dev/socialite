@@ -1,52 +1,72 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row justify-content-md-center">
-    <div class="col-md-6 bg-white p-3 bb rounded">
-        <h1>@lang('auth.register')</h1>
+<div class="columns is-centered">
+    <div class="column is-half">
+
+        <h1 class="title">@lang('auth.register')</h1>
+        <hr>
 
         {!! Form::open(['route' => 'register', 'role' => 'form', 'method' => 'POST']) !!}
-            <div class="form-group">
-                {!! Form::label('name', __('validation.attributes.name'), ['class' => 'control-label']) !!}
-                {!! Form::text('name', old('name'), ['class' => 'form-control' . ($errors->has('name') ? ' is-invalid' : ''), 'required', 'autofocus']) !!}
+        <b-field label="Name"
+            type="{{ ($errors->has('name') ? 'is-danger' : '') }}"
+            message="{{ $errors->first('name') }}">
+            <b-input placeholder="Name"
+                type="text"
+                icon="border-color"
+                name="name"
+                value="{{ old('name') }}">
+            </b-input>
+        </b-field>
 
-                @if ($errors->has('name'))
-                    <span class="invalid-feedback">{{ $errors->first('name') }}</span>
-                @endif
+        <b-field label="Username"
+            type="{{ ($errors->has('username') ? 'is-danger' : '') }}"
+            message="{{ $errors->first('username') }}">
+            <b-input placeholder="Username"
+                type="text"
+                icon="border-color"
+                name="username"
+                value="{{ old('username') }}">
+            </b-input>
+        </b-field>
+
+        <b-field label="Email"
+            type="{{ ($errors->has('email') ? 'is-danger' : '') }}"
+            message="{{ $errors->first('email') }}">
+            <b-input placeholder="Email..."
+                type="email"
+                icon="at"
+                name="email"
+                value="{{ old('email') }}">
+            </b-input>
+        </b-field>
+
+        <b-field label="Password"
+            type="{{ ($errors->has('password') ? 'is-danger' : '') }}"
+            message="{{ $errors->first('password') }}">
+            <b-input placeholder="Password..."
+                type="password"
+                name="password"
+                icon="textbox-password" password-reveal>
+            </b-input>
+        </b-field>
+
+        <b-field label="Password Confirmation"
+            type="{{ ($errors->has('password_confirmation') ? 'is-danger' : '') }}"
+            message="{{ $errors->first('password_confirmation') }}">
+            <b-input placeholder="Password..."
+                type="password"
+                name="password_confirmation"
+                icon="textbox-password" password-reveal>
+            </b-input>
+        </b-field>
+
+        {!! Form::submit(__('auth.register'), ['class' => 'button is-primary']) !!}
             </div>
-
-            <div class="form-group">
-                {!! Form::label('email', __('validation.attributes.email'), ['class' => 'control-label']) !!}
-                {!! Form::email('email', old('email'), ['class' => 'form-control' . ($errors->has('email') ? ' is-invalid' : ''), 'required']) !!}
-
-                @if ($errors->has('email'))
-                    <span class="invalid-feedback">{{ $errors->first('email') }}</span>
-                @endif
-            </div>
-
-            <div class="form-group">
-                {!! Form::label('password', __('validation.attributes.password'), ['class' => 'control-label']) !!}
-                {!! Form::password('password', ['class' => 'form-control' . ($errors->has('password') ? ' is-invalid' : ''), 'required']) !!}
-
-                @if ($errors->has('password'))
-                    <span class="invalid-feedback">{{ $errors->first('password') }}</span>
-                @endif
-            </div>
-
-            <div class="form-group">
-                {!! Form::label('password_confirmation', __('validation.attributes.password_confirmation'), ['class' => 'control-label']) !!}
-                {!! Form::password('password_confirmation', ['class' => 'form-control' . ($errors->has('password_confirmation') ? ' is-invalid' : ''), 'required']) !!}
-
-                @if ($errors->has('password_confirmation'))
-                    <span class="invalid-feedback">{{ $errors->first('password_confirmation') }}</span>
-                @endif
-            </div>
-
-            <div class="form-group">
-                {!! Form::submit(__('auth.register'), ['class' => 'btn btn-primary']) !!}
-            </div>
-
         {!! Form::close() !!}
+
+        <hr>
     </div>
 </div>
 @endsection
+
