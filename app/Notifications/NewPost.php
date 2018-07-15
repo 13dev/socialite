@@ -51,7 +51,7 @@ class NewPost extends Notification
     {
         return [
             'notification' => trans('notification.post.new', [ 
-                'from' => $this->post->user, 
+                'from' => $this->post->user->name, 
                 'username' => $this->post->user->username,
             ]),
             'from' => fractal($this->post->user, new UserTransformer())->toArray(),
