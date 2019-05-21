@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Events\CommentPosted;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Api\CommentsRequest;
-use App\Http\Resources\Comment as CommentResource;
 use App\Post;
 use Illuminate\Http\Request;
+use App\Events\CommentPosted;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Api\CommentsRequest;
+use App\Http\Resources\Comment as CommentResource;
 
 class PostCommentController extends Controller
 {
@@ -38,7 +38,7 @@ class PostCommentController extends Controller
         $comment = new CommentResource(
             Auth::user()->comments()->create([
                 'post_id' => $post->id,
-                'content' => $request->input('content')
+                'content' => $request->input('content'),
             ])
         );
 

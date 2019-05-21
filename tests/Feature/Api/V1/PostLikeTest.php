@@ -3,8 +3,8 @@
 namespace Tests\Feature\Api\V1;
 
 use App\Post;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PostLikeTest extends TestCase
 {

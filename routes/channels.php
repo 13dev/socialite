@@ -3,7 +3,6 @@
 use App\Broadcasting\PostChannel;
 use App\Broadcasting\ThreadChannel;
 
-
 /*
 |--------------------------------------------------------------------------
 | Broadcast Channels

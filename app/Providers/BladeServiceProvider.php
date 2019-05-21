@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class BladeServiceProvider extends ServiceProvider
@@ -23,8 +22,6 @@ class BladeServiceProvider extends ServiceProvider
         Blade::if('profile', function ($user) {
             return Auth::check() && Auth::user()->id == $user->id;
         });
-
-        
     }
 
     /**

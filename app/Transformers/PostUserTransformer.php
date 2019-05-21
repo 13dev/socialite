@@ -26,7 +26,7 @@ class PostUserTransformer extends TransformerAbstract
             'author' => $this->user->id == $post->user->id,
             'reposted' => $this->user->reposted($post->id),
             'favorited' => $this->user->favorited($post->id),
-        
+
         ];
     }
 }

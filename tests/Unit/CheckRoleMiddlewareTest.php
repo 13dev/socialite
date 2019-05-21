@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CheckRoleMiddlewareTest extends TestCase
 {
@@ -22,6 +22,6 @@ class CheckRoleMiddlewareTest extends TestCase
             ->get('/admin/dashboard')
             ->assertRedirect('/');
 
-        $this->assertEquals(session('errors')->first(), "Not authorized.");
+        $this->assertEquals(session('errors')->first(), 'Not authorized.');
     }
 }

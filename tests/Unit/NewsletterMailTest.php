@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use App\Mail\Newsletter;
 use App\Post;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
+use App\Mail\Newsletter;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class NewsletterMailTest extends TestCase
 {

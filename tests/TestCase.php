@@ -11,7 +11,7 @@ abstract class TestCase extends BaseTestCase
     use CreatesApplication;
 
     /**
-     * Return an admin user
+     * Return an admin user.
      * @return User $admin
      */
     protected function admin($overrides = [])
@@ -25,7 +25,7 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Return an user
+     * Return an user.
      * @return User
      */
     protected function user($overrides = [])
@@ -34,7 +34,7 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Acting as an admin
+     * Acting as an admin.
      */
     protected function actingAsAdmin($api = null)
     {
@@ -44,7 +44,7 @@ abstract class TestCase extends BaseTestCase
     }
 
     /**
-     * Acting as an user
+     * Acting as an user.
      */
     protected function actingAsUser($api = null)
     {

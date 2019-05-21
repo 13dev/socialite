@@ -36,7 +36,7 @@ class Newsletter extends Mailable
                     ->view('emails.newsletter')
                     ->with([
                         'posts' => $this->posts,
-                        'email' => $this->email
+                        'email' => $this->email,
                     ]);
     }
 }

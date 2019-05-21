@@ -1,9 +1,9 @@
 <?php
 
-use Faker\Generator as Faker;
-use App\Image;
-use App\User;
 use App\Post;
+use App\User;
+use App\Image;
+use Faker\Generator as Faker;
 
 $factory->define(Image::class, function (Faker $faker) {
     return [
@@ -14,8 +14,8 @@ $factory->define(Image::class, function (Faker $faker) {
             return factory(Post::class)->create()->id;
         },
         'actual' => $faker->imageUrl(),
-        'large' => $faker->imageUrl(), 
-        'medium' => $faker->imageUrl(), 
+        'large' => $faker->imageUrl(),
+        'medium' => $faker->imageUrl(),
         'tiny' => $faker->imageUrl(),
         'small' => $faker->imageUrl(),
 

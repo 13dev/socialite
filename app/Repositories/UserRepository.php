@@ -2,12 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Exceptions\UserNotFoundException;
-
 use App\User;
 
-class UserRepository {
-
+class UserRepository
+{
     protected $user;
 
     public function __construct(User $user)
@@ -19,7 +17,7 @@ class UserRepository {
     {
         return $this->user->find($id);
     }
-    
+
     public function findByName($name)
     {
         return $this->user->where('name', $name)->first();

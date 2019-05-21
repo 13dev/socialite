@@ -2,9 +2,9 @@
 
 namespace App;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Cmgmyr\Messenger\Traits\Messagable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
@@ -16,9 +16,8 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'username', 'email', 'password', 'provider', 'provider_id', 'created_at', 'api_token'
+        'name', 'username', 'email', 'password', 'provider', 'provider_id', 'created_at', 'api_token',
     ];
-
 
     /**
      * The attributes that should be hidden for arrays.
@@ -31,61 +30,56 @@ class User extends Authenticatable
 
     public function follows($id)
     {
-        foreach ($this->following as $following)
-        {
-            if ($following->id == $id)
-            {
+        foreach ($this->following as $following) {
+            if ($following->id == $id) {
                 return true;
             }
         }
+
         return false;
     }
 
     public function muted($id)
     {
-        foreach ($this->mutes as $mutes)
-        {
-            if ($mutes->muted_id == $id)
-            {
+        foreach ($this->mutes as $mutes) {
+            if ($mutes->muted_id == $id) {
                 return true;
             }
         }
+
         return false;
     }
 
     public function favorited($id)
     {
-        foreach ($this->favorites as $favorite)
-        {
-            if ($favorite->post_id == $id)
-            {
+        foreach ($this->favorites as $favorite) {
+            if ($favorite->post_id == $id) {
                 return true;
             }
         }
+
         return false;
     }
 
     public function posted($id)
     {
-        foreach ($this->posts as $post)
-        {
-            if ($post->id == $id)
-            {
+        foreach ($this->posts as $post) {
+            if ($post->id == $id) {
                 return true;
             }
         }
+
         return false;
     }
 
     public function reposted($id)
     {
-        foreach ($this->reposts as $repost)
-        {
-            if ($repost->post_id == $id)
-            {
+        foreach ($this->reposts as $repost) {
+            if ($repost->post_id == $id) {
                 return true;
             }
         }
+
         return false;
     }
 
@@ -93,7 +87,7 @@ class User extends Authenticatable
     {
         $posts = $this->posts()->latest()->get();
         $reposts = $this->reposts()->latest()->get();
-        
+
         // problems ? use push()
         return $posts->merge($reposts);
     }
@@ -133,7 +127,6 @@ class User extends Authenticatable
         return $this->hasOne('App\Profile');
     }
 
-
     /**
      * Get the user's fullname titleized.
      *
@@ -148,10 +141,10 @@ class User extends Authenticatable
     {
         $available = false;
         if (isset($this->profile->display_name)
-            && !empty($this->profile->display_name))
-        {
+            && ! empty($this->profile->display_name)) {
             $available = true;
         }
+
         return $available ?
             $this->profile->display_name :
             $this->name;
@@ -160,26 +153,26 @@ class User extends Authenticatable
     public function getWebsiteLinkAttribute()
     {
         $link = $this->profile->website;
-        if (!preg_match('#^http(s)?://#', $link)) {
-            $link = 'http://' . $link;
+        if (! preg_match('#^http(s)?://#', $link)) {
+            $link = 'http://'.$link;
         }
+
         return $link;
     }
 
     public function getWebsiteAttribute()
     {
         $link = parse_url($this->website_link);
+
         return $link['host'];
     }
 
     public function profileImage($size = 'small')
     {
         $webpath = 'images/avatar/no-avatar.png';
-        try
-        {
+        try {
             $contents = null;
-            switch ($size)
-            {
+            switch ($size) {
                 case 'small':
                     $contents = explode('/', $this->profile->image->small);
                     break;
@@ -189,7 +182,7 @@ class User extends Authenticatable
                 case 'medium':
                     $contents = explode('/', $this->profile->image->medium);
                     break;
-                case 'large';
+                case 'large':
                     $contents = explode('/', $this->profile->image->large);
                     break;
                 case 'actual':
@@ -200,11 +193,11 @@ class User extends Authenticatable
             $filename = array_pop($contents);
             $directory = array_pop($contents);
             $webpath = implode('/', ['images', $directory, $filename]);
+        } catch (\ErrorException $e) {
         }
-        catch (\ErrorException $e) {}
+
         return $webpath;
     }
-
 
     /**
      * Encrypt the user's password.
@@ -254,12 +247,11 @@ class User extends Authenticatable
         });
     }
 
-
     /**
-     * Check if the user has a role
+     * Check if the user has a role.
      *
      * @param string $role
-     * @return boolean
+     * @return bool
      */
     public function hasRole($role): bool
     {
@@ -267,18 +259,17 @@ class User extends Authenticatable
     }
 
     /**
-     * Check if the user has role admin
+     * Check if the user has role admin.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAdmin(): bool
     {
         return $this->hasRole(Role::ROLE_ADMIN);
     }
 
-
     /**
-     * Return the user's roles
+     * Return the user's roles.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

@@ -25,7 +25,7 @@ class CommentsRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'posted_at' => Carbon::parse($this->input('posted_at'))
+            'posted_at' => Carbon::parse($this->input('posted_at')),
         ]);
     }
 
@@ -38,8 +38,8 @@ class CommentsRequest extends FormRequest
     {
         return [
             'content' => 'required',
-            'posted_at' => 'required|after_or_equal:' . $this->comment->post->posted_at,
-            'author_id' => 'required|exists:users,id'
+            'posted_at' => 'required|after_or_equal:'.$this->comment->post->posted_at,
+            'author_id' => 'required|exists:users,id',
         ];
     }
 }

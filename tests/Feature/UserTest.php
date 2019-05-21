@@ -2,12 +2,11 @@
 
 namespace Tests\Feature;
 
-use App\Comment;
-
 use App\Post;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Hash;
+use App\Comment;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
@@ -93,7 +92,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * Valid params for updating or creating a resource
+     * Valid params for updating or creating a resource.
      *
      * @param  array  $overrides new params
      * @return array  Valid params for updating or creating a resource
@@ -107,7 +106,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * Valid params for updating or creating a resource's password
+     * Valid params for updating or creating a resource's password.
      *
      * @param  array  $overrides new params
      * @return array  Valid params for updating or creating a resource
@@ -117,7 +116,7 @@ class UserTest extends TestCase
         return array_merge([
             'current_password' => '4_n3w_h0p3',
             'password' => '7h3_3mp1r3_57r1k35_b4ck',
-            'password_confirmation' => '7h3_3mp1r3_57r1k35_b4ck'
+            'password_confirmation' => '7h3_3mp1r3_57r1k35_b4ck',
         ], $overrides);
     }
 }

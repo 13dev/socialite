@@ -4,8 +4,8 @@ namespace Tests\Unit;
 
 use App\Like;
 use App\Post;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LikeableTest extends TestCase
 {

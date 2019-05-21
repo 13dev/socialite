@@ -2,8 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Profile;
-
-class ProfileRepository {
+class ProfileRepository
+{
     protected $repo;
 }

@@ -5,7 +5,6 @@ namespace App\Transformers;
 use App\Post;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use League\Fractal\Resource\Primitive;
 use League\Fractal\TransformerAbstract;
 
 class PostTransformer extends TransformerAbstract
@@ -13,7 +12,6 @@ class PostTransformer extends TransformerAbstract
     protected $defaultIncludes = ['user'];
 
     protected $availableIncludes = ['me'];
-    
 
     /**
      * A Fractal transformer.
@@ -27,7 +25,7 @@ class PostTransformer extends TransformerAbstract
             'post' => $post->post,
             'created_at' => [
                 'timestamp' => optional($post->created_at)->timestamp,
-                'humans' => optional($post->created_at)->diffForHumans()
+                'humans' => optional($post->created_at)->diffForHumans(),
             ],
             'count' => [
                 'favorites' => $post->favorites()->count(),
@@ -46,13 +44,12 @@ class PostTransformer extends TransformerAbstract
     {
         $user = Auth::guard('api')->user();
 
-        if(!$user)
+        if (! $user) {
             return $this->null();
+        }
 
-        return $this->item($post, 
+        return $this->item($post,
             new PostUserTransformer($user)
         );
-
     }
-
 }

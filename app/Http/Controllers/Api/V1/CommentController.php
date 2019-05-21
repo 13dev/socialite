@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Comment;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Comment as CommentResource;
-use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {

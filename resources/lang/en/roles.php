@@ -2,6 +2,6 @@
 
 return [
   'none' => 'None',
-  'admin' => "Administrator",
-  'editor' => "Editor",
+  'admin' => 'Administrator',
+  'editor' => 'Editor',
 ];

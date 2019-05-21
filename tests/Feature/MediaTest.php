@@ -3,11 +3,10 @@
 namespace Tests\Feature;
 
 use App\Media;
-
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class MediaTest extends TestCase
 {
@@ -18,7 +17,7 @@ class MediaTest extends TestCase
         $filename = UploadedFile::fake()->image('file.png')->store('/');
         $media = factory(Media::class)->create([
             'filename' => $filename,
-            'original_filename' => 'file.png'
+            'original_filename' => 'file.png',
         ]);
 
         $this->get("/media/{$filename}")

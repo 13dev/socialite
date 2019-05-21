@@ -9,12 +9,12 @@ class Profile extends Model
     protected $table = 'user_profiles';
 
     protected $fillable = [
-    	'user_id', 
-    	'display_name', 
-    	'tagline', 
-    	'location', 
-    	'website', 
-    	'image_id'
+        'user_id',
+        'display_name',
+        'tagline',
+        'location',
+        'website',
+        'image_id',
     ];
 
     public function user()

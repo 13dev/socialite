@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\User;
 use App\Comment;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\CommentsRequest;
-use App\User;
 
 class CommentController extends Controller
 {
@@ -17,7 +17,7 @@ class CommentController extends Controller
     public function index()
     {
         return view('admin.comments.index', [
-            'comments' => Comment::with('post', 'author')->latest()->paginate(50)
+            'comments' => Comment::with('post', 'author')->latest()->paginate(50),
         ]);
     }
 
@@ -28,7 +28,7 @@ class CommentController extends Controller
     {
         return view('admin.comments.edit', [
             'comment' => $comment,
-            'users' => User::pluck('name', 'id')
+            'users' => User::pluck('name', 'id'),
         ]);
     }
 

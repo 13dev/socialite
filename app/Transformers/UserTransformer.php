@@ -10,6 +10,7 @@ class UserTransformer extends TransformerAbstract
     protected $availableIncludes = ['roles', 'posts'];
 
     protected $defaultIncludes = ['count'];
+
     /**
      * A Fractal transformer.
      *
@@ -32,6 +33,7 @@ class UserTransformer extends TransformerAbstract
     public function includePosts(User $user)
     {
         $posts = $user->posts;
+
         return $this->collection($posts, new PostTransformer);
     }
 
@@ -39,5 +41,4 @@ class UserTransformer extends TransformerAbstract
     {
         return $this->item($user, new UserCountTransformer);
     }
-
 }

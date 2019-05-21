@@ -11,7 +11,7 @@ return [
   'new_users' => 'nouvel utilisateur|nouveaux utilisateurs',
   'count' => ':count utilisateur|:count utilisateurs',
   'api_token' => "Clé d'API",
-  'security' => "Sécurité",
+  'security' => 'Sécurité',
 
   'attributes' => [
     'name' => 'Nom',
@@ -21,7 +21,7 @@ return [
     'password_confirmation' => 'Confirmation du mot de passe',
     'roles' => 'Rôles',
     'registered_at' => 'Enregistré le',
-    'api_token' => "Clé d'API"
+    'api_token' => "Clé d'API",
   ],
 
   'placeholder' => [
@@ -29,6 +29,6 @@ return [
     'email' => 'Votre email',
     'current_password' => 'Votre mot de passe actuel',
     'password' => 'Votre nouveau mot de passe',
-    'password_confirmation' => 'Confirmation du nouveau mot de passe'
-  ]
+    'password_confirmation' => 'Confirmation du nouveau mot de passe',
+  ],
 ];

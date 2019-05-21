@@ -16,7 +16,7 @@ class RoleTransformer extends TransformerAbstract
     {
         return [
             'id' => $role->id,
-            'name' => $role->name
+            'name' => $role->name,
         ];
     }
 }

@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Cmgmyr\Messenger\Models\Thread;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Thread as ThreadResource;
-use App\Http\Resources\Message as MessageResource;
-
 
 class ThreadController extends Controller
 {
@@ -66,5 +64,4 @@ class ThreadController extends Controller
     {
         //
     }
-
 }

@@ -13,8 +13,7 @@ class CreateMutedTable extends Migration
      */
     public function up()
     {
-        Schema::create('muted', function(Blueprint $table)
-        {
+        Schema::create('muted', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->integer('muted_id')->unsigned();
