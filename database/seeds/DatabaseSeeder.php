@@ -1,10 +1,10 @@
 <?php
 
 use App\Role;
-use App\Token;
 use App\User;
-use Illuminate\Database\Seeder;
+use App\Token;
 use App\Profile;
+use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
                 'name' => 'admin',
                 'email' => 'admin@admin.com',
                 'username' => 'admin',
-                'password' => 'secret'
+                'password' => 'secret',
             ]);
 
             // Create user profile
@@ -40,16 +40,15 @@ class DatabaseSeeder extends Seeder
                 'name' => 'user',
                 'email' => 'user@user.com',
                 'username' => 'user',
-                'password' => 'secret'
+                'password' => 'secret',
             ]);
         }
 
-
-        $this->call([ UsersTableSeeder::class]);
+        $this->call([UsersTableSeeder::class]);
 
         // API tokens
         User::where('api_token', null)->get()->each->update([
-            'api_token' => Token::generate()
+            'api_token' => Token::generate(),
         ]);
     }
 }

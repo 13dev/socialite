@@ -15,7 +15,6 @@ class ThreadChannel
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -26,7 +25,8 @@ class ThreadChannel
      */
     public function join(User $user, Thread $thread)
     {
-        if($thread->hasParticipant($user->id))
-        return new UserResource($user);
+        if ($thread->hasParticipant($user->id)) {
+            return new UserResource($user);
+        }
     }
 }

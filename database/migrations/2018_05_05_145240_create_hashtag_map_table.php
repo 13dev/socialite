@@ -13,8 +13,7 @@ class CreateHashtagMapTable extends Migration
      */
     public function up()
     {
-        Schema::create('hashtag_map', function(Blueprint $table)
-        {
+        Schema::create('hashtag_map', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('hashtag_id')->unsigned();
             $table->integer('post_id')->unsigned();

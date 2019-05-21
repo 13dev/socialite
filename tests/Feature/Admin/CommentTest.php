@@ -2,12 +2,11 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Comment;
-
 use App\Post;
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Comment;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CommentTest extends TestCase
 {
@@ -54,7 +53,7 @@ class CommentTest extends TestCase
         $comment = factory(Comment::class)->create(['post_id' => $post->id]);
         $params = $this->validParams([
             'post_id' => $post->id,
-            'posted_at' => $post->posted_at->addDay()->format('Y-m-d\TH:i')
+            'posted_at' => $post->posted_at->addDay()->format('Y-m-d\TH:i'),
         ]);
 
         $this->actingAsAdmin()
@@ -72,7 +71,7 @@ class CommentTest extends TestCase
         $comment = factory(Comment::class)->create(['post_id' => $post->id]);
         $params = $this->validParams([
             'post_id' => $post->id,
-            'posted_at' => $post->posted_at->subDay()->format('Y-m-d\TH:i')
+            'posted_at' => $post->posted_at->subDay()->format('Y-m-d\TH:i'),
         ]);
 
         $this->actingAsAdmin()
@@ -97,7 +96,7 @@ class CommentTest extends TestCase
     }
 
     /**
-     * Valid params for updating or creating a resource
+     * Valid params for updating or creating a resource.
      *
      * @param  array $overrides new params
      * @return array Valid params for updating or creating a resource
@@ -107,7 +106,7 @@ class CommentTest extends TestCase
         $post = factory(Post::class)->create();
 
         return array_merge([
-            'content' => "Great article ! Thanks for sharing it with us.",
+            'content' => 'Great article ! Thanks for sharing it with us.',
             'posted_at' => $post->posted_at->addDay()->format('Y-m-d\TH:i'),
             'post_id' => $post->id,
             'author_id' => factory(User::class)->create()->id,

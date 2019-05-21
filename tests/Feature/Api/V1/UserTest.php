@@ -2,12 +2,12 @@
 
 namespace Tests\Feature\Api\V1;
 
-use App\Comment;
 use App\Post;
 use App\Role;
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Comment;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
@@ -35,8 +35,8 @@ class UserTest extends TestCase
                     'posts_count',
                     'roles' => [[
                         'id',
-                        'name'
-                    ]]
+                        'name',
+                    ]],
                 ]],
                 'links' => [
                     'first',
@@ -52,7 +52,7 @@ class UserTest extends TestCase
                     'per_page',
                     'to',
                     'total',
-                ]
+                ],
             ]);
     }
 
@@ -79,9 +79,9 @@ class UserTest extends TestCase
                     'posts_count',
                     'roles' => [[
                         'id',
-                        'name'
-                    ]]
-                ]
+                        'name',
+                    ]],
+                ],
             ])
             ->assertJson([
                 'data' => [
@@ -95,8 +95,8 @@ class UserTest extends TestCase
                     'posts_count' => 2,
                     'roles' => [[
                         'id' => $role->id,
-                        'name' => 'editor'
-                    ]]
+                        'name' => 'editor',
+                    ]],
                 ],
             ]);
     }
@@ -118,7 +118,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * Valid params for updating or creating a resource
+     * Valid params for updating or creating a resource.
      *
      * @param  array $overrides new params
      * @return array Valid params for updating or creating a resource

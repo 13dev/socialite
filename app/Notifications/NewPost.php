@@ -2,17 +2,12 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
-use App\User;
 use App\Post;
-use Cmgmyr\Messenger\Models\Thread;
-use Auth;
-use App\Transformers\UserTransformer;
-use App\Transformers\PostTransformer;
 use Carbon\Carbon;
+use Illuminate\Bus\Queueable;
+use App\Transformers\PostTransformer;
+use App\Transformers\UserTransformer;
+use Illuminate\Notifications\Notification;
 
 class NewPost extends Notification
 {
@@ -50,8 +45,8 @@ class NewPost extends Notification
     public function toArray($notifiable)
     {
         return [
-            'notification' => trans('notification.post.new', [ 
-                'from' => $this->post->user->name, 
+            'notification' => trans('notification.post.new', [
+                'from' => $this->post->user->name,
                 'username' => $this->post->user->username,
             ]),
             'from' => fractal($this->post->user, new UserTransformer())->toArray(),

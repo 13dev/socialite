@@ -3,12 +3,13 @@
 namespace App\Policies;
 
 use App\User;
-use Illuminate\Auth\Access\HandlesAuthorization;
 use Cmgmyr\Messenger\Models\Message;
+use Illuminate\Auth\Access\HandlesAuthorization;
 
 class MessagePolicy
 {
     use HandlesAuthorization;
+
     /**
      * Determine whether the user is admin for all authorization.
      */
@@ -24,11 +25,10 @@ class MessagePolicy
      *
      * @param  \App\User  $user
      * @param  \App\Comment  $message
-     * @return boolean
+     * @return bool
      */
     public function store(User $user, Message $message): bool
     {
         return $message->thread->hasParticipant($user->id);
     }
-
 }

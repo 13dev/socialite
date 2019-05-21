@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-class PostParser {
-
-    private $mentionMark = "@";
-    private $hashtagMark = "#";
+class PostParser
+{
+    private $mentionMark = '@';
+    private $hashtagMark = '#';
 
     public function mentionsIn($post)
     {
@@ -21,6 +21,7 @@ class PostParser {
     {
         $linkUrls = $this->linkUrls($post);
         $mentionsLinked = $this->linkMentions($linkUrls);
+
         return $this->linkHashtags($mentionsLinked);
     }
 
@@ -28,18 +29,17 @@ class PostParser {
     {
         $postArray = explode(' ', $post);
         $newPost = [];
-        foreach ($postArray as $section)
-        {
-            if (filter_var($section, FILTER_VALIDATE_URL))
-            {
+        foreach ($postArray as $section) {
+            if (filter_var($section, FILTER_VALIDATE_URL)) {
                 $temp = $section;
-                if (!preg_match('#^http(s)?://#', $section)) {
-                    $section = 'http://' . $section;
+                if (! preg_match('#^http(s)?://#', $section)) {
+                    $section = 'http://'.$section;
                 }
                 $section = "<a href=\"{$section}\" target=\"_blank\">{$temp}</a>";
             }
             array_push($newPost, $section);
         }
+
         return implode(' ', $newPost);
     }
 
@@ -57,32 +57,30 @@ class PostParser {
     {
         $postArray = explode(' ', $post);
         $newPost = [];
-        $url = $url === '' ? $url : '/' .  $url;
-        foreach ($postArray as $section)
-        {
+        $url = $url === '' ? $url : '/'.$url;
+        foreach ($postArray as $section) {
             $firstLetter = substr($section, 0, 1);
-            if ($firstLetter == $checkFor)
-            {
+            if ($firstLetter == $checkFor) {
                 $chop = substr($section, 1, strlen($section));
                 $section = "<span class=\"primary-blue\">{$checkFor}</span><a href=\"{$url}/{$chop}\">{$chop}</a>";
             }
             array_push($newPost, $section);
         }
+
         return implode(' ', $newPost);
     }
-    
+
     private function parse($post, $checkFor)
     {
         $section = explode(' ', $post);
         $list = [];
-        foreach ($section as $subsection)
-        {
+        foreach ($section as $subsection) {
             $firstLetter = substr($subsection, 0, 1);
-            if ($firstLetter == $checkFor)
-            {
+            if ($firstLetter == $checkFor) {
                 $list[] = substr($subsection, 1, strlen($subsection));
             }
         }
+
         return $list;
     }
 }

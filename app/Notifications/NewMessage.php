@@ -2,22 +2,19 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\BroadcastMessage;
 use App\User;
-use Cmgmyr\Messenger\Models\Thread;
-use Auth;
-use App\Transformers\UserTransformer;
-use App\Transformers\NotificationTransformer;
 use Carbon\Carbon;
+use Illuminate\Bus\Queueable;
+use Cmgmyr\Messenger\Models\Thread;
+use App\Transformers\UserTransformer;
+use Illuminate\Notifications\Notification;
 
 class NewMessage extends Notification
 {
     use Queueable;
 
-    private $conv, $user;
+    private $conv;
+    private $user;
 
     /**
      * Create a new notification instance.
@@ -28,7 +25,7 @@ class NewMessage extends Notification
     {
         $this->conv = $conv;
         $this->user = $user;
-    }   
+    }
 
     /**
      * Get the notification's delivery channels.
@@ -49,18 +46,15 @@ class NewMessage extends Notification
      */
     public function toArray($notifiable)
     {
-
         return [
-            'notification' => trans('notification.message.new', [ 
-                'from' => $this->user->profile->display_name ?? $this->user->name, 
+            'notification' => trans('notification.message.new', [
+                'from' => $this->user->profile->display_name ?? $this->user->name,
                 'username' => $this->user->username,
-                'conv' => $this->conv->subject 
+                'conv' => $this->conv->subject,
             ]),
             'from' => fractal($this->user, new UserTransformer())->toArray(),
             'conv' => $this->conv->subject,
-            'created_at' => Carbon::now()->diffForHumans()
+            'created_at' => Carbon::now()->diffForHumans(),
         ];
-
     }
-
 }

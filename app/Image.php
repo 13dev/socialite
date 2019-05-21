@@ -9,8 +9,8 @@ class Image extends Model
     protected $table = 'images';
 
     protected $fillable = [
-    	'user_id', 'post_id', 'actual', 'large',
-        'medium', 'small', 'tiny'
+        'user_id', 'post_id', 'actual', 'large',
+        'medium', 'small', 'tiny',
     ];
 
     public function user()

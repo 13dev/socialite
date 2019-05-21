@@ -2,23 +2,22 @@
 
 namespace App\Events;
 
+use Cmgmyr\Messenger\Models\Thread;
 use Illuminate\Broadcasting\Channel;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Cmgmyr\Messenger\Models\Thread;
-use Illuminate\Support\Facades\Auth;
 
 class NewMessage implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * Thread new message
-     * @var 
+     * Thread new message.
+     * @var
      */
     private $thread;
 
@@ -44,17 +43,18 @@ class NewMessage implements ShouldBroadcast
         foreach ($this->thread->users as $user) {
 
             // skip the current user
-            if($authUser->id == $user->id)
+            if ($authUser->id == $user->id) {
                 continue;
+            }
 
-            $channels[] = new PrivateChannel('messages.' . $user->id);
+            $channels[] = new PrivateChannel('messages.'.$user->id);
         }
 
         return $channels;
     }
 
     /**
-     * Event Alias
+     * Event Alias.
      * @return string channel name
      */
     public function broadcastAs()
@@ -65,8 +65,7 @@ class NewMessage implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            'convid' => $this->thread->id
+            'convid' => $this->thread->id,
         ];
     }
-
 }

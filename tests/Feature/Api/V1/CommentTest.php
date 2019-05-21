@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\Api\V1;
 
-use App\Comment;
 use App\Post;
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Comment;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CommentTest extends TestCase
 {
@@ -24,7 +24,7 @@ class CommentTest extends TestCase
                     'content',
                     'posted_at',
                     'author_id',
-                    'post_id'
+                    'post_id',
                 ]],
                 'links' => [
                     'first',
@@ -40,7 +40,7 @@ class CommentTest extends TestCase
                     'per_page',
                     'to',
                     'total',
-                ]
+                ],
             ]);
     }
 
@@ -74,7 +74,7 @@ class CommentTest extends TestCase
                     'per_page',
                     'to',
                     'total',
-                ]
+                ],
             ])
             ->assertJsonFragment([
                 'current_page' => 1,
@@ -82,7 +82,7 @@ class CommentTest extends TestCase
                 'last_page' => 1,
                 'per_page' => 20,
                 'to' => 10,
-                'total' => 10
+                'total' => 10,
             ]);
     }
 
@@ -116,7 +116,7 @@ class CommentTest extends TestCase
                     'per_page',
                     'to',
                     'total',
-                ]
+                ],
             ])
             ->assertJsonFragment([
                 'current_page' => 1,
@@ -124,7 +124,7 @@ class CommentTest extends TestCase
                 'last_page' => 1,
                 'per_page' => 20,
                 'to' => 10,
-                'total' => 10
+                'total' => 10,
             ]);
     }
 
@@ -140,17 +140,17 @@ class CommentTest extends TestCase
     public function testStoreFail()
     {
         $this->actingAsUser('api')
-            ->json('POST', "/api/v1/posts/31415/comments", $this->validParams())
+            ->json('POST', '/api/v1/posts/31415/comments', $this->validParams())
             ->assertStatus(404)
             ->assertJson([
-                'message' => 'No query results for model [App\\Post].'
+                'message' => 'No query results for model [App\\Post].',
             ]);
     }
 
     public function testCommentShow()
     {
         $comment = factory(Comment::class)->create([
-            'content' => 'The Empire Strikes Back'
+            'content' => 'The Empire Strikes Back',
         ]);
 
         $this->json('GET', "/api/v1/comments/{$comment->id}")
@@ -176,7 +176,7 @@ class CommentTest extends TestCase
                     'author_id' => $comment->author_id,
                     'post_id' => $comment->post_id,
                     'author_name' => $comment->author->name,
-                    'can_delete' => false
+                    'can_delete' => false,
                 ],
             ]);
     }
@@ -186,7 +186,7 @@ class CommentTest extends TestCase
         $this->json('GET', '/api/v1/comments/31415')
             ->assertStatus(404)
             ->assertJson([
-                'message' => 'No query results for model [App\\Comment].'
+                'message' => 'No query results for model [App\\Comment].',
             ]);
     }
 
@@ -205,7 +205,7 @@ class CommentTest extends TestCase
             ->json('DELETE', '/api/v1/comments/31415')
             ->assertStatus(404)
             ->assertJson([
-                'message' => 'No query results for model [App\\Comment].'
+                'message' => 'No query results for model [App\\Comment].',
             ]);
     }
 
@@ -217,7 +217,7 @@ class CommentTest extends TestCase
             ->json('DELETE', "/api/v1/comments/{$comment->id}")
             ->assertStatus(403)
             ->assertJson([
-                'message' => 'This action is unauthorized.'
+                'message' => 'This action is unauthorized.',
             ]);
     }
 
@@ -227,12 +227,12 @@ class CommentTest extends TestCase
         $this->json('DELETE', "/api/v1/comments/{$comment->id}")
             ->assertStatus(401)
             ->assertJson([
-                'message' => 'Unauthenticated.'
+                'message' => 'Unauthenticated.',
             ]);
     }
 
     /**
-     * Valid params for updating or creating a resource
+     * Valid params for updating or creating a resource.
      *
      * @param  array $overrides new params
      * @return array Valid params for updating or creating a resource

@@ -2,10 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\NewsletterSubscription;
-
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\NewsletterSubscription;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class NewsletterSubscriptionTest extends TestCase
 {
@@ -62,7 +61,7 @@ class NewsletterSubscriptionTest extends TestCase
     }
 
     /**
-     * Valid params for updating or creating a resource
+     * Valid params for updating or creating a resource.
      *
      * @param  array $overrides new params
      * @return array Valid params for updating or creating a resource
@@ -70,7 +69,7 @@ class NewsletterSubscriptionTest extends TestCase
     private function validParams($overrides = [])
     {
         return array_merge([
-            'email' => 'test@test.test'
+            'email' => 'test@test.test',
         ], $overrides);
     }
 }

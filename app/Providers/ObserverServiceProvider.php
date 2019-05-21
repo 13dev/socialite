@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use App\Comment;
-use App\Observers\UserObserver;
-use App\Post;
 use App\User;
+use App\Observers\UserObserver;
 use Illuminate\Support\ServiceProvider;
 
 class ObserverServiceProvider extends ServiceProvider

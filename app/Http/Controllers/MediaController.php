@@ -7,7 +7,7 @@ use App\Media;
 class MediaController extends Controller
 {
     /**
-     * @param  String $medium
+     * @param  string $medium
      * @return Response
      */
     public function show(String $medium)
@@ -16,7 +16,7 @@ class MediaController extends Controller
 
         $headers = [
             'Content-Type' => $media->mime_type,
-            'Content-Disposition' => "filename='{$media->original_filename}'"
+            'Content-Disposition' => "filename='{$media->original_filename}'",
         ];
 
         return response()->file($media->getPath(), $headers);

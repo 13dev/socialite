@@ -2,19 +2,16 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
+use Cmgmyr\Messenger\Models\Thread;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Cmgmyr\Messenger\Models\Thread;
 
 class NewMessageThread implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
 
     private $thread;
 
@@ -36,7 +33,7 @@ class NewMessageThread implements ShouldBroadcast
     public function broadcastOn()
     {
         foreach ($this->thread->users as $user) {
-            $channels[] = new PrivateChannel('messages.' . $user->id);
+            $channels[] = new PrivateChannel('messages.'.$user->id);
         }
 
         return $channels;
@@ -44,22 +41,21 @@ class NewMessageThread implements ShouldBroadcast
 
     /**
      * Alias event name.
-     * @return string 
+     * @return string
      */
     public function broadcastAs()
     {
         return 'new.message.thread';
     }
 
-
     /**
-     * Data sould pass on event
-     * @return Array
+     * Data sould pass on event.
+     * @return array
      */
     public function broadcastWith()
     {
         return [
-            'convid' => $this->thread->id
+            'convid' => $this->thread->id,
         ];
     }
 }

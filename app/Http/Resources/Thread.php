@@ -2,11 +2,8 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Http\Resources\Json\Resource;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Resources\Json\ResourceCollection;
-use Cmgmyr\Messenger\Models\Thread as ThreadModel;
+use Illuminate\Http\Resources\Json\Resource;
 use App\Http\Resources\Message as MessageResource;
 
 class Thread extends Resource
@@ -21,7 +18,7 @@ class Thread extends Resource
     {
         $user = Auth::guard('api')->user();
 
-        return [          
+        return [
             'id' => $this->id,
             'subject' => $this->subject,
             'created_at' => $this->created_at->diffForHumans(null, false, true),
