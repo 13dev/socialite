@@ -4,8 +4,8 @@ namespace Tests\Feature\Api\V1\Auth;
 
 use App\Role;
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AuthenticateTest extends TestCase
 {
@@ -19,7 +19,7 @@ class AuthenticateTest extends TestCase
 
         $res = $this->json('POST', '/api/v1/authenticate', [
                 'email' => 'anakin@skywalker.st',
-                'password' => '4nak1n'
+                'password' => '4nak1n',
             ])
             ->assertStatus(200)
             ->assertJsonStructure([
@@ -34,12 +34,12 @@ class AuthenticateTest extends TestCase
                     'posts_count',
                     'roles' => [[
                         'id',
-                        'name'
-                    ]]
+                        'name',
+                    ]],
                 ],
                 'meta' => [
-                    'access_token'
-                ]
+                    'access_token',
+                ],
             ]);
     }
 
@@ -52,11 +52,11 @@ class AuthenticateTest extends TestCase
 
         $this->json('POST', '/api/v1/authenticate', [
                 'email' => 'anakin@skywalker.st',
-                'password' => 'Luk3'
+                'password' => 'Luk3',
             ])
             ->assertStatus(401)
             ->assertJson([
-                'message' => 'This action is unauthorized.'
+                'message' => 'This action is unauthorized.',
             ]);
     }
 }

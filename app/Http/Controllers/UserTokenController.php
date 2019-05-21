@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Token;
 use App\User;
+use App\Token;
 
 class UserTokenController extends Controller
 {
@@ -31,7 +31,7 @@ class UserTokenController extends Controller
         $this->authorize('api_token', $user);
 
         $user->update([
-            'api_token' => Token::generate()
+            'api_token' => Token::generate(),
         ]);
 
         return redirect()->route('users.token')->withSuccess(__('tokens.updated'));

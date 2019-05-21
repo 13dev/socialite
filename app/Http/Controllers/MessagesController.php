@@ -2,24 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\User;
 use Carbon\Carbon;
-use Cmgmyr\Messenger\Models\Message;
-use Cmgmyr\Messenger\Models\Participant;
+use App\Events\NewMessage;
+use App\Events\NewMessageThread;
 use Cmgmyr\Messenger\Models\Thread;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Cmgmyr\Messenger\Models\Message;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
-use App\Events\NewMessage;
-use App\Events\NewMessageThread;
+use Cmgmyr\Messenger\Models\Participant;
 use App\Http\Resources\Thread as ThreadResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class MessagesController extends Controller
 {
-     /**
+    /**
      * Show all of the message threads to the user.
      *
      * @return mixed
@@ -34,6 +32,7 @@ class MessagesController extends Controller
         // $threads = Thread::forUserWithNewMessages(Auth::id())->latest('updated_at')->get();
         return view('messenger.index');
     }
+
     /**
      * Shows a message thread.
      *
@@ -45,11 +44,12 @@ class MessagesController extends Controller
         try {
             $thread = Thread::findOrFail($id);
 
-            if(!$thread->hasParticipant(Auth::id()))
+            if (! $thread->hasParticipant(Auth::id())) {
                 return redirect()->route('messages');
-                
+            }
         } catch (ModelNotFoundException $e) {
-            Session::flash('error_message', 'The thread with ID: ' . $id . ' was not found.');
+            Session::flash('error_message', 'The thread with ID: '.$id.' was not found.');
+
             return redirect()->route('messages');
         }
         // show current user in list if not a current participant
@@ -58,8 +58,10 @@ class MessagesController extends Controller
         $userId = Auth::id();
         $users = User::whereNotIn('id', $thread->participantsUserIds($userId))->get();
         $thread->markAsRead($userId);
+
         return view('messenger.show', compact('thread', 'users'));
     }
+
     /**
      * Creates a new message thread.
      *
@@ -68,8 +70,10 @@ class MessagesController extends Controller
     public function create()
     {
         $users = User::where('id', '!=', Auth::id())->get();
+
         return view('messenger.create', compact('users'));
     }
+
     /**
      * Stores a new message thread.
      *
@@ -77,8 +81,6 @@ class MessagesController extends Controller
      */
     public function store()
     {
-
-
         $input = Input::all();
         $thread = Thread::create([
             'subject' => $input['subject'],
@@ -104,8 +106,10 @@ class MessagesController extends Controller
         }
 
         broadcast(new NewMessageThread($thread))->toOthers();
+
         return redirect()->route('messages');
     }
+
     /**
      * Adds a new message to a current thread.
      *
@@ -117,7 +121,8 @@ class MessagesController extends Controller
         try {
             $thread = Thread::findOrFail($id);
         } catch (ModelNotFoundException $e) {
-            Session::flash('error_message', 'The thread with ID: ' . $id . ' was not found.');
+            Session::flash('error_message', 'The thread with ID: '.$id.' was not found.');
+
             return redirect()->route('messages');
         }
 

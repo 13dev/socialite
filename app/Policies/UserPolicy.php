@@ -24,7 +24,7 @@ class UserPolicy
      *
      * @param  \App\User  $user
      * @param  \App\User  $user
-     * @return boolean
+     * @return bool
      */
     public function update(User $current_user, User $user): bool
     {

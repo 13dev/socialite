@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserPasswordsRequest;
 use App\User;
+use App\Http\Requests\UserPasswordsRequest;
 
 class UserPasswordController extends Controller
 {

@@ -25,7 +25,7 @@ class UsersRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255|alpha_dash',
-            'email' => 'required|email|unique:users,email,' . auth()->user()->id,
+            'email' => 'required|email|unique:users,email,'.auth()->user()->id,
         ];
     }
 }

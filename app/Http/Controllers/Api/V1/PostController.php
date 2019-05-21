@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\PostsRequest;
 use App\Post;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Transformers\PostTransformer;
+use App\Http\Requests\Admin\PostsRequest;
 
 class PostController extends Controller
 {
@@ -58,7 +58,7 @@ class PostController extends Controller
             array_merge(['user_id' => $authUser->id], $data)
         );
 
-        return json_encode(['success' => ($post) ?  true : false]);
+        return json_encode(['success' => ($post) ? true : false]);
     }
 
     /**
@@ -72,19 +72,20 @@ class PostController extends Controller
         $authUser = Auth::guard('api')->user();
         $post = Post::find($id);
 
-        if(!$post)
+        if (! $post) {
             abort(404);
+        }
 
         $build = fractal()
                 ->collection($post->replies)
                 ->transformWith(new PostTransformer());
-        
+
         //User auth?
-        if($authUser)
+        if ($authUser) {
             $build = $build->includeMe();
+        }
 
         return $build->toArray();
-        
     }
 
     /**

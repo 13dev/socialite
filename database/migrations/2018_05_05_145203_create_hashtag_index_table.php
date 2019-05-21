@@ -13,8 +13,7 @@ class CreateHashtagIndexTable extends Migration
      */
     public function up()
     {
-        Schema::create('hashtag_index', function(Blueprint $table)
-        {
+        Schema::create('hashtag_index', function (Blueprint $table) {
             $table->increments('id');
             $table->string('hashtag');
             $table->timestamps();

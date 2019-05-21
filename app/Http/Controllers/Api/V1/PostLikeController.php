@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class PostLikeController extends Controller
 {
-
     /**
      * Store a newly created resource in storage.
      *

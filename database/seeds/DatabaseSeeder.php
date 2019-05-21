@@ -1,8 +1,8 @@
 <?php
 
 use App\Role;
-use App\Token;
 use App\User;
+use App\Token;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,17 +24,17 @@ class DatabaseSeeder extends Seeder
                 'name' => 'admin',
                 'email' => 'admin@admin.com',
                 'username' => 'admin',
-                'password' => 'secret'
+                'password' => 'secret',
             ]);
 
             $user->roles()->attach($role_admin->id);
         }
 
-        $this->call([ UsersTableSeeder::class]);
+        $this->call([UsersTableSeeder::class]);
 
         // API tokens
         User::where('api_token', null)->get()->each->update([
-            'api_token' => Token::generate()
+            'api_token' => Token::generate(),
         ]);
     }
 }

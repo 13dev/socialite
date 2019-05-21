@@ -19,7 +19,7 @@ class CreateUsersInfoTable extends Migration
             $table->string('language')->default('pt');
             $table->string('country')->default('pt');
             $table->string('bio', 400)->nullable();
-            
+
             $table->timestamps();
 
             $table->unique('user_id');

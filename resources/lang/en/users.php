@@ -10,8 +10,8 @@ return [
   'password_updated' => 'Password updated',
   'new_users' => 'new user|new users',
   'count' => ':count user|:count users',
-  'api_token' => "API key",
-  'security' => "Security",
+  'api_token' => 'API key',
+  'security' => 'Security',
 
   'attributes' => [
     'name' => 'Name',
@@ -21,7 +21,7 @@ return [
     'password_confirmation' => 'Password confirmation',
     'roles' => 'Roles',
     'registered_at' => 'Registered at',
-    'api_token' => "API key"
+    'api_token' => 'API key',
   ],
 
   'placeholder' => [
@@ -29,6 +29,6 @@ return [
     'email' => 'Your email',
     'current_password' => 'Your current password',
     'password' => 'Your new password',
-    'password_confirmation' => 'Password confirmation'
-  ]
+    'password_confirmation' => 'Password confirmation',
+  ],
 ];

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Comment;
-use App\Http\Controllers\Controller;
 use App\Post;
 use App\User;
+use App\Comment;
+use App\Http\Controllers\Controller;
 
 class ShowDashboard extends Controller
 {

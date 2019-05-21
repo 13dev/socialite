@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UsersRequest;
-use App\Repositories\FavoriteRepository;
-use App\Repositories\UserRepository;
 use App\Role;
-use App\Services\PostsGetter;
-use App\Transformers\UserTransformer;
 use App\User;
-use Illuminate\Http\Request;
+use App\Services\PostsGetter;
+use App\Http\Requests\UsersRequest;
+use App\Transformers\UserTransformer;
+use App\Repositories\FavoriteRepository;
 
 class UserController extends Controller
 {
@@ -28,10 +26,12 @@ class UserController extends Controller
     {
         $user = User::where('username', $username)->get()->first();
 
-        if(!$user)
+        if (! $user) {
             abort(404);
+        }
 
         $user = fractal($user, new UserTransformer())->toArray();
+
         return view('users.show', compact('user'));
     }
 
@@ -46,7 +46,7 @@ class UserController extends Controller
 
         return view('users.edit', [
             'user' => $user,
-            'roles' => Role::all()
+            'roles' => Role::all(),
         ]);
     }
 
