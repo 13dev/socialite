@@ -27,8 +27,7 @@ Route::middleware('auth')->group(function () {
         Route::put('{id}', ['as' => 'messages.update', 'uses' => 'MessagesController@update']);
     });
 
-
-    Route::get('test', function() {
+    Route::get('test', function () {
         //dd(Cmgmyr\Messenger\Models\Thread::find(2)->participants->count());
         //broadcast(new \App\Events\NewMessage(Cmgmyr\Messenger\Models\Thread::find(1)));
         //
@@ -42,5 +41,4 @@ Route::middleware('auth')->group(function () {
         return 'fire';
         //use App\Events\NewMessageThread;
     });
-
 });

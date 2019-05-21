@@ -3,25 +3,21 @@
 namespace App\Http\Controllers\Api\V1;
 
 use Carbon\Carbon;
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Http\Requests\Api\SendMessageRequest;
-use Cmgmyr\Messenger\Models\Message;
-use Cmgmyr\Messenger\Models\Participant;
-use Cmgmyr\Messenger\Models\Thread;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Session;
 use App\Events\NewMessage;
 use App\Events\NewMessagePresence;
-use App\Events\NewMessageThread;
-use App\Notifications\NewMessage as NewMessageNotification;
+use Cmgmyr\Messenger\Models\Thread;
+use App\Http\Controllers\Controller;
+use Cmgmyr\Messenger\Models\Message;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Input;
+use Cmgmyr\Messenger\Models\Participant;
+use App\Http\Requests\Api\SendMessageRequest;
 use App\Http\Resources\Message as MessageResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Notifications\NewMessage as NewMessageNotification;
 
 class MessageController extends Controller
 {
-
     /**
      * Store a newly created resource in storage.
      *
@@ -39,7 +35,7 @@ class MessageController extends Controller
             $thread = Thread::findOrFail($thread_id);
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'Not found.'
+                'error' => 'Not found.',
             ]);
         }
 
@@ -73,7 +69,6 @@ class MessageController extends Controller
         broadcast(new NewMessage($thread));
         broadcast(new NewMessagePresence($thread, $message))->toOthers();
 
-
         // Send notification
         $usersToNotify = $thread->users()
             ->where('user_id', '!=', Auth::id())->get();
@@ -97,11 +92,10 @@ class MessageController extends Controller
             $message = Message::findOrFail($thread_id);
         } catch (ModelNotFoundException $e) {
             return response()->json([
-                'error' => 'Not found.'
+                'error' => 'Not found.',
             ]);
         }
 
         return new MessageResource($message);
     }
-
 }

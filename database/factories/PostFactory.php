@@ -1,8 +1,8 @@
 <?php
 
-use Faker\Generator as Faker;
-use App\User;
 use App\Post;
+use App\User;
+use Faker\Generator as Faker;
 
 $factory->define(Post::class, function (Faker $faker) {
     return [

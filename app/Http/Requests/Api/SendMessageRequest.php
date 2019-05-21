@@ -24,8 +24,8 @@ class SendMessageRequest extends FormRequest
     public function rules()
     {
         return [
-            'thread_id' =>'required|exists:' . config('messenger.threads_table') . ',id',
-            'message' => 'required|max:9000'
+            'thread_id' =>'required|exists:'.config('messenger.threads_table').',id',
+            'message' => 'required|max:9000',
         ];
     }
 }

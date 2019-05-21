@@ -2,14 +2,13 @@
 
 namespace Tests\Feature\Admin;
 
-use App\Comment;
-
 use App\Post;
 use App\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use App\Comment;
+use Tests\TestCase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PostTest extends TestCase
 {
@@ -22,7 +21,7 @@ class PostTest extends TestCase
         factory(Post::class, 3)->create();
 
         $this->actingAsAdmin()
-            ->get("/admin/posts")
+            ->get('/admin/posts')
             ->assertStatus(200)
             ->assertSee('4 articles')
             ->assertSee('test')
@@ -144,7 +143,7 @@ class PostTest extends TestCase
     }
 
     /**
-     * Valid params for updating or creating a resource
+     * Valid params for updating or creating a resource.
      *
      * @param  array $overrides new params
      * @return array Valid params for updating or creating a resource

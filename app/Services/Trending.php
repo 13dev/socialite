@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Repositories\HashtagMapRepository;
 
-class Trending {
-
+class Trending
+{
     private $bucket;
     protected $mapRepo;
 
@@ -17,20 +17,16 @@ class Trending {
 
     public function get($count, $outof)
     {
-        foreach ($this->mapRepo->latest($outof) as $map)
-        {
+        foreach ($this->mapRepo->latest($outof) as $map) {
             $name = $map->hashtag->hashtag;
-            if (array_key_exists($name, $this->bucket))
-            {
+            if (array_key_exists($name, $this->bucket)) {
                 $this->bucket[$name] = $this->bucket[$name] + 1;
-            }
-            else
-            {
+            } else {
                 $this->bucket[$name] = 1;
             }
         }
         array_multisort($this->bucket, SORT_DESC, SORT_NUMERIC);
+
         return array_slice($this->bucket, 0, $count, true);
     }
-    
 }

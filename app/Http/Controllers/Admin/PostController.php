@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\PostsRequest;
 use App\Post;
 use App\User;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\PostsRequest;
 
 class PostController extends Controller
 {
@@ -18,7 +18,7 @@ class PostController extends Controller
     public function index()
     {
         return view('admin.posts.index', [
-            'posts' => Post::withCount('comments', 'likes')->with('author')->latest()->paginate(50)
+            'posts' => Post::withCount('comments', 'likes')->with('author')->latest()->paginate(50),
         ]);
     }
 
@@ -29,7 +29,7 @@ class PostController extends Controller
     {
         return view('admin.posts.edit', [
             'post' => $post,
-            'users' => User::authors()->pluck('name', 'id')
+            'users' => User::authors()->pluck('name', 'id'),
         ]);
     }
 
@@ -41,7 +41,7 @@ class PostController extends Controller
     public function create(Request $request)
     {
         return view('admin.posts.create', [
-            'users' => User::authors()->pluck('name', 'id')
+            'users' => User::authors()->pluck('name', 'id'),
         ]);
     }
 

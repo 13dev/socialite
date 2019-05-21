@@ -2,25 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 class HomeController extends Controller
 {
-	/**
-	 * show the home page
-	 * @return view
-	 */
+    /**
+     * show the home page.
+     * @return view
+     */
     public function show()
     {
-    	return view('home');
+        return view('home');
     }
 
     /**
-     * Show about page
+     * Show about page.
      * @return view
      */
     public function about()
     {
-    	return view('about');
+        return view('about');
     }
 }

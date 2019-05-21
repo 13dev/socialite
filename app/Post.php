@@ -3,16 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\UploadedFile;
-use App\Services\PostParser;
 
 class Post extends Model
 {
- 
     protected $table = 'posts';
     protected $dates = ['created_at'];
     protected $fillable = [
-        'user_id', 'post', 'parent_id', 'created_at'
+        'user_id', 'post', 'parent_id', 'created_at',
     ];
 
     public function user()
@@ -24,7 +21,6 @@ class Post extends Model
     {
         return $this->hasMany('App\Favorite');
     }
-
 
     public function parent()
     {
@@ -52,7 +48,7 @@ class Post extends Model
     }
 
     /**
-     * Scope a query to search posts
+     * Scope a query to search posts.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
@@ -65,7 +61,7 @@ class Post extends Model
     }
 
     /**
-     * Scope a query to order posts by latest posted
+     * Scope a query to order posts by latest posted.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
      * @return \Illuminate\Database\Eloquent\Builder
@@ -99,5 +95,4 @@ class Post extends Model
         return $query->whereBetween('created_at', [now()->subWeek(), now()])
                      ->latest();
     }
-
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\User;
 use Auth;
+use App\User;
 use Socialite;
+use App\Http\Controllers\Controller;
 
 class AuthController extends Controller
 {
@@ -40,7 +40,7 @@ class AuthController extends Controller
     }
 
     /**
-     * Return user if exists; create and return if doesn't
+     * Return user if exists; create and return if doesn't.
      *
      * @param $user
      * @return User
@@ -57,7 +57,7 @@ class AuthController extends Controller
                         'name' => $user->name ?? $user->email,
                         'email' => $user->email,
                         'provider' => $provider,
-                        'provider_id' => $user->id
+                        'provider_id' => $user->id,
                     ]);
     }
 }

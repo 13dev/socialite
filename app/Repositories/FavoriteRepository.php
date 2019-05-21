@@ -2,13 +2,13 @@
 
 namespace App\Repositories;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use App\Favorite;
+use Illuminate\Database\Eloquent\Collection;
 
-class FavoriteRepository {
-
-    protected $favorite, $collection;
+class FavoriteRepository
+{
+    protected $favorite;
+    protected $collection;
 
     public function __construct(
         Favorite $favorite,
@@ -24,14 +24,14 @@ class FavoriteRepository {
         $favorites = $this->favorite->where('user_id', $id)
             ->orderBy('created_at')
             ->get();
-        foreach ($favorites as $current)
-        {
+        foreach ($favorites as $current) {
             $post = $current->post;
             array_push($posts, $post);
         }
+
         return $this->collection->make($posts);
     }
-    
+
     public function remove($userId, $postId)
     {
         return $this->favorite->where(['user_id' => $userId, 'post_id' => $postId])->delete();

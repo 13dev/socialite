@@ -2,21 +2,19 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\UsersRequest;
-use App\Http\Resources\Post as PostResource;
-use App\Http\Resources\User as UserResource;
 use App\Post;
+use App\User;
 use App\RePost;
+use App\UserRelations;
+use Illuminate\Http\Request;
 use App\Services\PostsGetter;
+use App\Http\Requests\UsersRequest;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Transformers\PostTransformer;
 use App\Transformers\RePostTransformer;
-use App\Transformers\TimelineTransformer;
+use App\Http\Resources\User as UserResource;
 use App\Transformers\NotificationTransformer;
-use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\UserRelations;
 
 class UserController extends Controller
 {
@@ -26,6 +24,7 @@ class UserController extends Controller
     {
         $this->getter = $getter;
     }
+
     /**
      * Return the users.
      *
@@ -69,7 +68,7 @@ class UserController extends Controller
     public function unreadMessages()
     {
         return [
-            'count' => Auth::user()->newThreadsCount()
+            'count' => Auth::user()->newThreadsCount(),
         ];
     }
 
@@ -77,34 +76,30 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        if(!$user)
+        if (! $user) {
             abort(404);
+        }
 
         $timeline = $user->timeline;
         $response = [];
         $authUser = Auth::guard('api')->user();
 
         // For each post / repost
-        foreach ($timeline as $post)
-        {
+        foreach ($timeline as $post) {
 
             // choose correct transformer
-            if($post instanceof Post)
-            {
+            if ($post instanceof Post) {
+                $build = fractal($post, new PostTransformer());
 
-                $build = fractal($post,new PostTransformer());
-                
                 //User auth?
-                if($authUser)
+                if ($authUser) {
                     $build = $build->includeMe();
+                }
 
-                $response[] = $build->toArray();      
+                $response[] = $build->toArray();
+            } elseif ($post instanceof RePost) {
+                $response[] = fractal($post, new RePostTransformer())->toArray();
             }
-            elseif($post instanceof RePost)
-            {
-                $response[] = fractal($post,new RePostTransformer())->toArray();
-            }
-
         }
 
         return $response;
@@ -115,8 +110,9 @@ class UserController extends Controller
         $user = User::find($id);
         $authUser = Auth::guard('api')->user();
 
-        if(!$user || $user->id != $authUser->id)
+        if (! $user || $user->id != $authUser->id) {
             abort(404);
+        }
 
         return fractal($user->unreadNotifications, new NotificationTransformer())->toArray();
     }
@@ -132,19 +128,20 @@ class UserController extends Controller
         $user = User::find($id);
         $authUser = Auth::guard('api')->user();
 
-        if(!$user)
+        if (! $user) {
             abort(404);
+        }
 
         //Is user already following ?
-        if($authUser->follows($user->id)) {
-           return response()->json(['is_following' => true]);
+        if ($authUser->follows($user->id)) {
+            return response()->json(['is_following' => true]);
         }
 
         return response()->json(['is_following' => false]);
     }
 
     /**
-     * POST - follow/unfollow user
+     * POST - follow/unfollow user.
      * @param  int    $id user to follow
      * @return bolean     return if user is followed or not.
      */
@@ -153,11 +150,12 @@ class UserController extends Controller
         $user = User::find($id);
         $authUser = Auth::guard('api')->user();
 
-        if(!$user)
+        if (! $user) {
             abort(404);
+        }
 
         //Is user already following ?
-        if($authUser->follows($user->id)) {
+        if ($authUser->follows($user->id)) {
             UserRelations::where([
                 'follower_id' => $authUser->id,
                 'followed_id' => $user->id,
@@ -171,9 +169,9 @@ class UserController extends Controller
             'followed_id' => $user->id,
         ]);
 
-        if(!$follows)
+        if (! $follows) {
             return response()->json(['is_following' => false]);
-
+        }
 
         return response()->json(['is_following' => true]);
     }
@@ -187,16 +185,16 @@ class UserController extends Controller
         $user = User::find($id);
         $authUser = Auth::guard('api')->user();
 
-        if(!$user || $user->id != $authUser->id)
+        if (! $user || $user->id != $authUser->id) {
             abort(404);
+        }
 
         $feed = [];
         $feed['posts'] = [];
         $feed['reposts'] = [];
         $response = [];
 
-        foreach ($user->followers as $userFlrs)
-        {
+        foreach ($user->followers as $userFlrs) {
             // Merge reposts and posts to response array
             $response = array_merge(
                 array_merge(
@@ -210,8 +208,7 @@ class UserController extends Controller
                     ), $response);
         }
 
-        foreach ($user->followers as $userFlg)
-        {
+        foreach ($user->followers as $userFlg) {
             // Merge followers posts and reposts to response
             $response = array_merge(
                 array_merge(
@@ -235,9 +232,8 @@ class UserController extends Controller
                 $user->reposts
                     ->transformWith(new RePostTransformer())
                     ->toArray()
-                )
-            , $response);
-        
+                ), $response);
+
         // Sort array by date
         $response = array_values(array_sort($response, function ($value) {
             return $value['created_at'];
@@ -247,6 +243,5 @@ class UserController extends Controller
         $response = array_unique($response, SORT_REGULAR);
 
         return array_reverse($response);
-        
     }
 }

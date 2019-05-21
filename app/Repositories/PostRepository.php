@@ -4,8 +4,8 @@ namespace App\Repositories;
 
 use App\Post;
 
-class PostRepository {
-
+class PostRepository
+{
     protected $post;
 
     public function __construct(Post $post)
@@ -34,14 +34,14 @@ class PostRepository {
     {
         $post = $this->post->find($id);
         $children = $post->replies;
-        foreach ($children as $child)
-        {
+        foreach ($children as $child) {
             $child->parent_id = null;
             $child->save();
         }
+
         return $post->delete();
     }
-    
+
     public function search($query)
     {
         return $this->post

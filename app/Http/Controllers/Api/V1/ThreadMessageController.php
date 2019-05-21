@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Cmgmyr\Messenger\Models\Thread;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Message as MessageResource;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ThreadMessageController extends Controller
 {
-
     /**
-     * Get all messages in thread
-     * @param  int $id 
+     * Get all messages in thread.
+     * @param  int $id
      * @return \App\Http\Resources\Message
      */
     public function index(int $id)
@@ -22,9 +21,9 @@ class ThreadMessageController extends Controller
         try {
             $thread = Thread::findOrFail($id);
 
-            if(!$thread->hasParticipant(Auth::id()))
+            if (! $thread->hasParticipant(Auth::id())) {
                 return response()->json('Unauthorized.');
-                
+            }
         } catch (ModelNotFoundException $e) {
             return response()->json('Not Found.');
         }

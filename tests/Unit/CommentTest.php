@@ -4,8 +4,8 @@ namespace Tests\Unit;
 
 use App\Comment;
 use Faker\Factory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CommentTest extends TestCase
 {

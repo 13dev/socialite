@@ -22,8 +22,8 @@ class NotificationTransformer extends TransformerAbstract
         // ];
 
         return array_merge($notification->data, [
-            'type' => $notification->type, 
-            'created_at' => optional($notification->created_at)->diffForHumans()
+            'type' => $notification->type,
+            'created_at' => optional($notification->created_at)->diffForHumans(),
         ]);
     }
 }

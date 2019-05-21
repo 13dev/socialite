@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\PostsRequest;
-use App\Http\Requests\Api\Post\FavoriteRequest;
-use App\Http\Requests\Api\Post\RepostRequest;
 use App\Post;
+use App\RePost;
+use App\Favorite;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Transformers\PostTransformer;
-use App\Favorite;
-use App\RePost;
+use App\Http\Requests\Admin\PostsRequest;
+use App\Http\Requests\Api\Post\RepostRequest;
+use App\Http\Requests\Api\Post\FavoriteRequest;
 use App\Notifications\NewPost as NewPostNotification;
 
 class PostController extends Controller
@@ -71,7 +71,7 @@ class PostController extends Controller
             $user->notify(new NewPostNotification($post));
         }
 
-        return json_encode(['success' => ($post) ?  true : false]);
+        return json_encode(['success' => ($post) ? true : false]);
     }
 
     /**
@@ -85,19 +85,20 @@ class PostController extends Controller
         $authUser = Auth::guard('api')->user();
         $post = Post::find($id);
 
-        if(!$post)
+        if (! $post) {
             abort(404);
+        }
 
         $build = fractal()
                 ->collection($post->replies)
                 ->transformWith(new PostTransformer());
-        
+
         //User auth?
-        if($authUser)
+        if ($authUser) {
             $build = $build->includeMe();
+        }
 
         return $build->toArray();
-        
     }
 
     public function repost(int $id, RepostRequest $request)
@@ -105,40 +106,41 @@ class PostController extends Controller
         $authUser = Auth::guard('api')->user();
         $data = $request->only(['user_id']);
 
-        if($authUser->id != $request->get('user_id'))
+        if ($authUser->id != $request->get('user_id')) {
             return response()->json('Unauthorized.');
+        }
 
         $post = Post::find($id);
 
-        if(!$post)
+        if (! $post) {
             abort(404);
+        }
 
-        if($authUser->reposted($post->id))
-        {
+        if ($authUser->reposted($post->id)) {
             // User has reposted the post already.
             $repost = RePost::where([
-                'post_id' => $post->id, 
-                'user_id' => $authUser->id
+                'post_id' => $post->id,
+                'user_id' => $authUser->id,
             ])->delete();
 
-            if($repost)
+            if ($repost) {
                 return response()->json(['success' => true, 'reposted' => false]);
-            
-            return response()->json(['success' => false, 'reposted' => true]);
+            }
 
+            return response()->json(['success' => false, 'reposted' => true]);
         }
 
         // User not reposted the post.
         $repost = RePost::create([
-            'post_id' => $post->id, 
-            'user_id' => $authUser->id
+            'post_id' => $post->id,
+            'user_id' => $authUser->id,
         ]);
 
-        if($repost)
+        if ($repost) {
             return response()->json(['success' => true, 'reposted' => true]);
-            
+        }
+
         return response()->json(['success' => false, 'reposted' => false]);
-       
     }
 
     public function favorite(int $id, FavoriteRequest $request)
@@ -146,40 +148,41 @@ class PostController extends Controller
         $authUser = Auth::guard('api')->user();
         $data = $request->only(['user_id']);
 
-        if($authUser->id != $request->get('user_id'))
+        if ($authUser->id != $request->get('user_id')) {
             return response()->json('Unauthorized.');
+        }
 
         $post = Post::find($id);
 
-        if(!$post)
+        if (! $post) {
             abort(404);
+        }
 
-        if($authUser->favorited($post->id))
-        {
+        if ($authUser->favorited($post->id)) {
             // User has favorited the post already.
             $favorite = Favorite::where([
-                'post_id' => $post->id, 
-                'user_id' => $authUser->id
+                'post_id' => $post->id,
+                'user_id' => $authUser->id,
             ])->delete();
 
-            if($favorite)
+            if ($favorite) {
                 return response()->json(['success' => true, 'favorited' => false]);
-            
-            return response()->json(['success' => false, 'favorited' => false]);
+            }
 
+            return response()->json(['success' => false, 'favorited' => false]);
         }
 
         // User not favorited the post.
         $favorite = Favorite::create([
-            'post_id' => $post->id, 
-            'user_id' => $authUser->id
+            'post_id' => $post->id,
+            'user_id' => $authUser->id,
         ]);
 
-        if($favorite)
+        if ($favorite) {
             return response()->json(['success' => true, 'favorited' => true]);
-            
+        }
+
         return response()->json(['success' => false, 'favorited' => false]);
-       
     }
 
     /**
