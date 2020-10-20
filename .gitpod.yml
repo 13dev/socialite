@@ -6,7 +6,6 @@ tasks:
     php -r "file_exists('.env') || copy('.env.example', '.env');"
     url=$(gp url 8000); sed -i'' "s#^APP_URL=http://localhost*#APP_URL=$url\nASSET_URL=$url#g" .env  #change APP_URL and ASSET_URL to 8080 URL
   init: |
-    sudo chmod 777 -R bootstrap/cache
     composer install
   command: |
     npm install -g laravel-echo-server
