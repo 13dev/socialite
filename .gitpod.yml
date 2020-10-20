@@ -1,0 +1,19 @@
+ports:
+- port: 8000
+  onOpen: open-preview
+tasks:
+- before: |
+    php -r "file_exists('.env') || copy('.env.example', '.env');"
+    url=$(gp url 8000); sed -i'' "s#^APP_URL=http://localhost*#APP_URL=$url\nASSET_URL=$url#g" .env  #change APP_URL and ASSET_URL to 8080 URL
+  init: |
+    sudo chmod 777 -R bootstrap/cache
+    composer install
+  command: |
+    npm install -g laravel-echo-server
+    npm install
+    php artisan key:generate --ansi
+    php artisan package:discover
+    php artisan serve
+    php artisan migrate
+    php artisan db:seed
+    
