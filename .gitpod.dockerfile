@@ -5,15 +5,10 @@ USER root
 RUN apt-get update \
  && apt-get -y install postgresql postgresql-contrib mysql-server mysql-client \
  && add-apt-repository ppa:ondrej/php \
- && apt-get install php7.1 \
- && apt-get install php7.1-mbstring php7.1-xml php7.1-mysql php-xml php-gd \
- && apt-get install redis-server \
- && update-alternatives --set php /usr/bin/php7.1 \
- && update-alternatives --set phar /usr/bin/phar7.1 \
- && update-alternatives --set phar.phar /usr/bin/phar.phar7.1 \
- && update-alternatives --set phpize /usr/bin/phpize7.1 \
- && update-alternatives --set php-config /usr/bin/php-config7.1 \
- && apt-get -y install php-amqp php-apcu php-imagick php-memcached php-mongodb php-oauth php-redis\
+ && apt-get -y install php7.1 \
+ && apt-get -y install php7.1-mbstring php7.1-xml php7.1-mysql php-xml php-gd \
+ && apt-get -y install redis-server \
+ && apt-get -y install php-amqp php-apcu php-imagick php-memcached php-mongodb php-oauth php-redis \
  && apt-get clean && rm -rf /var/cache/apt/* /var/lib/apt/lists/* /tmp/*
 
 RUN mkdir /var/run/mysqld \
