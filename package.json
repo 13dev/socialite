@@ -12,7 +12,7 @@
     },
     "dependencies": {
         "@mdi/font": "^2.3.54",
-        "axios": "^0.17",
+        "axios": "^0.21",
         "buefy": "^0.7.2",
         "bulma-badge": "^1.0.1",
         "cross-env": "^5.1.3",
